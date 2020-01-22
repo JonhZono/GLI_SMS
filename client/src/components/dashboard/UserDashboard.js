@@ -54,9 +54,6 @@ const UserDashboard = props => {
     props.studentDashboardExamById();
   }, []);
 
-  console.log(props.profile.studentProfile);
-  console.log(props.user.id);
-  //console.log(props.feedback.studentGetFeedbackArticleById);
   const studentCount = props.user.userLists.filter(
     count => count.role === 'student'
   );

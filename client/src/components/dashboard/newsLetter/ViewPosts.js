@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -6,20 +6,7 @@ import { addInterest, removeInterest, deletePost } from '../../../actions/post';
 
 const ViewPosts = ({
   history,
-  posts: {
-    name,
-    title,
-    likes,
-    comments,
-    _id,
-    avatar,
-    date,
-    descriptions,
-    image,
-    status
-  },
-  addInterest,
-  removeInterest,
+  posts: { name, title, comments, _id, avatar, date, image, status },
   deletePost,
   user: { role }
 }) => {

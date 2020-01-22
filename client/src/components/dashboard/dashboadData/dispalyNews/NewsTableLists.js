@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -11,11 +10,6 @@ class NewsTableLists extends Component {
   };
   render() {
     const props = this.props; //post props
-    /**
-     *moment().format("YYYY/MM/DD"); // if you want to convert current date
-      moment(startDate).format("YYYY/MM/DD"); // if you want to convert given date
-     */
-    //compare today date with other day to make sure it's new
 
     return (
       <tr>

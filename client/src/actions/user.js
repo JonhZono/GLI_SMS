@@ -14,9 +14,8 @@ import {
 } from './types';
 import { ENDPOINT } from '../components/utils/misc';
 import { setAlert } from '../actions/alert';
-import {} from '../actions/feedback'
+import {} from '../actions/feedback';
 import setGlobalToken from '../components/utils/setGlobalToken';
-
 
 //load user to check if token is available,
 //since token is stateless when reload is clear from the header, set up global header to store token
@@ -27,7 +26,7 @@ export const loadUser = () => async dispatch => {
   }
   try {
     const response = await axios.get(`${ENDPOINT}api/user/auth/`);
-    console.log(response.data)
+    console.log(response.data);
     dispatch({
       type: LOAD_USER,
       payload: response.data
@@ -54,7 +53,6 @@ export const loginUser = (email, password) => async dispatch => {
       payload: res.data
     });
     dispatch(loadUser());
-    console.log('User Login');
     dispatch(setAlert('Sign in successful', 'link'));
   } catch (err) {
     const errors = err.response.data.errors;
@@ -72,7 +70,6 @@ export const logOut = history => dispatch => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOG_OUT });
   history.push('/');
-  console.log('Logout Redirect successfully');
 };
 
 export const adminCreateUser = dataToSubmit => async dispatch => {
