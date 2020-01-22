@@ -2,10 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const webpush = require('web-push');
 const cors = require('cors');
-const config = require('config');
-//require('dotenv').config();
+require('dotenv').config();
 const PORT = 8080;
 
 // Setup express app
@@ -17,12 +15,8 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.Promise = global.Promise;
-const urlString = 'mongodb://localhost:27017/sms_db';
 
-const Public_Key =
-  'BDoMxb4OYULOpUmdGBhRs69fLhtBeYDAPRf_VL2p8wpjCn7LesynsTzTJU5Kwi_1KHdFnjzLpVJVZEYvcHYSkDY';
-const Private_Key = 'KWy5VBFHiQLms8_LTKlTIFm7SqywbwwpKpG5_IRfGxo';
-webpush.setVapidDetails('mailto:jonhzono@gmail.com', Public_Key, Private_Key);
+const urlString = process.env.MONGODB_URI;
 
 mongoose.connect(urlString, {
   useUnifiedTopology: true,

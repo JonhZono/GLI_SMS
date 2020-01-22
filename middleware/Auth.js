@@ -1,5 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = (req, res, next) => {
   //get token from header
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
         .json({ errors: [{ msg: 'Unauthorized, access denied' }] });
     }
     //verify the token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = jwt.verify(token, config.get(SECRETE_PASS));
     req.user = decoded.user;
     next();
   } catch (err) {
