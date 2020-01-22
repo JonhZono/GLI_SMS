@@ -6,6 +6,7 @@ const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
 const combine = require('../../middleware/Combine');
 const nodemailer = require('nodemailer');
+const config = require('config');
 const feeTemplate = require('../../utils/mail/feeTemplate');
 require('dotenv').config();
 
@@ -41,8 +42,8 @@ router.post(
       const smtpTransport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-          user: process.env.USER_EMAIL,
-          pass: process.env.EMAIL_PASS
+          user: config.get('USER_EMAIL'),
+          pass: config.get('EMAIL_PASS')
         }
       });
 

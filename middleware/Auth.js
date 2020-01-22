@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
         .json({ errors: [{ msg: 'Unauthorized, access denied' }] });
     }
     //verify the token
-    const decoded = jwt.verify(token, config.get(SECRETE_PASS));
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
     req.user = decoded.user;
     next();
   } catch (err) {

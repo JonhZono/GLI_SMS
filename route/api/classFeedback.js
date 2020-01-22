@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
 const User = require('../../model/User.model');
+const config = require('config');
 const ClassFeedback = require('../../model/ClassFeedback.model');
 const StudentLists = require('../../model/StudentLists.model');
 const Classroom = require('../../model/Classroom.model');
@@ -177,8 +178,8 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
     const smtpTransport = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: process.env.USER_EMAIL,
-        pass: process.env.EMAIL_PASS
+        user: config.get('USER_EMAIL'),
+        pass: config.get('EMAIL_PASS')
       }
     });
     const mailOptions = {
