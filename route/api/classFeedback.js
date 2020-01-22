@@ -182,7 +182,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
       }
     });
     const mailOptions = {
-      from: 'GLI Harumi ✔ <jonhzono@gmail.com>',
+      from: 'GLI Harumi ✔ <gli.harumi01@gmail.com>',
       to: email,
       subject: 'GLI Harumi Classroom Feedback ✔ ' + `${Date.now().toString()}`,
       html: feedbackTemplate(

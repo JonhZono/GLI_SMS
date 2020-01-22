@@ -126,8 +126,8 @@ router.post(
       };
       jwt.sign(
         payload,
-        config.get(process.env.SECRET_PASS),
-        //config.get('jwtSecret'),
+        //config.get(process.env.SECRET_PASS),
+        config.get('jwtSecret'),
         {
           expiresIn: 36000
         },
@@ -211,7 +211,8 @@ router.post(
       };
       jwt.sign(
         payload,
-        config.get(process.env.SECRET_PASS),
+        config.get('jwtSecret'),
+        //config.get(process.env.SECRET_PASS),
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;

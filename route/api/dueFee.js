@@ -47,7 +47,7 @@ router.post(
       });
 
       const mailOptions = {
-        from: 'GLI Harumi ✔ <jonhzono@gmail.com>',
+        from: 'GLI Harumi ✔ <gli.harumi01@gmail.com>',
         to: gmailLists, // list of receivers
         subject: 'Monthly Fee ✔', // Subject line
         html: feeTemplate(month, amount, additional) // html body
