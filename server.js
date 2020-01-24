@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
+const config = require('config');
 const path = require('path');
 const PORT = 8080;
 
@@ -17,9 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.Promise = global.Promise;
 
-const urlString = process.env.MONGODB_URI;
+const db = config.get('MONGODB_URI');
 
-mongoose.connect(urlString, {
+mongoose.connect(db, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useCreateIndex: true,

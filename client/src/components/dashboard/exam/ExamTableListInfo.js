@@ -13,6 +13,7 @@ const ExamTableListInfo = props => {
       <thead style={{ background: 'whitesmoke' }}>
         <tr>
           <td>Student</td>
+          <td>Created By</td>
           <td>Created At</td>
           <td>Reading</td>
           <td>Speaking</td>

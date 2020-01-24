@@ -12,6 +12,18 @@ import Spinner from '../../spinner/Spinner';
 
 class ViewStaffProfile extends Component {
   componentDidMount = () => {
+
+    const profile_id = this.props.match.params.profile_id;
+    this.props.dispatch(getStaffProfileById(profile_id));
+  };
+  componentWillUnmount = () => {
+    this.props.dispatch(clearProfileDetails());
+  };
+  deleteStaffProfile = () => {
+    const profile_id = this.props.match.params.profile_id;
+    this.props.dispatch(deleteStaffProfileById(profile_id, this.props.history));
+  };
+  render() {
     $(document).ready(function() {
       $('#showModal').click(function() {
         $('.modal').addClass('is-active');
@@ -29,20 +41,7 @@ class ViewStaffProfile extends Component {
       });
     });
 
-    const profile_id = this.props.match.params.profile_id;
-    this.props.dispatch(getStaffProfileById(profile_id));
-  };
-  componentWillUnmount = () => {
-    this.props.dispatch(clearProfileDetails());
-  };
-  deleteStaffProfile = () => {
-    const profile_id = this.props.match.params.profile_id;
-    this.props.dispatch(deleteStaffProfileById(profile_id, this.props.history));
-  };
-  render() {
     const profile = this.props.profile;
-    console.log(profile);
-    console.log(profile.loading);
     return (
       <Fragment>
         {profile.staffProfileById === null || profile.loading ? (
@@ -140,6 +139,7 @@ class ViewStaffProfile extends Component {
                                           <img
                                             key={item.public_id}
                                             src={item.url}
+                                            alt=''
                                             className='is-rounded'
                                           />
                                         )

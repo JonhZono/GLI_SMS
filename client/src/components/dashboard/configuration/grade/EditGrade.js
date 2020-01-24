@@ -27,7 +27,7 @@ class EditGrade extends Component {
   componentDidMount = () => {
     const formData = this.state.formData;
     //Populate the edit field
-    console.log(this.props.grade);
+
     const newFormData = populateFields(formData, this.props.grade);
     this.setState({
       formData: newFormData
@@ -48,7 +48,7 @@ class EditGrade extends Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'EditGrade');
     this.props.dispatch(editGrade(this.props.grade_id, dataToSubmit, this.props.history));
-    console.log(dataToSubmit);
+
   };
 
   render() {

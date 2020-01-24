@@ -8,6 +8,7 @@ import {
   populateFields,
   generateFormData
 } from '../../utils/form/formActions';
+import { getTeacher } from '../../../actions/profile';
 import { adminEditStatisticById } from '../../../actions/analysis';
 import { studentSelectField } from '../../../actions/user';
 import UserLayout from '../../../hoc/User';
@@ -87,7 +88,16 @@ class EditAnalyze extends React.Component {
         },
         showLabel: false
       },
-
+      teacher: {
+        element: 'select',
+        value: '',
+        config: {
+          name: 'teacher',
+          label: 'Created By',
+          options: []
+        },
+        showLabel: true
+      },
       ownerId: {
         element: 'select',
         value: '',
@@ -107,6 +117,14 @@ class EditAnalyze extends React.Component {
         this.state.formData,
         this.props.user.allStudentSelectField,
         'ownerId'
+      );
+      this.updateFields(newFormData);
+    });
+    this.props.dispatch(getTeacher()).then(() => {
+      let newFormData = populateFormField(
+        this.state.formData,
+        this.props.profile.teacherList,
+        'teacher'
       );
       this.updateFields(newFormData);
     });
@@ -174,7 +192,7 @@ class EditAnalyze extends React.Component {
                 <div className='card has-text-centered'>
                   <header className='card-header'>
                     <p
-                      className='card-header-title has-text-light'
+                      className='card-header-title'
                       style={{
                         backgroundColor: 'whitesmoke'
                       }}
@@ -237,42 +255,55 @@ class EditAnalyze extends React.Component {
                           formData={formData.writing}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'reading'}
                           formData={formData.reading}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'listening'}
                           formData={formData.listening}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'speaking'}
                           formData={formData.speaking}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'participation'}
                           formData={formData.participation}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'active'}
                           formData={formData.active}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'attitude'}
                           formData={formData.attitude}
                           change={element => this.updateForm(element)}
                         />
-
+                        <br />
+                        <FormField
+                          id={'teacher'}
+                          formData={formData.teacher}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'ownerId'}
                           formData={formData.ownerId}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>
                           <div className='field-body'>
@@ -296,7 +327,7 @@ class EditAnalyze extends React.Component {
                                   type='submit'
                                   className='button is-normal buttonForm is-info is-outlined'
                                 >
-                                  BACK
+                                  CANCEL
                                 </Link>
                               </div>
                             </div>
@@ -316,6 +347,7 @@ class EditAnalyze extends React.Component {
 }
 const mapStateToProps = state => ({
   user: state.user,
-  analysis: state.analysis
+  analysis: state.analysis,
+  profile: state.profile
 });
 export default connect(mapStateToProps)(withRouter(EditAnalyze));

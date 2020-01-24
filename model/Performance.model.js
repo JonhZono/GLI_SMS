@@ -49,6 +49,11 @@ const PerformanceSchema = new mongoose.Schema(
       required: true,
       ref: 'user'
     },
+    teacher: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'teacher'
+    },
     date: {
       type: Date,
       default: Date.now()

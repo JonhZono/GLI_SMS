@@ -4,7 +4,6 @@ import {
   INDIVIDUAL_FEE_LISTS,
   ADMIN_GET_FEE_LISTS
 } from './types';
-import { ENDPOINT } from '../components/utils/misc';
 import { setAlert } from '../actions/alert';
 
 export const adminCreateDueFee = dataToSubmit => async dispatch => {
@@ -15,11 +14,10 @@ export const adminCreateDueFee = dataToSubmit => async dispatch => {
       }
     };
     const response = await axios.post(
-      `${ENDPOINT}api/duefee/create`,
+      `/api/duefee/create`,
       dataToSubmit,
       config
     );
-    console.log(response.data);
     dispatch({
       type: ADMIN_CREATE_DUE_FEE,
       payload: response.data
@@ -36,9 +34,7 @@ export const adminCreateDueFee = dataToSubmit => async dispatch => {
 
 export const studentDueFeeLists = fee_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/student/duefee/all/${fee_id}`
-    );
+    const response = await axios.get(`/api/student/duefee/all/${fee_id}`);
 
     dispatch({
       type: INDIVIDUAL_FEE_LISTS,
@@ -54,8 +50,8 @@ export const studentDueFeeLists = fee_id => async dispatch => {
 
 export const adminGetDueFeeLists = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/duefee/all`);
-    console.log(response.data);
+    const response = await axios.get(`/api/duefee/all`);
+
     dispatch({
       type: ADMIN_GET_FEE_LISTS,
       payload: response.data

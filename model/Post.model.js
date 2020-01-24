@@ -25,6 +25,11 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: []
     },
+    gmailLists: {
+      type: Array,
+      default: [],
+      required: true
+    },
     avatar: {
       type: String
     },

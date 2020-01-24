@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "allowfullscreen",
+        "border",
         "bulma",
         "classfeedback",
         "cloudinary",
@@ -10,13 +11,18 @@
         "fullheight",
         "fullwidth",
         "gravatar",
+        "harumi",
+        "heroku",
         "hoverable",
         "lessonrecords",
+        "postbuild",
+        "radius",
         "removeimage",
         "smtp",
         "transport",
         "uploader",
         "uploadimage",
+        "webkit",
         "webpush",
         "whitesmoke",
         "youtube"

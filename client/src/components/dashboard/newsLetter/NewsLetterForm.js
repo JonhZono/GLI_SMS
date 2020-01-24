@@ -26,7 +26,6 @@ class NewsLetterForm extends React.Component {
         value: '',
         config: {
           name: 'status',
-          label: 'Do Enter Your Content Body Here',
           type: 'text',
           placeholder: 'ex. starting, on-going, finished'
         },
@@ -37,8 +36,20 @@ class NewsLetterForm extends React.Component {
         value: '',
         config: {
           name: 'descriptions',
+          label: 'Please Enter Your Content Body',
           type: 'text',
           placeholder: 'What is your content body?'
+        },
+        showLabel: true
+      },
+      gmailLists: {
+        element: 'textarea',
+        value: '',
+        config: {
+          name: 'gmailLists',
+          label: 'Please input email lists',
+          type: 'text',
+          placeholder: 'Please enter email lists a@gmail.com, b@gmail.com'
         },
         showLabel: true
       },
@@ -122,21 +133,31 @@ class NewsLetterForm extends React.Component {
                         <FileUpload
                           imageHandler={images => this.imageHandler(images)}
                         />
+
                         <FormField
                           id={'title'}
                           formData={this.state.formData.title}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'status'}
                           formData={this.state.formData.status}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'descriptions'}
                           formData={this.state.formData.descriptions}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+                        <FormField
+                          id={'gmailLists'}
+                          formData={this.state.formData.gmailLists}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>
@@ -147,7 +168,7 @@ class NewsLetterForm extends React.Component {
                                   type='submit'
                                   className='button is-outlined buttonForm'
                                 >
-                                  SUBMIT POST
+                                  SEND POST
                                 </button>
                               </div>
                             </div>

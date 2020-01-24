@@ -16,8 +16,8 @@ const FeeLists = props => {
         <tr>
           <td>Receiver</td>
           <td>Created At</td>
-          <td>Month</td>
-          <td>Amount</td>
+          <td>Monthly Paid</td>
+          <td>Total Amount</td>
         </tr>
       </thead>
       <tbody>{renderLists()}</tbody>

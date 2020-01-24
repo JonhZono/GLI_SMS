@@ -5,6 +5,9 @@ const Post = require('../../model/Post.model');
 const User = require('../../model/User.model');
 const admin = require('../../middleware/Admin');
 const auth = require('../../middleware/Auth');
+const nodemailer = require('nodemailer');
+const config = require('config');
+const postTemplate = require('../../utils/mail/postTemplate');
 
 //@route        api/post
 //@des          Add post
@@ -23,7 +26,8 @@ router.post(
       .isEmpty(),
     check('image', 'image is require')
       .not()
-      .isEmpty()
+      .isEmpty(),
+    check('gmailLists', 'gmail lists is require').isEmail()
   ],
   auth,
   admin,
@@ -44,7 +48,34 @@ router.post(
         user: req.user.id
       });
       const post = await newPost.save();
-      res.json(post);
+
+      const { title, descriptions, image, status, gmailLists } = req.body;
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: config.get('USER_EMAIL'),
+          pass: config.get('EMAIL_PASS')
+        }
+      });
+      const mailOptions = {
+        from: 'GLI Harumi - Event & News Letter ✔ <gli.harumi01@gmail.com>',
+        to: gmailLists,
+        subject:
+          'GLI Harumi Event & News Letter ✔ ' + `${Date.now().toString()}`,
+        html: postTemplate(title, descriptions, image, status)
+      };
+      // send mail with defined transport object
+      smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Message sent');
+        }
+
+        // if you don't want to use this transport object anymore, uncomment following line
+        smtpTransport.close(); // shut down the connection pool, no more messages
+      });
+      return res.json(post);
     } catch (error) {
       console.log(error.message);
       res.status(500).json({ msg: 'Server Error' });
@@ -130,7 +161,8 @@ router.put(
       .isEmpty(),
     check('image', 'image is require')
       .not()
-      .isEmpty()
+      .isEmpty(),
+    check('gmailLists', 'gmail lists is require').isEmail()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -147,6 +179,33 @@ router.put(
         { new: true, runValidators: true }
       );
       await post.save();
+      const { title, descriptions, image, status, gmailLists } = req.body;
+      console.log(image);
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: config.get('USER_EMAIL'),
+          pass: config.get('EMAIL_PASS')
+        }
+      });
+      const mailOptions = {
+        from: 'GLI Harumi - Event & News Letter ✔ <gli.harumi01@gmail.com>',
+        to: gmailLists,
+        subject:
+          'GLI Harumi Event & News Letter ✔ ' + `${Date.now().toString()}`,
+        html: postTemplate(title, descriptions, image, status)
+      };
+      // send mail with defined transport object
+      smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Message sent');
+        }
+
+        // if you don't want to use this transport object anymore, uncomment following line
+        smtpTransport.close(); // shut down the connection pool, no more messages
+      });
       res.status(200).json({ msg: 'Post Edit Successfully' });
     } catch (error) {
       console.log(error.message);

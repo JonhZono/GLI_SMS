@@ -31,18 +31,21 @@ const FeedbackField = ({ formData, change, id }) => {
             {formData.showLabel ? (
               <div
                 className='field-label is-normal'
-                style={{ textAlign: 'left', marginTop: '0.2rem'}}
+                style={{ textAlign: 'left', marginTop: '0.2rem' }}
               >
-                <label><i className="fas fa-star-half-alt"/>&nbsp;&nbsp;{formData.config.label}</label>
+                <label>
+                  <i className='fas fa-star-half-alt' />
+                  &nbsp;&nbsp;{formData.config.label}
+                </label>
               </div>
             ) : null}
             <div className='control'>
-            <textarea
-              className='textarea'
-              {...formData.config}
-              value={formData.value}
-              onChange={event => change({ event, id })}
-            />
+              <textarea
+                className='textarea'
+                {...formData.config}
+                value={formData.value}
+                onChange={event => change({ event, id })}
+              />
             </div>
           </div>
         );

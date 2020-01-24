@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ENDPOINT } from '../components/utils/misc';
 import {
   CLEAR_VIEW_STATISTICS,
   ADMIN_GET_OVERALL_PERFORMANCES,
@@ -13,9 +12,7 @@ import {
 } from './types';
 import { setAlert } from '../actions/alert';
 
-export const createStudentPerformance = (
-  dataToSubmit
-) => async dispatch => {
+export const createStudentPerformance = dataToSubmit => async dispatch => {
   try {
     const config = {
       headers: {
@@ -23,7 +20,7 @@ export const createStudentPerformance = (
       }
     };
     const response = await axios.post(
-      `${ENDPOINT}api/analyze/create`,
+      `/api/analyze/create`,
       dataToSubmit,
       config
     );
@@ -39,7 +36,7 @@ export const createStudentPerformance = (
 
 export const getIndividualStudentDailyAnalysisById = performance_id => async dispatch => {
   const response = await axios.get(
-    `${ENDPOINT}api/student/performance/all/${performance_id}`
+    `/api/student/performance/all/${performance_id}`
   );
 
   try {
@@ -51,10 +48,10 @@ export const getIndividualStudentDailyAnalysisById = performance_id => async dis
     if (error) throw error;
   }
 };
-//Everyone get individual daily analysis to show in viewEachFeedback 
+//Everyone get individual daily analysis to show in viewEachFeedback
 export const getAnalysisByStudentID = student_id => async dispatch => {
   const response = await axios.get(
-    `${ENDPOINT}api/student/performance/all/${student_id}`
+    `/api/student/performance/all/${student_id}`
   );
 
   try {
@@ -68,10 +65,9 @@ export const getAnalysisByStudentID = student_id => async dispatch => {
 };
 export const getStudentDailyAnalysisById = performance_id => async dispatch => {
   const response = await axios.get(
-    `${ENDPOINT}api/student/performance/all/${performance_id}`
+    `/api/student/performance/all/${performance_id}`
   );
-  console.log(response.data);
-  console.log('Here');
+
   try {
     dispatch({
       type: 'STUDENT_INDIVIDUAL_DAILY_BY_OWN_ID',
@@ -84,8 +80,8 @@ export const getStudentDailyAnalysisById = performance_id => async dispatch => {
 //admin get overall report
 export const adminGetStatistics = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/analyze/performances`);
-    console.log(response);
+    const response = await axios.get(`/api/analyze/performances`);
+
     dispatch({
       type: ADMIN_GET_OVERALL_PERFORMANCES,
       payload: response.data
@@ -102,7 +98,7 @@ export const adminDeleteStatistic = (
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/analyze/performance/${performance_id}`
+        `/api/analyze/performance/${performance_id}`
       );
       dispatch(adminGetStatistics());
       dispatch(setAlert(response.msg, 'success'));
@@ -115,7 +111,7 @@ export const adminDeleteStatistic = (
 
 export const getStatisticById = performance_id => dispatch => {
   return axios
-    .get(`${ENDPOINT}api/analyze/performance/${performance_id}`)
+    .get(`/api/analyze/performance/${performance_id}`)
     .then(response => {
       dispatch({
         type: GET_PERFORMANCE_BY_ID,
@@ -130,9 +126,8 @@ export const getStatisticById = performance_id => dispatch => {
 //student dashboard analysis data
 export const getStudentPerformanceMe = () => dispatch => {
   return axios
-    .get(`${ENDPOINT}api/student/get/performance/me`)
+    .get(`/api/student/get/performance/me`)
     .then(response => {
-      console.log(response.data);
       dispatch({
         type: GET_STUDENT_PERFORMANCE_ME,
         payload: response.data
@@ -140,7 +135,6 @@ export const getStudentPerformanceMe = () => dispatch => {
     })
 
     .catch(err => {
-      console.log(err.response.data);
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
@@ -151,9 +145,8 @@ export const getStudentPerformanceMe = () => dispatch => {
 //admin dashboard analysis data
 export const adminGetStudentPerformance = () => dispatch => {
   return axios
-    .get(`${ENDPOINT}api/analyze/get/dashboard/performance`)
+    .get(`/api/analyze/get/dashboard/performance`)
     .then(response => {
-      console.log(response.data);
       dispatch({
         type: ADMIN_GET_STUDENT_PERFORMANCE,
         payload: response.data
@@ -161,7 +154,6 @@ export const adminGetStudentPerformance = () => dispatch => {
     })
 
     .catch(err => {
-      console.log(err.response.data);
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
@@ -172,9 +164,8 @@ export const adminGetStudentPerformance = () => dispatch => {
 //staff dashboard analysis data
 export const staffGetStudentPerformance = () => dispatch => {
   return axios
-    .get(`${ENDPOINT}api/analyze/get/dashboard/staff/performance`)
+    .get(`/api/analyze/get/dashboard/staff/performance`)
     .then(response => {
-      console.log(response.data);
       dispatch({
         type: 'STAFF_GET_STUDENT_PERFORMANCE',
         payload: response.data
@@ -182,7 +173,6 @@ export const staffGetStudentPerformance = () => dispatch => {
     })
 
     .catch(err => {
-      console.log(err.response.data);
       const errors = err.response.data.errors;
       if (errors) {
         errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
@@ -202,7 +192,7 @@ export const adminEditStatisticById = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/analyze/performance/${performance_id}`,
+      `/api/analyze/performance/${performance_id}`,
       dataToSubmit,
       config
     );

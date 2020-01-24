@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ENDPOINT } from '../components/utils/misc';
 import {
   STUDENT_INDIVIDUAL_FEEDBACK_REPORT,
   ADMIN_GET_OVERALL_FEEDBACK,
@@ -17,11 +16,7 @@ export const createStudentFeedback = dataToSubmit => async dispatch => {
         'Content-Type': 'application/json'
       }
     };
-    await axios.post(
-      `${ENDPOINT}api/classfeedback/create`,
-      dataToSubmit,
-      config
-    );
+    await axios.post(`/api/classfeedback/create`, dataToSubmit, config);
 
     dispatch(adminGetOverallReport());
     dispatch(setAlert('Feedback Create Successful', 'success'));
@@ -44,7 +39,7 @@ export const editStudentFeedback = (
       }
     };
     const response = await axios.put(
-      `${ENDPOINT}api/classfeedback/class/${report_id}`,
+      `/api/classfeedback/class/${report_id}`,
       dataToSubmit,
       config
     );
@@ -62,7 +57,7 @@ export const editStudentFeedback = (
 
 export const getIndividualStudentReportById = report_id => async dispatch => {
   const response = await axios.get(
-    `${ENDPOINT}api/student/classfeedback/all/${report_id}`
+    `/api/student/classfeedback/all/${report_id}`
   );
 
   try {
@@ -76,7 +71,7 @@ export const getIndividualStudentReportById = report_id => async dispatch => {
 };
 //admin get overall report
 export const adminGetOverallReport = () => async dispatch => {
-  const response = await axios.get(`${ENDPOINT}api/classfeedback/classes`);
+  const response = await axios.get(`/api/classfeedback/classes`);
 
   try {
     dispatch({
@@ -88,10 +83,8 @@ export const adminGetOverallReport = () => async dispatch => {
   }
 };
 export const getStudentReportById = report_id => async dispatch => {
-  const response = await axios.get(
-    `${ENDPOINT}api/classfeedback/class/${report_id}`
-  );
-  console.log(response.data);
+  const response = await axios.get(`/api/classfeedback/class/${report_id}`);
+
   try {
     dispatch({
       type: GET_STUDENT_REPORT_BY_ID,
@@ -108,7 +101,7 @@ export const deleteStudentReportById = (
 ) => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      await axios.delete(`${ENDPOINT}api/classfeedback/class/${report_id}`);
+      await axios.delete(`/api/classfeedback/class/${report_id}`);
       dispatch(adminGetOverallReport());
       history.push('/user/feedbacks/history');
     } catch (error) {
@@ -118,25 +111,21 @@ export const deleteStudentReportById = (
 };
 //admin and staff
 export const adminDashboardFeedback = () => dispatch => {
-  return axios
-    .get(`${ENDPOINT}api/classfeedback/dashboard/classes`)
-    .then(response => {
-      dispatch({
-        type: ADMIN_DASHBOARD_FEEDBACK,
-        payload: response.data.articles
-      });
+  return axios.get(`/api/classfeedback/dashboard/classes`).then(response => {
+    dispatch({
+      type: ADMIN_DASHBOARD_FEEDBACK,
+      payload: response.data.articles
     });
+  });
 };
 //student only
 export const studentDashboardFeedbackById = () => dispatch => {
-  return axios
-    .get(`${ENDPOINT}api/student/dashboard/classes`)
-    .then(response => {
-      dispatch({
-        type: STUDENT_DASHBOARD_FEEDBACK,
-        payload: response.data.articles
-      });
+  return axios.get(`/api/student/dashboard/classes`).then(response => {
+    dispatch({
+      type: STUDENT_DASHBOARD_FEEDBACK,
+      payload: response.data.articles
     });
+  });
 };
 
 export const clearViewEachFeedback = () => dispatch => {

@@ -368,16 +368,17 @@ class EditStudentFeedback extends React.Component {
                         />
                         <br />
                         <FormField
+                          id={'lessonContent'}
+                          formData={this.state.formData.lessonContent}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
                           id={'gliNews'}
                           formData={this.state.formData.gliNews}
                           change={element => this.updateForm(element)}
                         />
                         <br />
-                        <FormField
-                          id={'lessonContent'}
-                          formData={this.state.formData.lessonContent}
-                          change={element => this.updateForm(element)}
-                        />
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>

@@ -13,9 +13,7 @@ require('dotenv').config();
 router.post(
   '/create',
   [
-    check('gmailLists', 'receiver is require')
-      .not()
-      .isEmpty(),
+    check('gmailLists', 'gmail lists is require').isEmail(),
     check('amount', 'amount is require')
       .not()
       .isEmpty(),
@@ -39,35 +37,36 @@ router.post(
         month
       });
       await fee.save();
-      const smtpTransport = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-          user: config.get('USER_EMAIL'),
-          pass: config.get('EMAIL_PASS')
-        }
-      });
+      if (gmailLists.length > 0) {
+        const smtpTransport = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            user: config.get('USER_EMAIL'),
+            pass: config.get('EMAIL_PASS')
+          }
+        });
 
-      const mailOptions = {
-        from: 'GLI Harumi ✔ <gli.harumi01@gmail.com>',
-        to: gmailLists, // list of receivers
-        subject: 'Monthly Fee ✔', // Subject line
-        html: feeTemplate(month, amount, additional) // html body
-      };
+        const mailOptions = {
+          from: 'GLI Harumi ✔ <gli.harumi01@gmail.com>',
+          to: gmailLists, // list of receivers
+          subject: 'Monthly Fee ✔', // Subject line
+          html: feeTemplate(month, amount, additional) // html body
+        };
 
-      // send mail with defined transport object
-      smtpTransport.sendMail(mailOptions, function(error, response) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Message sent');
-        }
+        // send mail with defined transport object
+        smtpTransport.sendMail(mailOptions, function(error, response) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Message sent');
+          }
 
-        // if you don't want to use this transport object anymore, uncomment following line
-        smtpTransport.close(); // shut down the connection pool, no more messages
-      });
-      //send email logic here
-      //convert string from textarea field into array ?
-
+          // if you don't want to use this transport object anymore, uncomment following line
+          smtpTransport.close(); // shut down the connection pool, no more messages
+        });
+        //send email logic here
+        //convert string from textarea field into array ?
+      }
       return res.status(200).json(fee);
     } catch (error) {
       if (error) console.log(error);

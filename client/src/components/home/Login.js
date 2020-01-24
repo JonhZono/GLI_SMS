@@ -27,19 +27,21 @@ class Login extends React.Component {
 
   render() {
     if (this.props.user.isAuth) {
-      console.log('login redirect');
       return <Redirect to='/user/dashboard' />;
     }
     const { email, password } = this.state;
     return (
       <section
         className='hero is-fullheight'
-        style={{ backgroundColor: '#fcfcfc' }}
+        style={{ backgroundColor: '#f9f7f1' }}
       >
         <div className='hero-body'>
           <div className='container has-text-centered'>
             <div className='column is-6 is-offset-3'>
               <Logo className='Logo' />
+              <div className='has-text-centered'>
+                <Logo style={{ width: '80%', height: 'auto', margin: '1rem' }} />
+              </div>
 
               <div className='box' style={{ borderRadius: '1px' }}>
                 <Alert />

@@ -71,12 +71,6 @@ router.post(
     check('father', 'father is require')
       .not()
       .isEmpty(),
-    check('father_occupation', 'occupation is require')
-      .not()
-      .isEmpty(),
-    check('mother', 'mother is require')
-      .not()
-      .isEmpty(),
     check('addresses', 'addresses is require')
       .not()
       .isEmpty(),
@@ -265,6 +259,7 @@ router.get('/dashboard/exam/scores', auth, student, (req, res) => {
   let limit = 10;
   ExamScore.find({ ownerId: req.user.id })
     .populate({ path: 'ownerId', select: 'name' })
+    .populate({ path: 'teacher', select: 'name' })
     .sort([[sortBy, orderBy]])
     .limit(limit)
     .exec((err, docs) => {
@@ -346,7 +341,7 @@ router.get('/duefee/all/:receiver', auth, async (req, res) => {
         errors: [{ msg: 'Fee not found' }]
       });
     }
-    console.log(error);
+
     res.status(500).json({ errors: [{ msg: 'server error' }] });
   }
 });

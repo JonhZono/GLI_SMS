@@ -30,7 +30,6 @@ class CreateClass extends Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'createClass');
     this.props.dispatch(addClassroom(dataToSubmit));
-    console.log(dataToSubmit);
   };
 
   render() {

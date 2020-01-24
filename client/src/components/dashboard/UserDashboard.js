@@ -72,7 +72,7 @@ const UserDashboard = props => {
       <div
         className='column is-10-desktop is-offset-2-desktop is-9-tablet is-offset-3-tablet is-12-mobile'
         style={{
-          background: 'hsl(0, 0%, 96%)',
+          background: '#fcfcfc',
           padding: 30,
           marginTop: 40
         }}
@@ -85,7 +85,7 @@ const UserDashboard = props => {
       <div
         className='column is-10-desktop is-offset-2-desktop is-9-tablet is-offset-3-tablet is-12-mobile'
         style={{
-          background: 'hsl(0, 0%, 96%)',
+          background: '#fcfcfc',
           padding: 30,
           marginTop: 40
         }}
@@ -95,31 +95,34 @@ const UserDashboard = props => {
             <h1
               style={{
                 fontSize: 20,
-                paddingBottom: '1rem'
+                paddingBottom: '1rem',
+                color: '#7a7a7a'
               }}
               className='has-text-weight-bold'
             >
-              Admin Dashboard, Welcome back <i>{props.user.name}</i>
+              Admin Dashboard, Welcome back <i>{props.user.name} :)</i>
             </h1>
           ) : props.user.role === 'student' ? (
             <h1
               style={{
                 fontSize: 20,
-                paddingBottom: '1rem'
+                paddingBottom: '1rem',
+                color: '#7a7a7a'
               }}
               className='has-text-weight-bold'
             >
-              Welcome Back <i>{props.user.name}...</i>
+              Welcome Back <i>{props.user.name} :]</i>
             </h1>
           ) : props.user.role === 'staff' ? (
             <h1
               style={{
                 fontSize: 20,
-                paddingBottom: '1rem'
+                paddingBottom: '1rem',
+                color: '#7a7a7a'
               }}
               className='has-text-weight-bold'
             >
-              Welcome Back <i>{props.user.name}...</i>
+              Welcome Back <i>{props.user.name} :]</i>
             </h1>
           ) : (
             ''

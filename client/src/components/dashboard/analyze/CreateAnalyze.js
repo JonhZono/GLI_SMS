@@ -6,6 +6,7 @@ import {
   generateFormData,
   populateFormField
 } from '../../utils/form/formActions';
+import { getTeacher } from '../../../actions/profile';
 import { createStudentPerformance } from '../../../actions/analysis';
 import { studentSelectField } from '../../../actions/user';
 import Alert from '../../alert/Alert';
@@ -93,6 +94,16 @@ class CreateAnalyze extends React.Component {
           options: []
         },
         showLabel: true
+      },
+      teacher: {
+        element: 'select',
+        value: '',
+        config: {
+          name: 'teacher',
+          label: 'Created By',
+          options: []
+        },
+        showLabel: true
       }
     }
   };
@@ -103,6 +114,14 @@ class CreateAnalyze extends React.Component {
         this.state.formData,
         this.props.user.allStudentSelectField,
         'ownerId'
+      );
+      this.updateFields(newFormData);
+    });
+    this.props.dispatch(getTeacher()).then(() => {
+      let newFormData = populateFormField(
+        this.state.formData,
+        this.props.profile.teacherList,
+        'teacher'
       );
       this.updateFields(newFormData);
     });
@@ -199,6 +218,13 @@ class CreateAnalyze extends React.Component {
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
+                      id={'teacher'}
+                      formData={formData.teacher}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
                       id={'ownerId'}
                       formData={formData.ownerId}
                       change={element => this.updateForm(element)}
@@ -264,6 +290,7 @@ class CreateAnalyze extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  profile: state.profile,
   user: state.user
 });
 export default connect(mapStateToProps)(CreateAnalyze);

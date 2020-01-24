@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Spinner from '../../spinner/Spinner';
 import UserLayout from '../../../hoc/User';
 import { connect } from 'react-redux';
-import ProfileImage from '../../utils/form/profileImage';
 import {
   getStudentProfileById,
   clearProfileDetails,

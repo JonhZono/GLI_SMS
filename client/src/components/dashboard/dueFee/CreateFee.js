@@ -46,10 +46,11 @@ class CreateFee extends React.Component {
         value: '',
         config: {
           name: 'additional',
+          label: 'Additional Price',
           type: 'text',
           placeholder: 'Additional Price'
         },
-        showLabel: false
+        showLabel: true
       },
 
       gmailLists: {
@@ -57,10 +58,11 @@ class CreateFee extends React.Component {
         value: '',
         config: {
           name: 'gmailLists',
+          label: 'Please input email lists here',
           type: 'text',
           placeholder: 'ex: a@gmail.com, b@gmail.com'
         },
-        showLabel: false
+        showLabel: true
       }
     }
   };

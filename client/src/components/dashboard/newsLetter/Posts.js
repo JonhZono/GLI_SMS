@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import $ from 'jquery';
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../../actions/post';
 import ViewPosts from './ViewPosts';
@@ -12,6 +13,22 @@ import Spinner from '../../spinner/Spinner';
 const Posts = ({ getAllPosts, post: { posts, loading } }) => {
   useEffect(() => {
     getAllPosts();
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
   }, [getAllPosts]);
   return loading ? (
     <UserLayout>

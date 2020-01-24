@@ -1,6 +1,5 @@
-import React, { Fragment, Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import Moment from 'react-moment';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ViewDetailsFeedback from './ViewDetailsFeedback';
 import {

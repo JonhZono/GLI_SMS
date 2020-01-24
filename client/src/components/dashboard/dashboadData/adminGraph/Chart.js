@@ -14,7 +14,6 @@ class Chart extends Component {
   };
   componentDidMount = () => {
     const adminGetStudentPerformance = this.props.adminGetStudentPerformance;
-    console.log(adminGetStudentPerformance);
 
     this.setState({
       chartData: {
@@ -67,14 +66,15 @@ class Chart extends Component {
   };
 
   render() {
-    console.log(this.props.loading);
     return this.props.loading &&
       this.props.adminGetStudentPerformance === null ? (
       <Spinner />
     ) : (
       <div className='card'>
         <header className='card-header'>
-          <p className='card-header-title has-text-grey'>Student Daily Performance</p>
+          <p className='card-header-title has-text-grey'>
+            Student Daily Performance
+          </p>
         </header>
         <div className='content'>
           <DisplayLine

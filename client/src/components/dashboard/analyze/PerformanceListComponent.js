@@ -26,8 +26,17 @@ class PerformanceListComponent extends Component {
           )}
         </td>
         <td>
+          {props.teacher ? (
+            <Link to={`/user/analysis/view/${props._id}`}>
+              {props.teacher.name}
+            </Link>
+          ) : (
+            <p>Please put teacher name</p>
+          )}
+        </td>
+        <td style={{ fontSize: '14px', color: 'grey' }}>
           {props ? (
-            <Moment format='YYYY-MM-DD'>{props.createdAt}</Moment>
+            <Moment format='LLLL'>{props.createdAt}</Moment>
           ) : (
             <p>Please Choose date</p>
           )}

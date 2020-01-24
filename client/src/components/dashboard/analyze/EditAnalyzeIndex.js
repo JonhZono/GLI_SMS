@@ -41,7 +41,7 @@ class EditAnalyzeIndex extends Component {
                 <div className='card has-text-centered'>
                   <header className='card-header'>
                     <p
-                      className='card-header-title has-text-light'
+                      className='card-header-title'
                       style={{
                         backgroundColor: 'whitesmoke'
                       }}

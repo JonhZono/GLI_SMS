@@ -11,6 +11,14 @@ import Spinner from '../../spinner/Spinner';
 
 class StudentProfile extends Component {
   componentDidMount = () => {
+    this.props.dispatch(getStudentProfileLists());
+  };
+
+  componentWillUnmount = () => {
+    this.props.dispatch(clearProfileDetails());
+  };
+
+  render() {
     $(document).ready(function() {
       $('#showModal').click(function() {
         $('.modal').addClass('is-active');
@@ -27,14 +35,6 @@ class StudentProfile extends Component {
         $('.navbar-menu').toggleClass('is-active');
       });
     });
-    this.props.dispatch(getStudentProfileLists());
-  };
-
-  componentWillUnmount = () => {
-    this.props.dispatch(clearProfileDetails());
-  };
-
-  render() {
     const profile = this.props.profile;
     if (profile.loading && profile.studentList === null) {
       return (
@@ -128,8 +128,14 @@ class StudentProfile extends Component {
                       }}
                     >
                       <p className='card-header-title'>Student Lists</p>
-                      <span style={{marginTop: '15px', fontSize: '17px'}}>Search:</span>&nbsp;&nbsp;
-                      <p className='control has-icons-left' style={{marginRight: '25px'}}>
+                      <span style={{ marginTop: '15px', fontSize: '17px' }}>
+                        Search:
+                      </span>
+                      &nbsp;&nbsp;
+                      <p
+                        className='control has-icons-left'
+                        style={{ marginRight: '25px' }}
+                      >
                         <input
                           className='input is-small buttonCardHeader'
                           type='text'

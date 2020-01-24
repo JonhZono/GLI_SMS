@@ -14,8 +14,6 @@ class Course extends Component {
     );
 
   render() {
-    const courseCount = this.props.course.length;
-    console.log(courseCount);
     const course = this.props.course;
     return (
       <div className='table-container'>

@@ -1,4 +1,5 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
+import $ from 'jquery';
 import { connect } from 'react-redux';
 import UserLayout from '../../../../hoc/User';
 import Spinner from '../../../spinner/Spinner';
@@ -11,6 +12,22 @@ import ProfileInfo from './ProfileInfo';
 
 const StudentProfile = props => {
   useEffect(() => {
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
     props.getCurrentStudentProfile();
   }, [getCurrentStudentProfile]);
 

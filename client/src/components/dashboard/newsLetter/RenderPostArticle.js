@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import $ from 'jquery';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Moment from 'react-moment';
 import { addInterest, removeInterest } from '../../../actions/post';
 
@@ -8,7 +9,6 @@ const RenderPostArticle = ({
   post: {
     name,
     title,
-    likes,
     comments,
     status,
     _id,
@@ -16,12 +16,26 @@ const RenderPostArticle = ({
     date,
     descriptions,
     image
-  },
-  addInterest,
-  removeInterest
+  }
 }) => {
-  console.log(likes.length);
-  console.log(image);
+  useEffect(() => {
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
+  }, []);
   return (
     <Fragment>
       <section className='hero is-info is-bold is-small promo-block'>

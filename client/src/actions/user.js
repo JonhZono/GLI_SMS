@@ -12,7 +12,6 @@ import {
   GET_USER_AUTH,
   ALL_STUDENT_ACCOUNTS
 } from './types';
-import { ENDPOINT } from '../components/utils/misc';
 import { setAlert } from '../actions/alert';
 import {} from '../actions/feedback';
 import setGlobalToken from '../components/utils/setGlobalToken';
@@ -25,8 +24,7 @@ export const loadUser = () => async dispatch => {
     setGlobalToken(localStorage.token);
   }
   try {
-    const response = await axios.get(`${ENDPOINT}api/user/auth/`);
-    console.log(response.data);
+    const response = await axios.get(`/api/user/auth/`);
     dispatch({
       type: LOAD_USER,
       payload: response.data
@@ -47,7 +45,7 @@ export const loginUser = (email, password) => async dispatch => {
     password
   };
   try {
-    const res = await axios.post(`${ENDPOINT}api/user/login`, body, config);
+    const res = await axios.post('/api/user/login', body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
@@ -59,7 +57,6 @@ export const loginUser = (email, password) => async dispatch => {
     if (errors) {
       errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
     }
-    console.log(err.message);
     dispatch({
       type: LOGIN_FAIL
     });
@@ -80,7 +77,7 @@ export const adminCreateUser = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/user/register`,
+      `/api/user/register`,
       dataToSubmit,
       config
     );
@@ -103,7 +100,7 @@ export const adminCreateUser = dataToSubmit => async dispatch => {
 
 export const adminGetUser = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/admin/user_accounts`);
+    const response = await axios.get(`/api/admin/user_accounts`);
     dispatch({
       type: ADMIN_GET_USER_ACCOUNT,
       payload: response.data
@@ -119,7 +116,7 @@ export const adminGetUser = () => async dispatch => {
 //select field student
 export const studentSelectField = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/admin/student/accounts`);
+    const response = await axios.get(`/api/admin/student/accounts`);
     dispatch({
       type: ALL_STUDENT_ACCOUNTS,
       payload: response.data
@@ -135,7 +132,7 @@ export const studentSelectField = () => async dispatch => {
 export const adminDeleteUserAccountById = user_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      await axios.delete(`${ENDPOINT}api/admin/remove/${user_id}`);
+      await axios.delete(`/api/admin/remove/${user_id}`);
       dispatch(adminGetUser());
     } catch (err) {
       if (err) throw err;
@@ -145,7 +142,7 @@ export const adminDeleteUserAccountById = user_id => async dispatch => {
 
 export const getUserAuth = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/user/auth/me`);
+    const response = await axios.get(`/api/user/auth/me`);
     dispatch({
       type: GET_USER_AUTH,
       payload: response.data

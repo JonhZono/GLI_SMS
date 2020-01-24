@@ -28,8 +28,7 @@ const ViewStudent = props => {
   const deleteStudentProfile = () => {
     props.studentDeleteProfileById(props.studentProfile._id, props.history);
   };
-  console.log(props.studentProfile.image);
-  console.log(props.studentProfile.user.avatar);
+  
   return (
     <div className='card-content'>
       <div className='content'>

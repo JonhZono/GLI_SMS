@@ -3,6 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
+const Teacher = require('../../model/Teacher.model');
 const Performance = require('../../model/Performance.model');
 const combine = require('../../middleware/Combine');
 
@@ -36,6 +37,9 @@ router.post(
     check('attitude', 'attitude is require')
       .not()
       .isEmpty(),
+    check('teacher', 'teacher is require')
+      .not()
+      .isEmpty(),
     check('ownerId', 'ownerId is require')
       .not()
       .isEmpty()
@@ -54,7 +58,8 @@ router.post(
         participation,
         active,
         attitude,
-        ownerId
+        ownerId,
+        teacher
       } = req.body;
       const performance = new Performance({
         writing,
@@ -64,7 +69,8 @@ router.post(
         participation,
         active,
         attitude,
-        ownerId
+        ownerId,
+        teacher
       });
 
       await performance.save();
@@ -82,9 +88,11 @@ router.get('/performances', auth, combine, async (req, res) => {
   try {
     let performance = await Performance.find({})
       .sort({ date: -1 })
-      .populate({ path: 'ownerId', select: 'name' });
+      .populate({ path: 'ownerId', select: 'name' })
+      .populate({ path: 'teacher', model: Teacher });
     return res.json(performance);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
   }
 });
@@ -94,6 +102,7 @@ router.get('/get/dashboard/performance', auth, combine, async (req, res) => {
   return Performance.find()
     .sort({ date: -1 })
     .populate('ownerId', ['name'])
+    .populate({ path: 'teacher', model: Teacher })
     .exec((err, performance) => {
       if (err)
         res.status(500).json({ errors: [{ msg: 'Something went wrong!' }] });
@@ -111,6 +120,7 @@ router.get(
     return Performance.find()
       .sort({ date: -1 })
       .populate('ownerId', ['name'])
+      .populate({ path: 'teacher', model: Teacher })
       .exec((err, performance) => {
         if (err)
           res.status(500).json({ errors: [{ msg: 'Something went wrong!' }] });
@@ -123,6 +133,7 @@ router.get(
 router.get('/performance/:perform_id', auth, (req, res) => {
   Performance.findOne({ _id: req.params.perform_id })
     .populate({ path: 'ownerId', select: 'name' })
+    .populate({ path: 'teacher', model: Teacher })
     .exec((err, performance) => {
       if (err) res.status(400).json({ msg: 'Something went wrong!' });
       res.status(200).json(performance);
@@ -135,7 +146,7 @@ router.put('/performance/:perform_id', auth, combine, async (req, res) => {
     req.body,
     { new: true }
   );
-  res.status(200).json({ msg: 'Statistics Edit Successfully', success: true });
+  res.status(200).json({ msg: 'Analysis Edit Successfully', success: true });
 });
 
 router.delete('/performance/:perform_id', auth, admin, async (req, res) => {

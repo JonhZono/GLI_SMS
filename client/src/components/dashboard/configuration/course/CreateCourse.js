@@ -34,7 +34,6 @@ class CreateCourse extends Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'CreateCourse');
     this.props.dispatch(addCourse(dataToSubmit));
-    console.log(dataToSubmit);
   };
 
   render() {

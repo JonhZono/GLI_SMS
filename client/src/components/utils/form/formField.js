@@ -31,18 +31,25 @@ const FormField = ({ formData, change, id }) => {
             {formData.showLabel ? (
               <div
                 className='field-label is-normal'
-                style={{ textAlign: 'left', marginTop: '0.2rem', color: '#004973'}}
+                style={{
+                  textAlign: 'left',
+                  marginTop: '0.2rem',
+                  color: '#004973'
+                }}
               >
-                <label><i className="fas fa-star-half-alt"/>&nbsp;&nbsp;{formData.config.label}</label>
+                <label>
+                  <i className='fas fa-star-half-alt' />
+                  &nbsp;&nbsp;{formData.config.label}
+                </label>
               </div>
             ) : null}
             <div className='control'>
-            <textarea
-              className='textarea'
-              {...formData.config}
-              value={formData.value}
-              onChange={event => change({ event, id })}
-            />
+              <textarea
+                className='textareaNews'
+                {...formData.config}
+                value={formData.value}
+                onChange={event => change({ event, id })}
+              />
             </div>
           </div>
         );

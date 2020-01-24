@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import { connect } from 'react-redux';
 import UserLayout from '../../../hoc/User';
 import { getPostById } from '../../../actions/post';
@@ -11,6 +12,22 @@ class ViewPost extends React.Component {
     this.props.dispatch(getPostById(post_id));
   };
   render() {
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
     const post = this.props.post;
     return post.postById === null ? (
       <UserLayout>
@@ -73,7 +90,7 @@ class ViewPost extends React.Component {
             <div className='columns'>
               <div className='column'>
                 <div className='card'>
-                  <RenderPostArticle  post={post.postById} />
+                  <RenderPostArticle post={post.postById} />
                 </div>
               </div>
             </div>

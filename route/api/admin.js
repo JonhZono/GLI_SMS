@@ -59,9 +59,6 @@ router.post(
     check('country', 'country is require')
       .not()
       .isEmpty(),
-    check('bank_account_details', 'bank account is requre')
-      .not()
-      .isEmpty(),
     check('position', 'position is require')
       .not()
       .isEmpty(),

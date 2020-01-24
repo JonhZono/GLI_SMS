@@ -9,7 +9,7 @@ import EditCourse from './EditCourse';
 class EditCoursePopUp extends React.Component {
   componentDidMount = () => {
     this.props.dispatch(getCourseById(this.props.match.params.course_id));
-    console.log(this.props.profile.getCourseById);
+
   };
 
   render() {
@@ -31,7 +31,7 @@ class EditCoursePopUp extends React.Component {
     });
 
     const profile = this.props.profile;
-    console.log(profile.loading);
+
     return profile.getCourseById === null ? (
       <UserLayout>
         <div

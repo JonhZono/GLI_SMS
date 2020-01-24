@@ -53,13 +53,11 @@ const ProfileSchema = new mongoose.Schema(
       required: true
     },
     father_occupation: {
-      type: String,
-      require: true
+      type: String
     },
     mother: {
       type: String,
-      maxlength: 100,
-      required: true
+      maxlength: 100
     },
     addresses: {
       type: [String],

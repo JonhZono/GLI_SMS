@@ -33,4 +33,4 @@ class Grade extends Component {
   }
 }
 
-export default connect()(Grade);
+export default connect(null)(Grade);

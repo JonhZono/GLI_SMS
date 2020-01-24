@@ -151,8 +151,8 @@ class Header extends Component {
         className='navbar box-shadow-y'
         style={{
           overflow: 'auto',
-          backgroundColor: '#273746',
-          //height: 'auto',
+          backgroundColor: '#f9f7f1',
+          height: 'auto',
           position: 'fixed',
           top: 0,
           width: '100%'
@@ -166,10 +166,24 @@ class Header extends Component {
           </Link>
 
           <Link
-            to='#'
+            to='/user/dashboard'
             className='navbar-item has-text-danger has-text-weight-bold'
           ></Link>
-          <Logo style={{ width: '160px', height: 'auto', margin: '0' }} />
+          {/*<Logo style={{ width: '160px', height: 'auto', margin: '0' }} />*/}
+          <Link to='/user/dashboard' style={{ paddingTop: '13px' }}>
+            <span
+              style={{
+                color: '#546b91',
+                textAlign: 'center',
+                fontSize: '18px'
+              }}
+            >
+              <b>
+                <i class='fas fa-book-reader' />&nbsp;
+                Global Learner's Institute
+              </b>
+            </span>
+          </Link>
           <Link to='#' className='navbar-burger nav-toggler'>
             <span></span>
             <span></span>

@@ -32,10 +32,19 @@ const ExamScoreSchema = new mongoose.Schema(
       maxlength: 50,
       required: true
     },
+    gmail: {
+      type: String,
+      maxlength: 80
+    },
     ownerId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'user'
+    },
+    teacher: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'teacher'
     },
     date: {
       type: Date,

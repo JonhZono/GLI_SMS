@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../../../spinner/Spinner';
 import RenderClass from './RenderClass';
@@ -17,7 +17,6 @@ class Classroom extends Component {
 
   render() {
     const classCount = this.props.classroom.length;
-    console.log(classCount);
     const classroom = this.props.classroom;
     return (
       <table className='fixed_header'>

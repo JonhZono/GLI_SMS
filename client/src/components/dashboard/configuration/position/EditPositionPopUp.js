@@ -12,7 +12,6 @@ class EditPositionPopUp extends React.Component {
 
   render() {
     const profile = this.props.profile;
-    console.log(profile.loading);
     return profile.getPositionById === null ? (
       <UserLayout>
         <div
@@ -43,12 +42,10 @@ class EditPositionPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
-                      List of Configuration
-                    </p>
+                    <p className='card-header-title'>List of Configuration</p>
                   </header>
                   <Spinner />
                 </div>
@@ -87,12 +84,10 @@ class EditPositionPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
-                      List of Configuration
-                    </p>
+                    <p className='card-header-title '>List of Configuration</p>
                   </header>
                   {
                     <EditPosition

@@ -51,8 +51,7 @@ const AdminSchema = new mongoose.Schema(
       required: true
     },
     bank_account_details: {
-      type: [String],
-      required: true
+      type: [String]
     }
   },
   { timestamps: true }

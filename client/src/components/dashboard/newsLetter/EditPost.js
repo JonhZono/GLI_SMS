@@ -31,7 +31,7 @@ class EditPost extends React.Component {
         value: '',
         config: {
           name: 'descriptions',
-          label: 'Do Enter Your Content Body Here',
+          label: 'Please Enter Your Content Body',
           type: 'text',
           placeholder: 'What is your content body?'
         },
@@ -47,6 +47,17 @@ class EditPost extends React.Component {
         },
         showLabel: false
       },
+      gmailLists: {
+        element: 'textarea',
+        value: '',
+        config: {
+          name: 'gmailLists',
+          label: 'Please input email lists',
+          type: 'text',
+          placeholder: 'Please enter email lists a@gmail.com, b@gmail.com'
+        },
+        showLabel: true
+      },
       image: {
         value: []
       }
@@ -54,27 +65,9 @@ class EditPost extends React.Component {
   };
 
   componentDidMount = () => {
-    $(document).ready(function() {
-      $('#showModal').click(function() {
-        $('.modal').addClass('is-active');
-      });
-
-      $('.modal-close').click(function() {
-        $('.modal').removeClass('is-active');
-      });
-      $('.toggler').on('click', function() {
-        $('.menu-container').toggleClass('active');
-      });
-      $('.nav-toggler').on('click', function() {
-        $('.navbar-toggler').toggleClass('is-active');
-        $('.navbar-menu').toggleClass('is-active');
-      });
-    });
-
     const formData = this.state.formData;
 
     //Populate the edit field
-    console.log(this.props.postById);
     const newFormData = populateFields(formData, this.props.postById);
     this.setState({
       formData: newFormData
@@ -98,7 +91,6 @@ class EditPost extends React.Component {
   submitForm = event => {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'update_post');
-    console.log(dataToSubmit);
     this.props.dispatch(editPostById(this.props.post_id, dataToSubmit));
   };
 
@@ -112,6 +104,22 @@ class EditPost extends React.Component {
     });
   };
   render() {
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
     return (
       <UserLayout>
         <div
@@ -161,16 +169,25 @@ class EditPost extends React.Component {
                           formData={this.state.formData.title}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'status'}
                           formData={this.state.formData.status}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'descriptions'}
                           formData={this.state.formData.descriptions}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+                        <FormField
+                          id={'gmailLists'}
+                          formData={this.state.formData.gmailLists}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>

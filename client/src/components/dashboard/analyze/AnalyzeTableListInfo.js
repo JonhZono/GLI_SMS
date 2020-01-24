@@ -15,6 +15,7 @@ const AnalyzeTableListInfo = props => {
       <thead style={{ background: 'whitesmoke' }}>
         <tr>
           <td>Authorized To</td>
+          <td>Created By</td>
           <td>Created At</td>
           <td>Active</td>
           <td>Participation</td>

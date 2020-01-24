@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ENDPOINT } from '../components/utils/misc';
 import {
   ADMIN_GET_OVERALL_EXAM_SCORE,
   STUDENT_INDIVIDUAL_EXAM_SCORE,
@@ -21,7 +20,7 @@ export const createStudentExam = dataToSubmit => async dispatch => {
       }
     };
     const response = await axios.post(
-      `${ENDPOINT}api/exam/score/create`,
+      `/api/exam/score/create`,
       dataToSubmit,
       config
     );
@@ -36,9 +35,7 @@ export const createStudentExam = dataToSubmit => async dispatch => {
 };
 
 export const getIndividualStudentExamById = exam_id => async dispatch => {
-  const response = await axios.get(
-    `${ENDPOINT}api/student/exam/score/all/${exam_id}`
-  );
+  const response = await axios.get(`/api/student/exam/score/all/${exam_id}`);
 
   try {
     dispatch({
@@ -51,9 +48,7 @@ export const getIndividualStudentExamById = exam_id => async dispatch => {
 };
 //Everyone get individual exam score to show in viewEachFeedback
 export const getExamScoreByStudentID = student_id => async dispatch => {
-  const response = await axios.get(
-    `${ENDPOINT}api/student/exam/score/all/${student_id}`
-  );
+  const response = await axios.get(`/api/student/exam/score/all/${student_id}`);
   console.log(response.data[0]);
   try {
     dispatch({
@@ -67,7 +62,7 @@ export const getExamScoreByStudentID = student_id => async dispatch => {
 //admin get overall exam score
 export const adminGetExam = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/exam/scores`);
+    const response = await axios.get(`/api/exam/scores`);
     dispatch({
       type: ADMIN_GET_OVERALL_EXAM_SCORE,
       payload: response.data
@@ -80,9 +75,7 @@ export const adminGetExam = () => async dispatch => {
 export const adminDeleteExam = (exam_id, history) => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      const response = await axios.delete(
-        `${ENDPOINT}api/exam/score/${exam_id}`
-      );
+      const response = await axios.delete(`/api/exam/score/${exam_id}`);
       dispatch(adminGetExam());
       dispatch(setAlert(response.msg, 'success'));
       history.push('/user/exam/scores');
@@ -97,7 +90,7 @@ export const adminDeleteExam = (exam_id, history) => async dispatch => {
 
 export const getExamById = exam_id => dispatch => {
   return axios
-    .get(`${ENDPOINT}api/exam/score/${exam_id}`)
+    .get(`/api/exam/score/${exam_id}`)
     .then(response => {
       dispatch({
         type: GET_EXAM_SCORE_BY_ID,
@@ -121,7 +114,7 @@ export const adminEditExamById = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/exam/score/${exam_id}`,
+      `/api/exam/score/${exam_id}`,
       dataToSubmit,
       config
     );
@@ -140,7 +133,7 @@ export const adminEditExamById = (
 };
 
 export const adminDashboardExam = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/exam/dashboard/all`).then(response => {
+  return axios.get(`/api/exam/dashboard/all`).then(response => {
     dispatch({
       type: ADMIN_DASHBOARD_EXAM,
       payload: response.data.articles
@@ -150,14 +143,12 @@ export const adminDashboardExam = () => dispatch => {
 
 //student only
 export const studentDashboardExamById = () => dispatch => {
-  return axios
-    .get(`${ENDPOINT}api/student/dashboard/exam/scores`)
-    .then(response => {
-      dispatch({
-        type: STUDENT_DASHBOARD_EXAM,
-        payload: response.data.articles
-      });
+  return axios.get(`/api/student/dashboard/exam/scores`).then(response => {
+    dispatch({
+      type: STUDENT_DASHBOARD_EXAM,
+      payload: response.data.articles
     });
+  });
 };
 
 export const clearExam = () => dispatch => {

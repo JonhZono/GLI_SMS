@@ -26,7 +26,6 @@ class EditClass extends Component {
   componentDidMount = () => {
     const formData = this.state.formData;
     //Populate the edit field
-    console.log(this.props.classroom);
     const newFormData = populateFields(formData, this.props.classroom);
     this.setState({
       formData: newFormData
@@ -47,7 +46,6 @@ class EditClass extends Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'EditClass');
     this.props.dispatch(editClass(this.props.class_id, dataToSubmit, this.props.history));
-    console.log(dataToSubmit);
   };
 
   render() {

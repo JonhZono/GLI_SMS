@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getTeacher, getGrade, getClassroom } from '../../../actions/profile';
 import { createStudentFeedback } from '../../../actions/feedback';
@@ -246,15 +245,15 @@ class CreateStudentFeedback extends React.Component {
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FeedbackField
-                      id={'gliNews'}
-                      formData={this.state.formData.gliNews}
+                      id={'lessonContent'}
+                      formData={this.state.formData.lessonContent}
                       change={element => this.updateForm(element)}
                     />
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FeedbackField
-                      id={'lessonContent'}
-                      formData={this.state.formData.lessonContent}
+                      id={'gliNews'}
+                      formData={this.state.formData.gliNews}
                       change={element => this.updateForm(element)}
                     />
                   </div>

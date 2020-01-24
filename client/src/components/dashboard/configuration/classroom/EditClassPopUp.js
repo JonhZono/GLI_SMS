@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import UserLayout from '../../../../hoc/User';
-import Alert from '../../../alert/Alert';
 import Spinner from '../../../spinner/Spinner';
 import { getClassById } from '../../../../actions/profile';
 import EditClass from './EditClass';
@@ -10,7 +9,6 @@ import EditClass from './EditClass';
 class EditClassPopUp extends React.Component {
   componentDidMount = () => {
     this.props.dispatch(getClassById(this.props.match.params.class_id));
-    console.log(this.props.profile.getClassroomById);
   };
 
   render() {
@@ -32,7 +30,6 @@ class EditClassPopUp extends React.Component {
     });
 
     const profile = this.props.profile;
-    console.log(profile.loading);
     return profile.getClassroomById === null ? (
       <UserLayout>
         <div
@@ -63,10 +60,10 @@ class EditClassPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
+                    <p className='card-header-title'>
                       List of Configuration
                     </p>
                   </header>
@@ -107,10 +104,10 @@ class EditClassPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
+                    <p className='card-header-title'>
                       List of Configuration
                     </p>
                   </header>

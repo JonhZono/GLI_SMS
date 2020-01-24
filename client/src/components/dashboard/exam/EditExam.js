@@ -13,6 +13,7 @@ import { studentSelectField } from '../../../actions/user';
 import UserLayout from '../../../hoc/User';
 import Alert from '../../alert/Alert';
 import Spinner from '../../spinner/Spinner';
+import { getTeacher } from '../../../actions/profile';
 
 class EditExam extends React.Component {
   state = {
@@ -67,12 +68,32 @@ class EditExam extends React.Component {
         },
         showLabel: false
       },
+      gmail: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'gmail',
+          type: 'text',
+          placeholder: 'please enter student@gmail.com'
+        },
+        showLabel: false
+      },
       ownerId: {
         element: 'select',
         value: '',
         config: {
           name: 'ownerId',
           label: 'Please Choose Right Student To Receive Feedback',
+          options: []
+        },
+        showLabel: true
+      },
+      teacher: {
+        element: 'select',
+        value: '',
+        config: {
+          name: 'teacher',
+          label: 'Created By',
           options: []
         },
         showLabel: true
@@ -86,6 +107,14 @@ class EditExam extends React.Component {
         this.state.formData,
         this.props.user.allStudentSelectField,
         'ownerId'
+      );
+      this.updateFields(newFormData);
+    });
+    this.props.dispatch(getTeacher()).then(() => {
+      let newFormData = populateFormField(
+        this.state.formData,
+        this.props.profile.teacherList,
+        'teacher'
       );
       this.updateFields(newFormData);
     });
@@ -212,31 +241,49 @@ class EditExam extends React.Component {
                           formData={formData.writing}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'reading'}
                           formData={formData.reading}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'listening'}
                           formData={formData.listening}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'speaking'}
                           formData={formData.speaking}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'examName'}
                           formData={formData.examName}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+                        <FormField
+                          id={'teacher'}
+                          formData={formData.teacher}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
+                          id={'gmail'}
+                          formData={formData.gmail}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'ownerId'}
                           formData={formData.ownerId}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>
                           <div className='field-body'>
@@ -246,7 +293,7 @@ class EditExam extends React.Component {
                                   type='submit'
                                   className='button is-normal buttonForm is-info is-outlined'
                                 >
-                                  UPDATE
+                                  UPDATE SCORE
                                 </button>
                               </div>
                             </div>
@@ -260,7 +307,7 @@ class EditExam extends React.Component {
                                   type='submit'
                                   className='button is-normal buttonForm is-info is-outlined'
                                 >
-                                  BACK
+                                  CANCEL
                                 </Link>
                               </div>
                             </div>
@@ -280,6 +327,7 @@ class EditExam extends React.Component {
 }
 const mapStateToProps = state => ({
   user: state.user,
-  exam: state.exam
+  exam: state.exam,
+  profile: state.profile
 });
 export default connect(mapStateToProps)(withRouter(EditExam));

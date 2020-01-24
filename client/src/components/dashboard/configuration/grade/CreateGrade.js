@@ -18,9 +18,6 @@ class CreateGrade extends Component {
       }
     }
   };
-  componentWillMount = () => {
-    console.log('Create grade pop up!');
-  };
 
   componentWillUnmount = () => {
     this.props.dispatch(clearConfigData());
@@ -37,7 +34,7 @@ class CreateGrade extends Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'createGrade');
     this.props.dispatch(addGrade(dataToSubmit));
-    console.log(dataToSubmit);
+
   };
 
   render() {

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ENDPOINT } from '../components/utils/misc';
 import {
   GET_TEACHER,
   GET_GRADE,
@@ -38,7 +37,7 @@ import { setAlert } from '../actions/alert';
 //Admin get their current own profile route
 export const getCurrentAdminProfile = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/admin/profile/me`);
+    const response = await axios.get(`/api/admin/profile/me`);
     dispatch({
       type: GET_CURRENT_ADMIN_PROFILE,
       payload: response.data
@@ -55,7 +54,7 @@ export const getCurrentAdminProfile = () => async dispatch => {
 //Student get their current own profile route
 export const getCurrentStudentProfile = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/student/profile/me`);
+    const response = await axios.get(`/api/student/profile/me`);
 
     dispatch({
       type: GET_CURRENT_STUDENT_PROFILE,
@@ -72,7 +71,7 @@ export const getCurrentStudentProfile = () => async dispatch => {
 //Staff get their current own profile route
 export const getCurrentStaffProfile = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/staff/profile/me`);
+    const response = await axios.get(`/api/staff/profile/me`);
 
     dispatch({
       type: GET_CURRENT_STAFF_PROFILE,
@@ -108,7 +107,7 @@ export const adminEditStudentProfileById = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/admin/edit/student/${profile_id}`,
+      `/api/admin/edit/student/${profile_id}`,
       dataToSubmit,
       config
     );
@@ -141,7 +140,7 @@ export const adminEditStaffProfileById = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/admin/edit/staff/${profile_id}`,
+      `/api/admin/edit/staff/${profile_id}`,
       dataToSubmit,
       config
     );
@@ -170,7 +169,7 @@ export const deleteStudentProfileById = (
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/admin/remove/student/${profile_id}`
+        `/api/admin/remove/student/${profile_id}`
       );
       dispatch(getStudentProfileLists());
       history.push('/user/student/profiles');
@@ -194,7 +193,7 @@ export const deleteStaffProfileById = (
 ) => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      await axios.delete(`${ENDPOINT}api/admin/remove/staff/${profile_id}`);
+      await axios.delete(`/api/admin/remove/staff/${profile_id}`);
       dispatch(getStaffProfileLists());
       history.push('/user/staff/profiles');
     } catch (err) {
@@ -222,7 +221,7 @@ export const createStudentProfile = (
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/student/createprofile`,
+      `/api/student/createprofile`,
       dataToSubmit,
       config
     );
@@ -253,7 +252,7 @@ export const createStaffProfile = (dataToSubmit, history) => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/staff/profile`,
+      `/api/staff/profile`,
       dataToSubmit,
       config
     );
@@ -281,7 +280,7 @@ export const studentEditProfileById = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/student/edit/${profile_id}`,
+      `/api/student/edit/${profile_id}`,
       dataToSubmit,
       config
     );
@@ -305,9 +304,7 @@ export const studentDeleteProfileById = (
 ) => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      const response = await axios.delete(
-        `${ENDPOINT}api/student/remove/${profile_id}`
-      );
+      const response = await axios.delete(`/api/student/remove/${profile_id}`);
       dispatch(getCurrentStudentProfile());
       history.push('/user/student/feedback/view');
       dispatch(clearStudentProfile());
@@ -335,7 +332,7 @@ export const clearStudentProfile = () => dispatch => {
 export const getStudentProfileById = profile_id => async dispatch => {
   try {
     const response = await axios.get(
-      `${ENDPOINT}api/admin/get/student/profile/${profile_id}`
+      `/api/admin/get/student/profile/${profile_id}`
     );
 
     dispatch({
@@ -352,9 +349,7 @@ export const getStudentProfileById = profile_id => async dispatch => {
 
 export const getStudentProfileLists = () => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/admin/get/student/profiles`
-    );
+    const response = await axios.get(`/api/admin/get/student/profiles`);
 
     dispatch({
       type: GET_STUDENT_PROFILE_LISTS,
@@ -371,7 +366,7 @@ export const getStudentProfileLists = () => async dispatch => {
 export const getStaffProfileById = profile_id => async dispatch => {
   try {
     const response = await axios.get(
-      `${ENDPOINT}api/admin/get/staff/profile/${profile_id}`
+      `/api/admin/get/staff/profile/${profile_id}`
     );
 
     dispatch({
@@ -388,7 +383,7 @@ export const getStaffProfileById = profile_id => async dispatch => {
 
 export const getStaffProfileLists = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/admin/get/staff/profiles`);
+    const response = await axios.get(`/api/admin/get/staff/profiles`);
 
     dispatch({
       type: GET_STAFF_PROFILE_LISTS,
@@ -403,7 +398,7 @@ export const getStaffProfileLists = () => async dispatch => {
 };
 
 export const getTeacher = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/teachers`).then(response => {
+  return axios.get(`/api/lists/get/teachers`).then(response => {
     dispatch({
       type: GET_TEACHER,
       payload: response.data
@@ -419,7 +414,7 @@ export const addTeacher = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/teacher`,
+      `/api/lists/add/teacher`,
       dataToSubmit,
       config
     );
@@ -439,10 +434,8 @@ export const addTeacher = dataToSubmit => async dispatch => {
 };
 export const getTeacherById = teacher_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/lists/get/teacher/${teacher_id}`
-    );
-    console.log(response.data);
+    const response = await axios.get(`/api/lists/get/teacher/${teacher_id}`);
+
     dispatch({
       type: GET_TEACHER_BY_ID,
       payload: response.data
@@ -463,7 +456,7 @@ export const editTeacher = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/teacher/${teacher_id}`,
+      `/api/lists/edit/teacher/${teacher_id}`,
       dataToSubmit,
       config
     );
@@ -479,7 +472,7 @@ export const deleteTeacher = teacher_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/teacher/${teacher_id}`
+        `/api/lists/remove/teacher/${teacher_id}`
       );
       dispatch(getTeacher());
       dispatch(setAlert(response.data.msg, 'success'));
@@ -493,7 +486,7 @@ export const deleteTeacher = teacher_id => async dispatch => {
 };
 
 export const getStudent = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/students`).then(response => {
+  return axios.get(`/api/lists/get/students`).then(response => {
     dispatch({
       type: GET_STUDENT,
       payload: response.data
@@ -509,7 +502,7 @@ export const addStudent = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/student`,
+      `/api/lists/add/student`,
       dataToSubmit,
       config
     );
@@ -529,9 +522,7 @@ export const addStudent = dataToSubmit => async dispatch => {
 };
 export const getStudentById = student_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/lists/get/student/${student_id}`
-    );
+    const response = await axios.get(`/api/lists/get/student/${student_id}`);
     dispatch({
       type: GET_STUDENT_BY_ID,
       payload: response.data
@@ -552,7 +543,7 @@ export const editStudent = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/student/${student_id}`,
+      `/api/lists/edit/student/${student_id}`,
       dataToSubmit,
       config
     );
@@ -568,7 +559,7 @@ export const deleteStudent = student_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/student/${student_id}`
+        `/api/lists/remove/student/${student_id}`
       );
       dispatch(getStudent());
       dispatch(setAlert(response.data.msg, 'success'));
@@ -582,7 +573,7 @@ export const deleteStudent = student_id => async dispatch => {
 };
 
 export const getGrade = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/grades`).then(response => {
+  return axios.get(`/api/lists/get/grades`).then(response => {
     dispatch({
       type: GET_GRADE,
       payload: response.data
@@ -598,7 +589,7 @@ export const addGrade = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/grade`,
+      `/api/lists/add/grade`,
       dataToSubmit,
       config
     );
@@ -617,10 +608,8 @@ export const addGrade = dataToSubmit => async dispatch => {
 };
 export const getGradeById = grade_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/lists/get/grade/${grade_id}`
-    );
-    console.log(response.data);
+    const response = await axios.get(`/api/lists/get/grade/${grade_id}`);
+
     dispatch({
       type: GET_GRADE_BY_ID,
       payload: response.data
@@ -641,7 +630,7 @@ export const editGrade = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/grade/${grade_id}`,
+      `/api/lists/edit/grade/${grade_id}`,
       dataToSubmit,
       config
     );
@@ -657,7 +646,7 @@ export const deleteGrade = grade_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/grade/${grade_id}`
+        `/api/lists/remove/grade/${grade_id}`
       );
       dispatch(getGrade());
       dispatch(setAlert(response.data.msg, 'success'));
@@ -671,7 +660,7 @@ export const deleteGrade = grade_id => async dispatch => {
 };
 
 export const getCourse = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/courses`).then(response => {
+  return axios.get(`/api/lists/get/courses`).then(response => {
     dispatch({
       type: GET_COURSE,
       payload: response.data
@@ -687,7 +676,7 @@ export const addCourse = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/course`,
+      `/api/lists/add/course`,
       dataToSubmit,
       config
     );
@@ -706,10 +695,8 @@ export const addCourse = dataToSubmit => async dispatch => {
 };
 export const getCourseById = course_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/lists/get/course/${course_id}`
-    );
-    console.log(response.data);
+    const response = await axios.get(`/api/lists/get/course/${course_id}`);
+
     dispatch({
       type: GET_COURSE_BY_ID,
       payload: response.data
@@ -730,7 +717,7 @@ export const editCourse = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/course/${course_id}`,
+      `/api/lists/edit/course/${course_id}`,
       dataToSubmit,
       config
     );
@@ -746,7 +733,7 @@ export const deleteCourse = course_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/course/${course_id}`
+        `/api/lists/remove/course/${course_id}`
       );
       dispatch(getCourse());
       dispatch(setAlert(response.data.msg, 'success'));
@@ -760,7 +747,7 @@ export const deleteCourse = course_id => async dispatch => {
 };
 
 export const getClassroom = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/classrooms`).then(response => {
+  return axios.get(`/api/lists/get/classrooms`).then(response => {
     dispatch({
       type: GET_CLASSROOM,
       payload: response.data
@@ -776,7 +763,7 @@ export const addClassroom = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/classroom`,
+      `/api/lists/add/classroom`,
       dataToSubmit,
       config
     );
@@ -797,9 +784,9 @@ export const addClassroom = dataToSubmit => async dispatch => {
 export const getClassById = classroom_id => async dispatch => {
   try {
     const response = await axios.get(
-      `${ENDPOINT}api/lists/get/classroom/${classroom_id}`
+      `/api/lists/get/classroom/${classroom_id}`
     );
-    console.log(response.data);
+
     dispatch({
       type: GET_CLASS_BY_ID,
       payload: response.data
@@ -820,7 +807,7 @@ export const editClass = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/classroom/${classroom_id}`,
+      `/api/lists/edit/classroom/${classroom_id}`,
       dataToSubmit,
       config
     );
@@ -836,7 +823,7 @@ export const deleteClass = classroom_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/classroom/${classroom_id}`
+        `/api/lists/remove/classroom/${classroom_id}`
       );
       dispatch(getClassroom());
       dispatch(setAlert(response.data.msg, 'success'));
@@ -850,7 +837,7 @@ export const deleteClass = classroom_id => async dispatch => {
 };
 
 export const getPosition = () => dispatch => {
-  return axios.get(`${ENDPOINT}api/lists/get/positions`).then(response => {
+  return axios.get(`/api/lists/get/positions`).then(response => {
     dispatch({
       type: GET_POSITION,
       payload: response.data
@@ -866,7 +853,7 @@ export const addPosition = dataToSubmit => async dispatch => {
   };
   try {
     const response = await axios.post(
-      `${ENDPOINT}api/lists/add/position`,
+      `/api/lists/add/position`,
       dataToSubmit,
       config
     );
@@ -886,10 +873,8 @@ export const addPosition = dataToSubmit => async dispatch => {
 };
 export const getPositionById = position_id => async dispatch => {
   try {
-    const response = await axios.get(
-      `${ENDPOINT}api/lists/get/position/${position_id}`
-    );
-    console.log(response.data);
+    const response = await axios.get(`/api/lists/get/position/${position_id}`);
+
     dispatch({
       type: GET_POSITION_BY_ID,
       payload: response.data
@@ -910,7 +895,7 @@ export const editPosition = (
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/lists/edit/position/${position_id}`,
+      `/api/lists/edit/position/${position_id}`,
       dataToSubmit,
       config
     );
@@ -926,7 +911,7 @@ export const deletePosition = position_id => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
       const response = await axios.delete(
-        `${ENDPOINT}api/lists/remove/position/${position_id}`
+        `/api/lists/remove/position/${position_id}`
       );
       dispatch(getPosition());
       dispatch(setAlert(response.data.msg, 'success'));

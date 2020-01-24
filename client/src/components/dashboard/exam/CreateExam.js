@@ -6,6 +6,7 @@ import {
   generateFormData,
   populateFormField
 } from '../../utils/form/formActions';
+import { getTeacher } from '../../../actions/profile';
 import { createStudentExam } from '../../../actions/exam';
 import { studentSelectField } from '../../../actions/user';
 import Alert from '../../alert/Alert';
@@ -72,6 +73,16 @@ class CreateExam extends React.Component {
           options: []
         },
         showLabel: true
+      },
+      teacher: {
+        element: 'select',
+        value: '',
+        config: {
+          name: 'teacher',
+          label: 'Created By',
+          options: []
+        },
+        showLabel: true
       }
     }
   };
@@ -82,6 +93,14 @@ class CreateExam extends React.Component {
         this.state.formData,
         this.props.user.allStudentSelectField,
         'ownerId'
+      );
+      this.updateFields(newFormData);
+    });
+    this.props.dispatch(getTeacher()).then(() => {
+      let newFormData = populateFormField(
+        this.state.formData,
+        this.props.profile.teacherList,
+        'teacher'
       );
       this.updateFields(newFormData);
     });
@@ -161,6 +180,13 @@ class CreateExam extends React.Component {
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
+                      id={'teacher'}
+                      formData={formData.teacher}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
                       id={'ownerId'}
                       formData={formData.ownerId}
                       change={element => this.updateForm(element)}
@@ -226,6 +252,7 @@ class CreateExam extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  profile: state.profile
 });
 export default connect(mapStateToProps)(CreateExam);

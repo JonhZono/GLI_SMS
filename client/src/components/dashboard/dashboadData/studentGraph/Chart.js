@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DisplayLine from './DisplayLine';
 import Spinner from '../../../spinner/Spinner';
@@ -13,7 +13,6 @@ class Chart extends Component {
   };
   componentDidMount = () => {
     const myStudentPerformance = this.props.myStudentPerformance;
-    console.log(myStudentPerformance);
 
     this.setState({
       chartData: {

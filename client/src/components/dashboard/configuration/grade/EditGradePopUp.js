@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import UserLayout from '../../../../hoc/User';
-import Alert from '../../../alert/Alert';
 import Spinner from '../../../spinner/Spinner';
 import { getGradeById } from '../../../../actions/profile';
 import EditGrade from './EditGrade';
@@ -10,7 +9,7 @@ import EditGrade from './EditGrade';
 class EditGradePopUp extends React.Component {
   componentDidMount = () => {
     this.props.dispatch(getGradeById(this.props.match.params.grade_id));
-    console.log(this.props.profile.getGradeById);
+   
   };
 
   render() {
@@ -32,7 +31,7 @@ class EditGradePopUp extends React.Component {
     });
 
     const profile = this.props.profile;
-    console.log(profile.loading);
+
     return profile.getGradeById === null ? (
       <UserLayout>
         <div

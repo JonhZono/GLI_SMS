@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ENDPOINT } from '../components/utils/misc';
 import {
   GET_POSTS,
   POST_ERROR,
@@ -13,8 +12,8 @@ import { setAlert } from '../actions/alert';
 
 export const getAllPosts = () => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/post/posts`);
-    console.log(response.data[0])
+    const response = await axios.get(`/api/post/posts`);
+    console.log(response.data[0]);
     dispatch({
       type: GET_POSTS,
       payload: response.data
@@ -32,7 +31,7 @@ export const getAllPosts = () => async dispatch => {
 
 export const addInterest = post_id => async dispatch => {
   try {
-    const response = await axios.put(`${ENDPOINT}api/post/like/${post_id}`);
+    const response = await axios.put(`/api/post/like/${post_id}`);
 
     dispatch({
       type: UPDATE_LIKES,
@@ -51,7 +50,7 @@ export const addInterest = post_id => async dispatch => {
 
 export const removeInterest = post_id => async dispatch => {
   try {
-    const response = await axios.put(`${ENDPOINT}api/post/unlike/${post_id}`);
+    const response = await axios.put(`/api/post/unlike/${post_id}`);
 
     dispatch({
       type: UPDATE_LIKES,
@@ -71,7 +70,7 @@ export const removeInterest = post_id => async dispatch => {
 export const deletePost = (post_id, history) => async dispatch => {
   if (window.confirm('Are you sure, this can be undone!')) {
     try {
-      await axios.delete(`${ENDPOINT}api/post/remove/${post_id}`);
+      await axios.delete(`/api/post/remove/${post_id}`);
 
       dispatch(getAllPosts());
       history.push('/user/view/newsletter');
@@ -86,7 +85,7 @@ export const deletePost = (post_id, history) => async dispatch => {
 
 export const createPost = dataToSubmit => async dispatch => {
   try {
-    const response = await axios.post(`${ENDPOINT}api/post/add`, dataToSubmit);
+    const response = await axios.post(`/api/post/add`, dataToSubmit);
     dispatch({
       type: CREATE_POST,
       payload: response.data
@@ -111,7 +110,7 @@ export const editPostById = (post_id, dataToSubmit) => async dispatch => {
   };
   try {
     const response = await axios.put(
-      `${ENDPOINT}api/post/edit/${post_id}`,
+      `/api/post/edit/${post_id}`,
       dataToSubmit,
       config
     );
@@ -137,7 +136,7 @@ export const editPostById = (post_id, dataToSubmit) => async dispatch => {
 
 export const getPostById = post_id => async dispatch => {
   try {
-    const response = await axios.get(`${ENDPOINT}api/post/${post_id}`);
+    const response = await axios.get(`/api/post/${post_id}`);
 
     dispatch({
       type: GET_POST_BY_ID,

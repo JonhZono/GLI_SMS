@@ -183,7 +183,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
       }
     });
     const mailOptions = {
-      from: 'GLI Harumi ✔ <gli.harumi01@gmail.com>',
+      from: 'GLI Harumi Classroom Feedback ✔ <gli.harumi01@gmail.com>',
       to: email,
       subject: 'GLI Harumi Classroom Feedback ✔ ' + `${Date.now().toString()}`,
       html: feedbackTemplate(
@@ -210,7 +210,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
     });
     return res
       .status(200)
-      .json({ msg: 'Feedback edit Successfully', feedback });
+      .json({ msg: 'Feedback Sent Successfully', feedback });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error' });

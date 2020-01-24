@@ -3,10 +3,10 @@ const feedbackTemplate = (
   lessonContent,
   lessonID,
   gliNews,
-  teacher,
   email,
   ownerId,
-  grade
+  grade,
+  teacher
 ) => {
   return (template = `
   <section id="Introduction" class="main-section">
@@ -17,7 +17,7 @@ const feedbackTemplate = (
   Email: <b>${email}</b>
   </header>
   
-    <p>${lessonContent}</p>
+    <p style="font-size: 16px">${lessonContent}</p>
     <p><b>GLI News:</b> ${gliNews}</p>
   </section>
   <footer><i>➤ View ${ownerId.name} Daily Analysis Here: http://localhost:3000/user/dashboard </i></footer>

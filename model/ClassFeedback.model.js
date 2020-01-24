@@ -40,8 +40,7 @@ const ClassFeedbackSchema = new mongoose.Schema(
       required: true
     },
     gliNews: {
-      type: String,
-      required: true
+      type: String
     },
     //sending report to the parents and follow by administrator
     publish: {

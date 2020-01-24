@@ -8,6 +8,15 @@ import UserLayout from '../../../hoc/User';
 
 class EditNewsLetter extends Component {
   componentDidMount() {
+    const post_id = this.props.match.params.post_id;
+    this.props.dispatch(getPostById(post_id));
+  }
+
+  componentWillUnmount = () => {
+    this.props.dispatch(clearEditPost());
+  };
+
+  render() {
     $(document).ready(function() {
       $('#showModal').click(function() {
         $('.modal').addClass('is-active');
@@ -24,17 +33,6 @@ class EditNewsLetter extends Component {
         $('.navbar-menu').toggleClass('is-active');
       });
     });
-    const post_id = this.props.match.params.post_id;
-    this.props.dispatch(getPostById(post_id));
-  }
-
-  componentWillUnmount = () => {
-    this.props.dispatch(clearEditPost());
-  };
-
-  render() {
-    console.log(this.props.post.loading);
-    console.log(this.props.post.postById);
     return this.props.post.postById === null ? (
       <UserLayout>
         <div
@@ -52,8 +50,7 @@ class EditNewsLetter extends Component {
             <h1
               style={{
                 fontSize: 20,
-                paddingBottom: '1rem',
-                textDecoration: 'underline'
+                paddingBottom: '1rem'
               }}
               className='has-text-weight-bold'
             >

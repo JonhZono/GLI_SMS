@@ -11,7 +11,6 @@ const ViewPosts = ({
   user: { role }
 }) => {
   const adminDeletePost = _id => {
-    console.log('delete');
     deletePost(_id, history);
   };
   console.log(status);
