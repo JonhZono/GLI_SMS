@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.Promise = global.Promise;
 
-const db = process.env.MONGODB_URI || 'mongodb://localhost:27017/sms_db';
+const db = config.get('MONGODB_URI');
 
 mongoose.connect(db, {
   useUnifiedTopology: true,
