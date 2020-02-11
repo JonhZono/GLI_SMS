@@ -1,13 +1,18 @@
 const feeTemplate = (month, amount, additional) => {
   return (template = `
   <section id="Introduction" class="main-section">
-  <header>Month: <b>${month}</b><br/>
-  Amount: <b>${amount}</b><br/>
-  Additional Fee: <b>${additional}</b>
+  <header>Lesson Fee, Greeting From GLI Harumi<br/>
+<br/>
+
+  平素よりお世話になっております。<br/>
+  〇月分の授業料をお知らせいたします。※〇＝${month}<br/>
+  ご確認の程宜しくお願い致します。<br/>
+  Additional Fee: <b>${additional}</b><br/>
+  Here is total amount fee <b>${amount}</b> <br/>
+<br/>
+  GLI晴海校 <br/>
   </header>
-    <p>From GLI Harumi, Have a nice day...</p>
   </section>
-  <footer><i>➤ Check Here For More: http://localhost:3000/user/dashboard </i></footer>
   `);
 };
 

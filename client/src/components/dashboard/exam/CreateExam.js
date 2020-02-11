@@ -74,6 +74,16 @@ class CreateExam extends React.Component {
         },
         showLabel: true
       },
+      examDate: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'examDate',
+          type: 'text',
+          placeholder: 'Please enter date format YYYY/MM/DD'
+        },
+        showLabel: false
+      },
       teacher: {
         element: 'select',
         value: '',
@@ -83,6 +93,26 @@ class CreateExam extends React.Component {
           options: []
         },
         showLabel: true
+      },
+      name: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student name'
+        },
+        showLabel: false
+      },
+      gmail: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'gmail',
+          type: 'text',
+          placeholder: 'Send To Parent with a@gmail.com'
+        },
+        showLabel: false
       }
     }
   };
@@ -145,6 +175,13 @@ class CreateExam extends React.Component {
                 <form onSubmit={event => this.submitForm(event)}>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
+                      id={'name'}
+                      formData={formData.name}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
                       id={'writing'}
                       formData={formData.writing}
                       change={element => this.updateForm(element)}
@@ -180,6 +217,13 @@ class CreateExam extends React.Component {
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
+                      id={'examDate'}
+                      formData={formData.examDate}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
                       id={'teacher'}
                       formData={formData.teacher}
                       change={element => this.updateForm(element)}
@@ -189,6 +233,13 @@ class CreateExam extends React.Component {
                     <FormField
                       id={'ownerId'}
                       formData={formData.ownerId}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
+                      id={'gmail'}
+                      formData={formData.gmail}
                       change={element => this.updateForm(element)}
                     />
                   </div>
@@ -213,7 +264,15 @@ class CreateExam extends React.Component {
             </div>
           </div>
         </div>
-        <div className='control has-icons-left'>
+        <div
+          className='button is-small is-rounded'
+          style={{ marginTop: '14px' }}
+        >
+          <span style={{ color: 'grey', fontSize: '14px' }}>
+            Total Exam &nbsp;{this.props.totalExam}
+          </span>
+        </div>
+        {/*<div className='control has-icons-left'>
           <input
             className='input is-small buttonCardHeader'
             type='text'
@@ -234,7 +293,7 @@ class CreateExam extends React.Component {
           >
             <i className='fas fa-search-plus' />
           </span>
-        </div>
+          </div>*/}
         &nbsp;
         <button
           id='showModal'

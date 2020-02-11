@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EditStudent from './EditStudent';
-import { getStudentProfileById } from '../../../actions/profile';
+import {
+  getStudentProfileById,
+  clearProfileDetails
+} from '../../../actions/profile';
 import Spinner from '../../spinner/Spinner';
 import UserLayout from '../../../hoc/User';
 
@@ -10,6 +13,9 @@ class EditStudentProfile extends Component {
     const match = this.props.match;
     this.props.dispatch(getStudentProfileById(match.params.profile_id));
   }
+  componentWillUnmount = () => {
+    this.props.dispatch(clearProfileDetails());
+  };
   render() {
     return this.props.profile.studentProfileById === null ? (
       <UserLayout>

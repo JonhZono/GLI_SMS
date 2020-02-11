@@ -16,24 +16,20 @@ const links = [
     linkTo: '/user/student/feedback/view'
   },
   {
-    name: 'Human Resource',
+    name: 'Teacher',
     linkTo: '/user/staff/profiles'
   },
   {
-    name: 'My Report',
+    name: 'Student Report',
     linkTo: '/user/student/report'
   },
   {
-    name: 'Analysis',
+    name: 'Monthly Performance',
     linkTo: '/user/analysis'
   },
   {
     name: 'Exam Score',
     linkTo: '/user/exam/scores'
-  },
-  {
-    name: 'Payment',
-    linkTo: '/user/view/payment'
   },
   {
     name: 'News & Events',
@@ -72,71 +68,66 @@ const UserLayout = props => {
             className='fas fa-tachometer-alt'
             style={{ marginRight: '10px' }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Generate User' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-user-cog' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Configuration' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-cogs' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Student' &&
         (props.user.role === 'admin' || props.user.role === 'staff') ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-user-graduate' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Information' && props.user.role === 'student' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-user-graduate' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
-      ) : item.name === 'Human Resource' ? (
+      ) : item.name === 'Teacher' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-id-card' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
-      ) : item.name === 'Analysis' &&
+      ) : item.name === 'Monthly Performance' &&
         (props.user.role === 'admin' || props.user.role === 'staff') ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-chart-line' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
-      ) : item.name === 'My Report' && props.user.role === 'student' ? (
+      ) : item.name === 'Student Report' && props.user.role === 'student' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-chart-line' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Exam Score' &&
         (props.user.role === 'admin' || props.user.role === 'staff') ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='far fa-edit' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
-        </Link>
-      ) : item.name === 'Payment' && props.user.role === 'student' ? (
-        <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
-          <i className='far fa-edit' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'News & Events' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='fas fa-newspaper' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Daily Feedback' &&
         (props.user.role === 'admin' || props.user.role === 'staff') ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
-          <i className='fas fa-history' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          <i className='fas fa-comment-dots' style={{ marginRight: '10px' }} />
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Create News Letter' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
-          <i className='fas fa-history' style={{ marginRight: '10px' }} />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          <i className='fas fa-newspaper' style={{ marginRight: '10px' }} />
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : item.name === 'Monthly Fee' ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
@@ -144,7 +135,7 @@ const UserLayout = props => {
             className='far fa-money-bill-alt'
             style={{ marginRight: '10px' }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;<b>{item.name}</b>
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
       ) : (
         ''

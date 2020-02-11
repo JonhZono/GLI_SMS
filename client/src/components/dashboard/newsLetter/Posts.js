@@ -49,9 +49,8 @@ const Posts = ({ getAllPosts, post: { posts, loading } }) => {
               fontSize: 20,
               paddingBottom: '1rem'
             }}
-            className='has-text-weight-bold'
           >
-            <i class='fas fa-arrow-circle-right' />
+            <i className='fas fa-arrow-circle-right' />
             &nbsp;&nbsp;News Letter
           </h1>
           <div className='columns'>
@@ -83,9 +82,8 @@ const Posts = ({ getAllPosts, post: { posts, loading } }) => {
               fontSize: 20,
               paddingBottom: '1rem'
             }}
-            className='has-text-weight-bold'
           >
-            <i class='fas fa-arrow-circle-right' />
+            <i className='fas fa-arrow-circle-right' />
             &nbsp;&nbsp;News Letter
           </h1>
           <div className='columns'>

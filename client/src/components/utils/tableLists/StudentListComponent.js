@@ -12,7 +12,7 @@ class StudentListComponent extends Component {
 
   render() {
     const props = this.props;
-    console.log(props.user.avatar);
+
     return (
       <tr>
         <td>
@@ -35,8 +35,8 @@ class StudentListComponent extends Component {
           <span>
             <Link
               to={`/user/student/profile/${props._id}`}
-              className='tag is-info'
-              style={{ margin: '3px' }}
+              className='button is-small is-info'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-info' aria-hidden='true' />
@@ -47,8 +47,8 @@ class StudentListComponent extends Component {
               <Fragment>
                 <Link
                   to={`/user/student/profile/edit/${props._id}`}
-                  className='tag is-primary'
-                  style={{ margin: '3px' }}
+                  className='button is-small is-primary'
+                  style={{ margin: '3px', fontSize: '10px' }}
                 >
                   <span className='icon is-small'>
                     <i className='fas fa-pencil-alt' aria-hidden='true' />
@@ -58,8 +58,8 @@ class StudentListComponent extends Component {
 
                 <button
                   onClick={this.deleteStudentProfile}
-                  className='tag is-danger'
-                  style={{ margin: '3px' }}
+                  className='button is-small is-danger'
+                  style={{ margin: '3px', fontSize: '10px' }}
                 >
                   <span className='icon is-small'>
                     <i className='fas fa-trash-alt' aria-hidden='true' />

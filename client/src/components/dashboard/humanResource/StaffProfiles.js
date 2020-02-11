@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import $ from 'jquery';
 import UserLayout from '../../../hoc/User';
 import { connect } from 'react-redux';
@@ -7,7 +7,6 @@ import {
   getStaffProfileLists,
   clearProfileDetails
 } from '../../../actions/profile';
-import teacher from '../../../assets/teacher.png';
 
 /**
  * StaffProfiles
@@ -59,9 +58,8 @@ class StaffProfiles extends Component {
                 fontSize: 20,
                 paddingBottom: '1rem'
               }}
-              className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Human Resource
             </h1>
             <div className='columns'>
@@ -91,13 +89,8 @@ class StaffProfiles extends Component {
   }
 }
 
-/*StaffProfiles.propTypes = {
-  prop: PropTypes.type.isRequired
-}*/
-
 const mapStateToProps = state => ({
-  profile: state.profile,
-  user: state.user
+  profile: state.profile
 });
 
 export default connect(mapStateToProps)(StaffProfiles);

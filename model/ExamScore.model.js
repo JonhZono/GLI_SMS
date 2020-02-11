@@ -41,10 +41,17 @@ const ExamScoreSchema = new mongoose.Schema(
       required: true,
       ref: 'user'
     },
+    name: {
+      type: String,
+      required: true
+    },
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'teacher'
+    },
+    examDate: {
+      type: String
     },
     date: {
       type: Date,

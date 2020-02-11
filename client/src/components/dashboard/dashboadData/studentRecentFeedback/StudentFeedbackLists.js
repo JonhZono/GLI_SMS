@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Spinner from '../../../spinner/Spinner';
 import StudentFeedbackTableLists from './StudentFeedbackTableLists';
 
-const StudentFeedbackLists = props => {
-  const renderFeedbacks = recentFeedback =>
+class StudentFeedbackLists extends Component {
+  
+  studentRenderFeedbacks = recentFeedback =>
     recentFeedback.length > 0 ? (
-      recentFeedback.map(feedback => (
-        <StudentFeedbackTableLists key={feedback._id} {...feedback} />
+      recentFeedback.map(student_feedback => (
+        <StudentFeedbackTableLists
+          key={student_feedback._id}
+          {...student_feedback}
+        />
       ))
     ) : (
       <Spinner />
     );
+  render() {
+    console.log(this.props.recentFeedback)
+    return (
+      <table className='fixed_header'>
+        <tbody>{this.studentRenderFeedbacks(this.props.recentFeedback)}</tbody>
+      </table>
+    );
+  }
+}
 
-  return (
-    <table className='fixed_header'>
-      <tbody>{renderFeedbacks(props.recentFeedback)}</tbody>
-    </table>
-  );
-};
-
-export default StudentFeedbackLists;
+export default connect()(StudentFeedbackLists);

@@ -36,7 +36,7 @@ class RenderReportTable extends Component {
         </td>
         <td>
           {props ? (
-            <span className='has-text-grey' style={{ fontSize: '14px' }}>
+            <span className='has-text-grey' style={{ fontSize: '12px' }}>
               <Moment format='LLLL'>{props.date}</Moment>{' '}
             </span>
           ) : (
@@ -44,15 +44,15 @@ class RenderReportTable extends Component {
           )}
         </td>
 
-        <td>{props ? props.teacher.name : <p>Please put teacher</p>}</td>
-        <td>{props ? props.ownerId.name : <p>Please put receiver</p>}</td>
+        <td>{props.teacher ? props.teacher.name : <p>Please put teacher</p>}</td>
+        <td>{props ? props.name : <p>Please put receiver</p>}</td>
 
         <td>
           <span>
             <Link
               to={`/user/student/feedback/view/${props._id}`}
-              className='tag is-info'
-              style={{ margin: '3px' }}
+              className='button is-small is-info'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-info' aria-hidden='true' />
@@ -61,8 +61,8 @@ class RenderReportTable extends Component {
             </Link>
             <Link
               to={`/user/student/feedback/edit/${props._id}`}
-              className='tag is-primary'
-              style={{ margin: '3px' }}
+              className='button is-small is-primary'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-pencil-alt' />
@@ -72,8 +72,8 @@ class RenderReportTable extends Component {
             {props.user.role === 'admin' && (
               <button
                 onClick={this.deleteReportStudent}
-                className='tag is-danger'
-                style={{ margin: '3px' }}
+                className='button is-small is-danger'
+                style={{ margin: '3px', fontSize: '10px' }}
               >
                 <span className='icon is-small'>
                   <i className='fas fa-trash-alt' aria-hidden='true' />

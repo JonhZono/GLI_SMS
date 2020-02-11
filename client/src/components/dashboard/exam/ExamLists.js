@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import UserLayout from '../../../hoc/User';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import ExamTableListInfo from './ExamTableListInfo';
 import { adminGetExam, clearExam } from '../../../actions/exam';
 import Spinner from '../../spinner/Spinner';
@@ -69,7 +68,7 @@ class ExamLists extends Component {
                     }}
                   >
                     <p className='card-header-title'>Exam Lists</p>
-                    <CreateExam />
+                    <CreateExam totalExam={this.props.exam.examLists.length} />
                   </header>
                   <Spinner />
                 </div>
@@ -98,12 +97,12 @@ class ExamLists extends Component {
                 paddingBottom: '1rem'
               }}
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp; Student Exam Score
             </h1>
             <div className='columns'>
               <div className='column'>
-                <div className='card has-text-centered'>
+                <div className='card'>
                   <header
                     className='card-header'
                     style={{
@@ -111,7 +110,7 @@ class ExamLists extends Component {
                     }}
                   >
                     <p className='card-header-title'>Exam Lists</p>
-                    <CreateExam />
+                    <CreateExam totalExam={this.props.exam.examLists.length} />
                   </header>
                   <ExamTableListInfo lists={this.props.exam.examLists} />
                 </div>
@@ -125,8 +124,7 @@ class ExamLists extends Component {
 }
 
 const mapStateToProps = state => ({
-  exam: state.exam,
-  user: state.user
+  exam: state.exam
 });
 
 export default connect(mapStateToProps)(ExamLists);

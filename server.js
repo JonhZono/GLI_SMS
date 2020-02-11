@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 const config = require('config');
 const path = require('path');
-const PORT = 8080;
+const devPort = 8080;
 
 // Setup express app
 const app = express();
@@ -52,4 +52,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(PORT, () => console.log(`Node JS is running on port ${PORT}`));
+app.listen(process.env.PORT || devPort, () =>
+  console.log(`Node JS is running on port ${devPort}`)
+);

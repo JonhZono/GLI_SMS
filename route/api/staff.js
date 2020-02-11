@@ -16,9 +16,9 @@ router.get('/profile/me', auth, async (req, res) => {
     );
 
     if (!profile) {
-      res.status(400).json({ msg: 'There is no profile found' });
+      res.status(404).json({ msg: 'There is no profile found' });
     }
-    res.json(profile);
+    return res.status(200).json(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).json('Server Error');
@@ -63,7 +63,7 @@ router.post(
   auth,
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(200).json({ errors: errors.array() });
+    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
 
     try {
       const {
@@ -78,6 +78,7 @@ router.post(
         country,
         bank_account_details,
         position,
+        admission,
         email
       } = req.body;
 
@@ -93,6 +94,7 @@ router.post(
       if (country) staffFields.country = country;
       if (position) staffFields.position = position;
       if (email) staffFields.email = email;
+      if (admission) staffFields.admission = admission;
       if (addresses) {
         staffFields.addresses = addresses
           .split(',')
@@ -103,7 +105,7 @@ router.post(
         staffFields.bank_account_details = bank_account_details
           .split(',')
           .map(bank => bank.trim());
-        console.log(staffFields.bank_account_details);
+       
       }
 
       let staff = await Staff.findOne({ user: req.user.id });
@@ -118,7 +120,7 @@ router.post(
       }
       staff = new StaffProfile(staffFields);
       await staff.save();
-      res.json(staff);
+      res.status(200).json({msg: 'Congratulation, Profile Created Successfully'});
     } catch (error) {
       console.log(error.message);
       res.status(500).send('Server Error');
@@ -159,10 +161,27 @@ router.delete('/admin/delete', auth, admin, async (req, res) => {
   }
 });
 
+//@route        api/staff/remove/profile
+//@des          Remove Admin Profile ID
+//@access       Private/admin only
+router.delete('/remove/profile/:profile_id', auth, async (req, res) => {
+  try {
+    await Staff.findByIdAndRemove({
+      _id: req.params.profile_id
+    });
+    res.status(200).json({ msg: 'Profile Remove Successfully' });
+  } catch (error) {
+    console.log(error.message);
+    if (error.kind == 'ObjectId')
+      return res.status(404).json({ msg: 'Profile not found' });
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 //@route        api/profile/user/user_id
 //@des          Get user profile by id
 //@access       Public
-router.get('/user/:user_id',auth, async (req, res) => {
+router.get('/user/:user_id', auth, async (req, res) => {
   try {
     const profile_id = await Staff.findOne({
       user: req.params.user_id

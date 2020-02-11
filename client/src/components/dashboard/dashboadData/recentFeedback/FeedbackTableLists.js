@@ -8,13 +8,12 @@ const NewsTableLists = props => {
     <tr>
       <td>
         <Link to={`/user/student/feedback/view/${props._id}`}>
-          <span style={{ fontSize: '14px', color: 'grey' }}>Created By:</span>
           <span style={{ fontSize: '14px', color: '#69D420' }}>
-            <b> {props && props.teacher.name}</b>
+            <b> {props.teacher && props.teacher.name}</b>
           </span>
           <br />
           <span className='has-text-grey' style={{ fontSize: '14px' }}>
-            {props && props.termCode} - <b>{props && props.ownerId.name}</b>
+            {props && props.termCode} - <b>{props && props.name}</b>
           </span>
         </Link>
       </td>
@@ -29,8 +28,4 @@ const NewsTableLists = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user
-});
-
-export default connect(mapStateToProps)(NewsTableLists);
+export default connect()(NewsTableLists);

@@ -28,6 +28,7 @@ export const createStudentPerformance = dataToSubmit => async dispatch => {
     dispatch(setAlert(response.data.msg, 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
+
     if (errors) {
       errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
     }
@@ -200,10 +201,14 @@ export const adminEditStatisticById = (
       type: ADMIN_EDIT_PERFORMANCE_BY_ID,
       payload: response.data
     });
-    dispatch(setAlert(response.msg, 'success'));
+    dispatch(setAlert(response.data.msg, 'success'));
     history.push('/user/analysis');
-  } catch (error) {
-    if (error) throw error;
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
+    }
   }
 };
 

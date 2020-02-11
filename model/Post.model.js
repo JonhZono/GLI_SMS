@@ -14,14 +14,23 @@ const PostSchema = new mongoose.Schema(
       required: true
     },
     descriptions: {
-      type: String,
-      required: true
+      type: String
+    },
+    event: {
+      type: String
     },
     status: {
-      type: String,
-      required: true
+      type: String
+    },
+    type: {
+      type: String
     },
     image: {
+      type: Array,
+      default: [],
+      required: true
+    },
+    image1: {
       type: Array,
       default: []
     },
@@ -29,9 +38,6 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: [],
       required: true
-    },
-    avatar: {
-      type: String
     },
     likes: [
       {
@@ -45,21 +51,11 @@ const PostSchema = new mongoose.Schema(
         }
       }
     ],
-    comments: [
+    sns: [
       {
         user: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'user'
-        },
-        name: {
-          type: String
-        },
-        avatar: {
-          type: String
-        },
-        descriptions: {
-          type: String,
-          required: true
         },
         date: {
           type: Date,
@@ -67,6 +63,9 @@ const PostSchema = new mongoose.Schema(
         }
       }
     ],
+    avatar: {
+      type: String
+    },
     date: {
       type: Date,
       default: Date.now()

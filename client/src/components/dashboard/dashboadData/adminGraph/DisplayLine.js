@@ -8,8 +8,10 @@ const DisplayLine = props => {
       options={{
         title: {
           display: true,
-          text: props.student.ownerId && props.student.ownerId.name,
-          fontSize: '14'
+          text:
+            props.student &&
+            props.student.name + ' Date ' + props.student.examDate,
+          fontSize: '14'  
         },
         legend: {
           display: true,

@@ -23,18 +23,18 @@ class CreateFee extends React.Component {
         value: '',
         config: {
           options: [
-            {key: 'January', value: 'January'},
-            {key: 'February', value: 'February'},
-            {key: 'March', value: 'March'},
-            {key: 'April', value: 'April'},
-            {key: 'May', value: 'May'},
-            {key: 'June', value: 'June'},
-            {key: 'July', value: 'July'},
-            {key: 'August', value: 'August'},
-            {key: 'September', value: 'September'},
-            {key: 'October', value: 'October'},
-            {key: 'November', value: 'November'},
-            {key: 'December', value: 'December'},
+            { key: 'January', value: 'January' },
+            { key: 'February', value: 'February' },
+            { key: 'March', value: 'March' },
+            { key: 'April', value: 'April' },
+            { key: 'May', value: 'May' },
+            { key: 'June', value: 'June' },
+            { key: 'July', value: 'July' },
+            { key: 'August', value: 'August' },
+            { key: 'September', value: 'September' },
+            { key: 'October', value: 'October' },
+            { key: 'November', value: 'November' },
+            { key: 'December', value: 'December' }
           ],
           name: 'month',
           type: 'text'
@@ -48,7 +48,7 @@ class CreateFee extends React.Component {
           name: 'additional',
           label: 'Additional Price',
           type: 'text',
-          placeholder: 'Additional Price'
+          placeholder: 'Additional Fee'
         },
         showLabel: true
       },
@@ -145,7 +145,15 @@ class CreateFee extends React.Component {
             </div>
           </div>
         </div>
-        <div className='control has-icons-left'>
+        <div
+          className='button is-small is-rounded'
+          style={{ marginTop: '14px' }}
+        >
+          <span style={{ color: 'grey', fontSize: '14px' }}>
+            Total Receipt &nbsp;{this.props.feeLists}
+          </span>
+        </div>
+        {/*<div className='control has-icons-left'>
           <input
             className='input is-small buttonCardHeader'
             type='text'
@@ -166,7 +174,7 @@ class CreateFee extends React.Component {
           >
             <i className='fas fa-search-plus' />
           </span>
-        </div>
+          </div>*/}
         &nbsp;
         <button
           id='showModal'

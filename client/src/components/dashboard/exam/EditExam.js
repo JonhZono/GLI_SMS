@@ -74,7 +74,27 @@ class EditExam extends React.Component {
         config: {
           name: 'gmail',
           type: 'text',
-          placeholder: 'please enter student@gmail.com'
+          placeholder: 'Please enter student@gmail.com'
+        },
+        showLabel: false
+      },
+      examDate: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'examDate',
+          type: 'text',
+          placeholder: 'Please enter date format YYYY/MM/DD'
+        },
+        showLabel: false
+      },
+      name: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student name'
         },
         showLabel: false
       },
@@ -218,7 +238,7 @@ class EditExam extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Edit Exam
             </h1>
             <div className='columns'>
@@ -236,6 +256,12 @@ class EditExam extends React.Component {
                     <Alert />
                     <div className='content'>
                       <form onSubmit={event => this.submitForm(event)}>
+                        <FormField
+                          id={'name'}
+                          formData={formData.name}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'writing'}
                           formData={formData.writing}
@@ -263,6 +289,12 @@ class EditExam extends React.Component {
                         <FormField
                           id={'examName'}
                           formData={formData.examName}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
+                          id={'examDate'}
+                          formData={formData.examDate}
                           change={element => this.updateForm(element)}
                         />
                         <br />

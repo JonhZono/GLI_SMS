@@ -110,7 +110,7 @@ class ViewStudent extends Component {
                     paddingBottom: '1rem'
                   }}
                 >
-                  <i class='fas fa-arrow-circle-right' />
+                  <i className='fas fa-arrow-circle-right' />
                   &nbsp;&nbsp; Student Profile
                 </h1>
                 <div className='columns'>
@@ -140,6 +140,7 @@ class ViewStudent extends Component {
                                           <img
                                             key={item.public_id}
                                             src={item.url}
+                                            alt='user'
                                             className='is-rounded'
                                           />
                                         )
@@ -164,8 +165,11 @@ class ViewStudent extends Component {
                                     <nav className='level is-mobile py-1 has-text-centered'>
                                       <Link
                                         to={`/user/student/profile/edit/${this.props.match.params.profile_id}`}
-                                        className='tag is-primary'
-                                        style={{ margin: '3px' }}
+                                        className='button is-small is-primary'
+                                        style={{
+                                          margin: '3px',
+                                          fontSize: '12px'
+                                        }}
                                       >
                                         <span className='icon is-small'>
                                           <i
@@ -178,8 +182,11 @@ class ViewStudent extends Component {
 
                                       <button
                                         onClick={this.deleteStudentProfile}
-                                        className='tag is-danger'
-                                        style={{ margin: '3px' }}
+                                        className='button is-small is-danger'
+                                        style={{
+                                          margin: '3px',
+                                          fontSize: '12px'
+                                        }}
                                       >
                                         <span className='icon is-small'>
                                           <i
@@ -252,38 +259,50 @@ class ViewStudent extends Component {
                                             <tr>
                                               <td>Classroom</td>
                                               <td>
-                                                {
+                                                {profile.studentProfileById
+                                                  .className ? (
                                                   profile.studentProfileById
                                                     .classroom.name
-                                                }
+                                                ) : (
+                                                  <p>Classroom Not Selected</p>
+                                                )}
                                               </td>
                                             </tr>
 
                                             <tr>
                                               <td>Grade</td>
                                               <td>
-                                                {
+                                                {profile.studentProfileById
+                                                  .grade ? (
                                                   profile.studentProfileById
                                                     .grade.name
-                                                }
+                                                ) : (
+                                                  <p>Grade Not Selected</p>
+                                                )}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Teacher</td>
                                               <td>
-                                                {
+                                                {profile.studentProfileById
+                                                  .teacher ? (
                                                   profile.studentProfileById
                                                     .teacher.name
-                                                }
+                                                ) : (
+                                                  <p>Teacher Not Selected</p>
+                                                )}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Course</td>
                                               <td>
-                                                {
+                                                {profile.studentProfileById
+                                                  .course ? (
                                                   profile.studentProfileById
                                                     .course.name
-                                                }
+                                                ) : (
+                                                  <p>Course Not Selected</p>
+                                                )}
                                               </td>
                                             </tr>
                                             <tr>
@@ -295,12 +314,7 @@ class ViewStudent extends Component {
                                                 }
                                               </td>
                                             </tr>
-                                            <tr>
-                                              <td>Due Fee</td>
-                                              <td>
-                                                {profile.studentProfileById.fee}
-                                              </td>
-                                            </tr>
+
                                             <tr>
                                               <td>Father</td>
                                               <td>

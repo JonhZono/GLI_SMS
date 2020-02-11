@@ -21,7 +21,7 @@ class Chart extends Component {
         labels: ['Writing', 'Reading', 'Listening', 'Speaking'],
         datasets: [
           {
-            label: '# Exam Score Evaluation',
+            label: 'Exam',
             data: [
               examById && examById.writing,
               examById && examById.reading,
@@ -71,7 +71,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayPie
                   positionLegend='right'
+                  date={this.props.examById.date}
                   chartData={this.state.chartData}
+                  student={this.props.examById}
                 />
               </div>
             </div>
@@ -83,7 +85,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayPolarArea
                   positionLegend='right'
+                  date={this.props.examById.date}
                   chartData={this.state.chartData}
+                  student={this.props.examById}
                 />
               </div>
             </div>
@@ -94,7 +98,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayLine
                   positionLegend='right'
+                  date={this.props.examById.date}
                   chartData={this.state.chartData}
+                  student={this.props.examById}
                 />
               </div>
             </div>

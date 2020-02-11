@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createStaffProfile, getPosition } from '../../../../actions/profile';
+import { createStaffProfile } from '../../../../actions/profile';
 import Alert from '../../../alert/Alert';
 import UserLayout from '../../../../hoc/User';
 import FormField from '../../../utils/form/formField';
 import {
   updates,
-  generateFormData,
-  populateFormField
+  generateFormData
 } from '../../../utils/form/formActions';
 import Spinner from '../../../spinner/Spinner';
 
@@ -92,7 +91,32 @@ class CreateStudentProfile extends React.Component {
         config: {
           label: 'Which Position',
           name: 'position',
-          options: []
+          options: [
+            {
+              key: 'Administrator',
+              value: 'Administrator'
+            },
+            {
+              key: 'Head Teacher',
+              value: 'Head Teacher'
+            },
+            {
+              key: 'Full Time Teacher',
+              value: 'Full Time Teacher'
+            },
+            {
+              key: 'Part Time Teacher',
+              value: 'Part Time Teacher'
+            },
+            {
+              key: 'President',
+              value: 'President'
+            },
+            {
+              key: 'Supporting Teacher',
+              value: 'Supporting Teacher'
+            }
+          ]
         },
         showLabel: true
       },
@@ -161,25 +185,6 @@ class CreateStudentProfile extends React.Component {
     }
   };
 
-  componentDidMount = () => {
-    const formData = this.state.formData;
-
-    this.props.dispatch(getPosition()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.positionList,
-        'position'
-      );
-      this.updateFields(newFormData);
-    });
-  };
-
-  updateFields = newFormData => {
-    this.setState({
-      formData: newFormData
-    });
-  };
-
   updateForm = element => {
     //target form input
     const newFormData = updates(
@@ -199,7 +204,6 @@ class CreateStudentProfile extends React.Component {
       'CreateStaffProfileInfo'
     );
     this.props.dispatch(createStaffProfile(dataToSubmit, this.props.history));
-    //console.log(dataToSubmit);
   };
 
   render() {

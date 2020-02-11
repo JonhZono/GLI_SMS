@@ -16,8 +16,7 @@ const StaffSchema = new mongoose.Schema(
     },
     admission: {
       type: String,
-      required: true,
-      default: Date.now()
+      required: true
     },
     bio: {
       type: String,
@@ -44,8 +43,8 @@ const StaffSchema = new mongoose.Schema(
       required: true
     },
     position: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Position'
+      type: String,
+      required: true
     },
     company: {
       type: String,
@@ -62,9 +61,13 @@ const StaffSchema = new mongoose.Schema(
     bank_account_details: {
       type: [String]
     },
-    image:{
-     type: Array,
-     default: [] 
+    image: {
+      type: Array,
+      default: []
+    },
+    date: {
+      type: Date,
+      default: Date.now()
     }
   },
   { timestamps: true }

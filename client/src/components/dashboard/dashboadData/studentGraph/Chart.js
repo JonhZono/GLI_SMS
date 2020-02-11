@@ -21,13 +21,13 @@ class Chart extends Component {
           'Reading',
           'Listening',
           'Speaking',
-          'Participation',
-          'Active',
-          'Attitude'
+          '出席率',
+          '活動',
+          '授業態度'
         ],
         datasets: [
           {
-            label: '# DCE',
+            label: 'Tracking',
             data: [
               myStudentPerformance && myStudentPerformance.writing,
               myStudentPerformance && myStudentPerformance.reading,
@@ -68,7 +68,9 @@ class Chart extends Component {
     ) : (
       <div className='card'>
         <header className='card-header has-text-grey'>
-          <p className='card-header-title'>Student Daily Performance</p>
+          <p className='card-header-title'>
+          あなたの毎月のパフォーマンス
+          </p>
         </header>
         <div className='content'>
           <DisplayLine

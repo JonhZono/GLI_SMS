@@ -7,6 +7,8 @@ import Alert from '../../alert/Alert';
 import UserLayout from '../../../hoc/User';
 import FormField from '../../utils/form/formField';
 import FileUpload from '../../utils/form/fileUpload';
+import FileUpload1 from '../../utils/form/fileUpload1';
+import Spinner from '../../spinner/Spinner';
 import {
   updates,
   generateFormData,
@@ -16,6 +18,16 @@ import {
 class EditPost extends React.Component {
   state = {
     formData: {
+      type: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'type',
+          type: 'text',
+          placeholder: 'Post Type: News Letter, Event'
+        },
+        showLabel: false
+      },
       title: {
         element: 'input',
         value: '',
@@ -43,9 +55,20 @@ class EditPost extends React.Component {
         config: {
           name: 'status',
           type: 'text',
-          placeholder: 'ex. starting, on-going, finished'
+          placeholder: 'ex. upcoming, onGoing, finished'
         },
         showLabel: false
+      },
+      event: {
+        element: 'textarea',
+        value: '',
+        config: {
+          name: 'event',
+          label: 'Event Descriptions',
+          type: 'text',
+          placeholder: 'What is your event content body?'
+        },
+        showLabel: true
       },
       gmailLists: {
         element: 'textarea',
@@ -59,6 +82,9 @@ class EditPost extends React.Component {
         showLabel: true
       },
       image: {
+        value: []
+      },
+      image1: {
         value: []
       }
     }
@@ -103,6 +129,15 @@ class EditPost extends React.Component {
       formData: newFormData
     });
   };
+  imageHandler1 = images => {
+    const newFormData = { ...this.state.formData };
+
+    newFormData['image1'].value = images;
+
+    this.setState({
+      formData: newFormData
+    });
+  };
   render() {
     $(document).ready(function() {
       $('#showModal').click(function() {
@@ -120,7 +155,53 @@ class EditPost extends React.Component {
         $('.navbar-menu').toggleClass('is-active');
       });
     });
-    return (
+    return this.props.loading ? (
+      <UserLayout>
+        <div
+          className='column is-10-desktop is-offset-2-desktop is-9-tablet is-offset-3-tablet is-12-mobile'
+          style={{
+            background: '#fcfcfc',
+            paddingLeft: 30,
+            paddingRight: 50,
+            paddingTop: 30,
+            paddingBottom: 30,
+            marginTop: 40
+          }}
+        >
+          <div className='py-1'>
+            <h1
+              style={{
+                fontSize: 20,
+                paddingBottom: '1rem'
+              }}
+            >
+              News & Event
+            </h1>
+            <div className='columns'>
+              <div className='column'>
+                <div className='card has-text-centered'>
+                  <header className='card-header'>
+                    <p
+                      className='card-header-title'
+                      style={{
+                        backgroundColor: 'whitesmoke'
+                      }}
+                    >
+                      Post Information
+                    </p>
+                  </header>
+                  <div className='card-content'>
+                    <div className='card'>
+                      <Spinner />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </UserLayout>
+    ) : (
       <UserLayout>
         <div
           className='column is-10-desktop is-offset-2-desktop is-9-tablet is-offset-3-tablet is-12-mobile'
@@ -141,7 +222,7 @@ class EditPost extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Edit News Letter
             </h1>
             <div className='columns'>
@@ -165,6 +246,12 @@ class EditPost extends React.Component {
                           imageHandler={images => this.imageHandler(images)}
                         />
                         <FormField
+                          id={'type'}
+                          formData={this.state.formData.type}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
                           id={'title'}
                           formData={this.state.formData.title}
                           change={element => this.updateForm(element)}
@@ -179,6 +266,15 @@ class EditPost extends React.Component {
                         <FormField
                           id={'descriptions'}
                           formData={this.state.formData.descriptions}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FileUpload1
+                          imageHandler1={images => this.imageHandler1(images)}
+                        />
+                        <FormField
+                          id={'event'}
+                          formData={this.state.formData.event}
                           change={element => this.updateForm(element)}
                         />
                         <br />

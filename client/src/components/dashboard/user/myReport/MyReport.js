@@ -72,15 +72,11 @@ const MyReport = props => {
           <div className='columns'>
             <div className='column'>
               <div className='card has-text-centered'>
-                <div style={{ padding: '10px', fontSize: '1.05rem' }}>
-                  <i className='far fa-hand-point-right' />
-                  &nbsp; &nbsp; &nbsp;Please Choose To View Daily Analysis or
-                  Check Exam Score
-                </div>
                 <div className='card'>
                   <div className='card-content'>
                     <RenderDAES
                       user_id={props.user.id}
+                      name={props.user.name}
                       loading={props.user.loading}
                     />
                   </div>

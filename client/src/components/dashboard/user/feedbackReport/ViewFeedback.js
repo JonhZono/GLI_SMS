@@ -17,7 +17,7 @@ const ViewFeedback = props => {
     ) : (
       <Spinner />
     );
-    console.log(props.match.params.report_id)
+
   return props.loading && props.feedback.individualFeedbackLists === null ? (
     <UserLayout>
       <div

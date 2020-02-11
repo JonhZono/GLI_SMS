@@ -6,6 +6,7 @@ import { createStudentFeedback } from '../../../actions/feedback';
 import { studentSelectField } from '../../../actions/user';
 import Alert from '../../alert/Alert';
 import FeedbackField from '../../../components/utils/form/feedbackField';
+import FileUpload from '../../utils/form/fileUpload';
 import {
   updates,
   generateFormData,
@@ -25,7 +26,16 @@ class CreateStudentFeedback extends React.Component {
         },
         showLabel: false
       },
-
+      name: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student Name'
+        },
+        showLabel: false
+      },
       termCode: {
         element: 'input',
         value: '',
@@ -98,6 +108,9 @@ class CreateStudentFeedback extends React.Component {
           placeholder: 'Please Enter Your student feedback here ...'
         },
         showLabel: true
+      },
+      image: {
+        value: []
       }
     }
   };
@@ -142,6 +155,16 @@ class CreateStudentFeedback extends React.Component {
   };
 
   updateFields = newFormData => {
+    this.setState({
+      formData: newFormData
+    });
+  };
+
+  imageHandler = images => {
+    const newFormData = { ...this.state.formData };
+
+    newFormData['image'].value = images;
+
     this.setState({
       formData: newFormData
     });
@@ -201,10 +224,20 @@ class CreateStudentFeedback extends React.Component {
                 {/*Any other Bulma elements you want*/}
                 <Alert />
                 <form onSubmit={event => this.submitForm(event)}>
+                  <FileUpload
+                    imageHandler={images => this.imageHandler(images)}
+                  />
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FeedbackField
                       id={'lessonID'}
                       formData={this.state.formData.lessonID}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FeedbackField
+                      id={'name'}
+                      formData={this.state.formData.name}
                       change={element => this.updateForm(element)}
                     />
                   </div>
@@ -279,7 +312,10 @@ class CreateStudentFeedback extends React.Component {
             </div>
           </div>
         </div>
-        <div className='control has-icons-left'>
+        <div className='button is-small is-rounded' style={{marginTop: '14px'}}>
+          <span style={{color: 'grey', fontSize: '14px'}}>Total Feedback &nbsp;{this.props.totalFeedback}</span>
+        </div>
+        {/*<div className='control has-icons-left'>
           <input
             className='input is-small buttonCardHeader'
             type='text'
@@ -300,7 +336,7 @@ class CreateStudentFeedback extends React.Component {
           >
             <i className='fas fa-search-plus' />
           </span>
-        </div>
+          </div>*/}
         &nbsp;
         <button
           id='showModal'

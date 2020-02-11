@@ -1,18 +1,19 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 const DisplayLine = props => {
   DisplayLine.defaultProps = {
     positionLegend: 'right'
   };
   return (
-    <Line
+    <Pie
       data={props.chartData}
       options={{
         title: {
           display: true,
           text:
-            props.student && props.student.ownerId.name + ' Date ' + props.date,
+            props.student &&
+            props.student.name + ' Date ' + props.student.examDate,
           fontSize: '16'
         },
         legend: {

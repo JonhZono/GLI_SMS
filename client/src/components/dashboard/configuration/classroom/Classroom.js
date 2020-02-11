@@ -16,7 +16,6 @@ class Classroom extends Component {
     );
 
   render() {
-    const classCount = this.props.classroom.length;
     const classroom = this.props.classroom;
     return (
       <table className='fixed_header'>

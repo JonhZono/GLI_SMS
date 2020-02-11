@@ -3,7 +3,6 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
-const User = require('../../model/User.model');
 const config = require('config');
 const ClassFeedback = require('../../model/ClassFeedback.model');
 const StudentLists = require('../../model/StudentLists.model');
@@ -38,6 +37,9 @@ router.post(
       .isEmpty(),
     check('ownerId', 'ownerId is require')
       .not()
+      .isEmpty(),
+    check('name', 'name is require')
+      .not()
       .isEmpty()
   ],
   auth,
@@ -58,6 +60,8 @@ router.post(
         lessonContent,
         publish,
         ownerId,
+        name,
+        image,
         email
       } = req.body;
       const feedback = new ClassFeedback({
@@ -70,11 +74,13 @@ router.post(
         lessonContent,
         publish,
         ownerId,
+        name,
+        image,
         email
       });
 
       await feedback.save();
-      res.json(feedback);
+      res.status(200).json({ feedback, success: true });
     } catch (error) {
       res.status(500).json({ errors: [{ msg: 'Server Error' }] });
     }
@@ -83,48 +89,29 @@ router.post(
 
 //http://localhost:8080/api/classfeedback/classes?sortBy=createdAt&orderBy=desc&limit=4&skip=5
 //do research about skip
-router.get('/dashboard/classes', auth, combine, (req, res) => {
-  let sortBy = req.query.sortBy ? req.query.sortBy : 'createdAt';
-  let orderBy = req.query.orderBy ? req.query.orderBy : 'desc';
-  let limit = 20;
-  ClassFeedback.find()
-    .populate({ path: 'ownerId', select: 'name' })
-    .populate({ path: 'grade', model: Grade })
-    .populate({ path: 'teacher', model: Teacher })
-    .populate({ path: 'classroom', model: Classroom })
-    .sort([[sortBy, orderBy]])
-    .limit(limit)
-    .exec((err, docs) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send(err);
-      }
-      res.status(200).json({
-        size: docs.length,
-        articles: docs
-      });
+router.get('/dashboard/classes', auth, combine, async (req, res) => {
+  try {
+    let sortBy = req.query.sortBy ? req.query.sortBy : 'createdAt';
+    let orderBy = req.query.orderBy ? req.query.orderBy : 'desc';
+    let limit = 20;
+    const feedbackClasses = await ClassFeedback.find()
+      .populate({ path: 'ownerId', select: 'name' })
+      .populate({ path: 'grade', model: Grade })
+      .populate({ path: 'teacher', model: Teacher })
+      .populate({ path: 'classroom', model: Classroom })
+      .sort([[sortBy, orderBy]])
+      .limit(limit);
+    res.status(200).json({
+      size: feedbackClasses.length,
+      articles: feedbackClasses
     });
-});
-
-//http://localhost:8080/api/classfeedback/class/class_id?5dd98e077bec141260121de2,9843uhk234h3g4k,type=array
-/*router.get('/class/class_id', auth, (req, res) => {
-  let type = req.query.type;
-  let items = req.query.id;
-
-  if (type === 'array') {
-    let ids = req.query.id.split(',');
-    items = [];
-    items = ids.map(item => {
-      return mongoose.Types.ObjectId(item);
-    });
+  } catch (err) {
+    if (err) {
+      console.log(err);
+      return res.status(400).send(err);
+    }
   }
-  ClassFeedback.find({ _id: { $in: items } })
-    .populate('createdBy', ['name', 'avatar'])
-    .exec((err, feedback) => {
-      if (err) return res.status(400).send(err);
-      res.json(feedback);
-    });
-});*/
+});
 
 router.get('/classes', auth, combine, async (req, res) => {
   try {
@@ -149,8 +136,7 @@ router.get('/class/:class_id', auth, async (req, res) => {
       .populate({ path: 'teacher', model: Teacher })
       .populate({ path: 'classroom', model: Classroom })
       .populate({ path: 'student', model: StudentLists });
-    res.status(200).json(feedback);
-    console.log(feedback.ownerId.name);
+    return res.status(200).json(feedback);
   } catch (error) {
     console.log(error);
     res.status(500).json({ errors: [{ msg: 'Server error' }] });
@@ -159,7 +145,7 @@ router.get('/class/:class_id', auth, async (req, res) => {
 
 router.put('/class/:class_id', auth, combine, async (req, res) => {
   try {
-    const feedback = await ClassFeedback.findByIdAndUpdate(
+   await ClassFeedback.findByIdAndUpdate(
       { _id: req.params.class_id },
       req.body,
       { new: true }
@@ -171,7 +157,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
       lessonContent,
       lessonID,
       gliNews,
-      ownerId,
+      name,
       teacher,
       grade
     } = req.body;
@@ -191,10 +177,9 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
         lessonContent,
         lessonID,
         gliNews,
-        teacher,
-        email,
-        ownerId,
-        grade
+        name,
+        grade,
+        teacher
       )
     };
     // send mail with defined transport object
@@ -210,7 +195,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
     });
     return res
       .status(200)
-      .json({ msg: 'Feedback Sent Successfully', feedback });
+      .json({ msg: 'Lesson Feedback Updated & Message Sent', success: true });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: 'Server Error' });
@@ -219,7 +204,7 @@ router.put('/class/:class_id', auth, combine, async (req, res) => {
 
 router.delete('/class/:class_id', auth, admin, async (req, res) => {
   await ClassFeedback.findByIdAndRemove({ _id: req.params.class_id });
-  res.json({ msg: 'Remove Successful' });
+  return res.status(200).json({ msg: 'Remove Successful' });
 });
 
 module.exports = router;

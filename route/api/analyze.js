@@ -40,7 +40,13 @@ router.post(
     check('teacher', 'teacher is require')
       .not()
       .isEmpty(),
+    check('name', 'student name is require')
+      .not()
+      .isEmpty(),
     check('ownerId', 'ownerId is require')
+      .not()
+      .isEmpty(),
+    check('examDate', 'exam date is require')
       .not()
       .isEmpty()
   ],
@@ -59,7 +65,9 @@ router.post(
         active,
         attitude,
         ownerId,
-        teacher
+        teacher,
+        examDate,
+        name
       } = req.body;
       const performance = new Performance({
         writing,
@@ -70,15 +78,19 @@ router.post(
         active,
         attitude,
         ownerId,
-        teacher
+        teacher,
+        name,
+        examDate
       });
 
       await performance.save();
-      res.status(200).json({ msg: 'Performance Create Successfully' });
+      res
+        .status(200)
+        .json({ msg: 'Performance Created Successfully', success: true });
     } catch (error) {
       if (error)
         res.status(400).json({
-          errors: [{ msg: 'Maximum Score of Each Subject is 25...!' }]
+          errors: [{ msg: 'Maximum Points of Each Skill is 10...!' }]
         });
     }
   }
@@ -140,14 +152,67 @@ router.get('/performance/:perform_id', auth, (req, res) => {
     });
 });
 
-router.put('/performance/:perform_id', auth, combine, async (req, res) => {
-  await Performance.findByIdAndUpdate(
-    { _id: req.params.perform_id },
-    req.body,
-    { new: true }
-  );
-  res.status(200).json({ msg: 'Analysis Edit Successfully', success: true });
-});
+router.put(
+  '/performance/:perform_id',
+  auth,
+  combine,
+  [
+    check('writing', 'writing is require')
+      .not()
+      .isEmpty(),
+    check('reading', 'reading is require')
+      .not()
+      .isEmpty(),
+    check('listening', 'listening is require')
+      .not()
+      .isEmpty(),
+    check('speaking', 'speaking is require')
+      .not()
+      .isEmpty(),
+    check('participation', 'participation is require')
+      .not()
+      .isEmpty(),
+    check('active', 'active is require')
+      .not()
+      .isEmpty(),
+    check('attitude', 'attitude is require')
+      .not()
+      .isEmpty(),
+    check('teacher', 'teacher is require')
+      .not()
+      .isEmpty(),
+    check('name', 'student name is require')
+      .not()
+      .isEmpty(),
+    check('ownerId', 'ownerId is require')
+      .not()
+      .isEmpty(),
+    check('examDate', 'exam date is require')
+      .not()
+      .isEmpty()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      await Performance.findByIdAndUpdate(
+        { _id: req.params.perform_id },
+        req.body,
+        { new: true }
+      );
+      res
+        .status(200)
+        .json({ msg: 'Performance Updated Successfully', success: true });
+    } catch (error) {
+      if (error)
+        res.status(500).json({
+          errors: [{ msg: 'Maximum Points of Each Skill is 10...!' }]
+        });
+    }
+  }
+);
 
 router.delete('/performance/:perform_id', auth, admin, async (req, res) => {
   await Performance.findByIdAndRemove({ _id: req.params.perform_id });

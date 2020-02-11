@@ -4,8 +4,8 @@ import Spinner from '../../../spinner/Spinner';
 import ExamTableLists from './ExamTableLists';
 import { clearExam } from '../../../../actions/exam';
 
-class NewsLists extends Component {
-  renderFeedbacks = () =>
+class ExamLists extends Component {
+  renderExams = () =>
     this.props.exam.length > 0 ? (
       this.props.exam.map(exam => <ExamTableLists key={exam._id} {...exam} />)
     ) : this.props.exam.length === 0 ? (
@@ -20,10 +20,10 @@ class NewsLists extends Component {
     return (
       <table className='table is-fullwidth is-striped fixed_header'>
         <thead></thead>
-        <tbody>{this.renderFeedbacks()}</tbody>
+        <tbody>{this.renderExams()}</tbody>
       </table>
     );
   }
 }
 
-export default connect()(NewsLists);
+export default connect()(ExamLists);

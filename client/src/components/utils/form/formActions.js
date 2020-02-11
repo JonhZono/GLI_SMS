@@ -3,7 +3,6 @@ export const updates = (element, formData, formName) => {
   let newElement = { ...newFormData[element.id] };
 
   newElement.value = element.event.target.value;
-  console.log(newElement.value);
   newFormData[element.id] = newElement;
 
   return newFormData;
@@ -32,7 +31,7 @@ export const populateFormField = (formData, arrayData = [], field) => {
 
 export const populateFields = (formData, fields) => {
   for (let key in formData) {
-    console.log(fields[key])
+
     formData[key].value = fields[key];
 
   }

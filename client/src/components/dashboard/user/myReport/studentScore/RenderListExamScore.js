@@ -9,7 +9,7 @@ const RenderListExamScore = props => {
       <td>
         <Link to={`/user/student/exam/score/view/${props._id}`}>
           {props ? (
-            <Moment format='YYYY/MM/DD'>{props.createdAt}</Moment>
+            <Moment format='LLLL'>{props.createdAt}</Moment>
           ) : (
             <p>Please select date</p>
           )}
@@ -18,14 +18,23 @@ const RenderListExamScore = props => {
 
       <td>
         {props.ownerId ? (
-          <span class='tag is-primary'>{props.ownerId.name}</span>
+          <span className='tag is-primary'>{props.ownerId.name}</span>
         ) : (
           <p>Please put receiver</p>
         )}
       </td>
       <td>
+        {props.teacher ? (
+          <Link to={`/user/student/exam/score/view/${props._id}`}>
+            {props.teacher.name}
+          </Link>
+        ) : (
+          <p>Please put name</p>
+        )}
+      </td>
+      <td>
         {props ? (
-          <Moment format='YYYY-MM-DD'>{props.date}</Moment>
+          <Moment format='LLLL'>{props.date}</Moment>
         ) : (
           <p>Date of exam</p>
         )}
@@ -33,7 +42,7 @@ const RenderListExamScore = props => {
       <td>{props ? props.examName : <p>Name not available</p>}</td>
       <td>
         {props ? (
-          <span class='tag is-whitesmoke'>
+          <span className='tag is-whitesmoke'>
             <b>{props.listening} Points</b>
           </span>
         ) : (
@@ -42,7 +51,7 @@ const RenderListExamScore = props => {
       </td>
       <td>
         {props ? (
-          <span class='tag is-whitesmoke'>
+          <span className='tag is-whitesmoke'>
             <b>{props.writing} Points</b>
           </span>
         ) : (

@@ -12,6 +12,10 @@ const ClassFeedbackSchema = new mongoose.Schema(
       required: true
     },
     //format Term/Unit/Week/Class/Theme
+    name: {
+      type: String,
+      required: true
+    },
     termCode: {
       type: String,
       required: true
@@ -50,6 +54,10 @@ const ClassFeedbackSchema = new mongoose.Schema(
     email: {
       type: String,
       maxlength: 50
+    },
+    image: {
+      type: Array,
+      default: []
     },
     date: {
       type: Date,

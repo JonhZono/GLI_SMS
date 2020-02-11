@@ -3,7 +3,6 @@ import $ from 'jquery';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../../actions/user';
-import { ReactComponent as Logo } from '../../assets/headerLogo.svg';
 
 class Header extends Component {
   state = {
@@ -179,7 +178,7 @@ class Header extends Component {
               }}
             >
               <b>
-                <i class='fas fa-book-reader' />&nbsp;
+                <i className='fas fa-book-reader' />&nbsp;
                 Global Learner's Institute
               </b>
             </span>

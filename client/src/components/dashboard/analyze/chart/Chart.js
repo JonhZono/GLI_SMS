@@ -23,13 +23,13 @@ class Chart extends Component {
           'Reading',
           'Listening',
           'Speaking',
-          'Participation',
-          'Active',
-          'Attitude'
+          '出席率',
+          '活動',
+          '授業態度'
         ],
         datasets: [
           {
-            label: '# Daily Class Evaluation',
+            label: 'Tracking',
             data: [
               performanceById && performanceById.writing,
               performanceById && performanceById.reading,
@@ -65,7 +65,6 @@ class Chart extends Component {
   };
 
   render() {
-    console.log(this.props.performanceById);
     return this.props.performanceById === null ? (
       <Spinner />
     ) : (
@@ -90,6 +89,7 @@ class Chart extends Component {
                 <DisplayPie
                   positionLegend='right'
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>
@@ -102,6 +102,7 @@ class Chart extends Component {
                 <DisplayPolarArea
                   positionLegend='right'
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>
@@ -113,6 +114,7 @@ class Chart extends Component {
                 <DisplayLine
                   positionLegend='right'
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>

@@ -28,9 +28,9 @@ router.get('/profile/me', auth, async (req, res) => {
       .populate({ path: 'classroom', model: Classroom })
       .populate({ path: 'course', model: Course });
     if (!profile) {
-      res.status(400).json({ msg: 'There is no profile found' });
+      res.status(404).json({ msg: 'There is no profile found' });
     }
-    res.json(profile);
+    return res.status(200).json(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).json('Server Error');
@@ -149,9 +149,9 @@ router.post(
   }
 );
 
-//@route        api/post/edit/:profile_id
+//@route        api/student/edit/:profile_id
 //@des          Update Profile by id
-//@access       Private - available only admin
+//@access       Private - available only student
 router.put('/edit/:profile_id', auth, student, async (req, res) => {
   try {
     const student = await Student.findByIdAndUpdate(
@@ -223,33 +223,34 @@ router.get('/classfeedback/all/:ownerId', auth, student, async (req, res) => {
         errors: [{ msg: 'Feedback not found' }]
       });
     }
-    console.log(error);
+
     res.status(500).json({ msg: 'Server Error' });
   }
 });
 
 //student route for dashboard feedback
-router.get('/dashboard/classes', auth, student, (req, res) => {
-  let sortBy = req.query.sortBy ? req.query.sortBy : 'createdAt';
-  let orderBy = req.query.orderBy ? req.query.orderBy : 'desc';
-  let limit = 10;
-  ClassFeedback.find({ ownerId: req.user.id })
-    .populate({ path: 'ownerId', select: 'name' })
-    .populate({ path: 'grade', model: Grade })
-    .populate({ path: 'teacher', model: Teacher })
-    .populate({ path: 'classroom', model: Classroom })
-    .sort([[sortBy, orderBy]])
-    .limit(limit)
-    .exec((err, docs) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send(err);
-      }
-      res.status(200).json({
-        size: docs.length,
-        articles: docs
-      });
+router.get('/dashboard/classes', auth, student, async (req, res) => {
+  try {
+    let sortBy = req.query.sortBy ? req.query.sortBy : 'createdAt';
+    let orderBy = req.query.orderBy ? req.query.orderBy : 'desc';
+    let limit = 10;
+    const dashboardClasses = await ClassFeedback.find({ ownerId: req.user.id })
+      .populate({ path: 'ownerId', select: 'name' })
+      .populate({ path: 'grade', model: Grade })
+      .populate({ path: 'teacher', model: Teacher })
+      .populate({ path: 'classroom', model: Classroom })
+      .sort([[sortBy, orderBy]])
+      .limit(limit);
+    res.status(200).json({
+      size: dashboardClasses.length,
+      articles: dashboardClasses
     });
+  } catch (err) {
+    if (err) {
+      console.log(err);
+      return res.status(400).send(err);
+    }
+  }
 });
 
 //student route for dashboard exam
@@ -259,12 +260,11 @@ router.get('/dashboard/exam/scores', auth, student, (req, res) => {
   let limit = 10;
   ExamScore.find({ ownerId: req.user.id })
     .populate({ path: 'ownerId', select: 'name' })
-    .populate({ path: 'teacher', select: 'name' })
+    .populate({ path: 'teacher', model: Teacher })
     .sort([[sortBy, orderBy]])
     .limit(limit)
     .exec((err, docs) => {
       if (err) {
-        console.log(err);
         return res.status(400).send(err);
       }
       res.status(200).json({

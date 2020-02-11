@@ -11,9 +11,7 @@ import RenderListsExamScore from './RenderListExamScore';
 class ViewExamScore extends Component {
   componentDidMount = () => {
     this.props.dispatch(
-      getIndividualStudentExamById(
-        this.props.match.params.exam_id
-      )
+      getIndividualStudentExamById(this.props.match.params.exam_id)
     );
   };
   componentWillUnmount = () => {
@@ -28,8 +26,7 @@ class ViewExamScore extends Component {
       <Spinner />
     );
   render() {
-    return this.props.exam.loading &&
-      this.props.exam.examByOwnerId === null ? (
+    return this.props.exam.loading && this.props.exam.examByOwnerId === null ? (
       <UserLayout>
         <div
           className='column is-10-desktop is-offset-2-desktop is-9-tablet is-offset-3-tablet is-12-mobile'
@@ -51,7 +48,7 @@ class ViewExamScore extends Component {
               className='has-text-weight-bold'
             >
               <i className='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Student Exam Score
+              &nbsp;&nbsp;Exam Score
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -61,7 +58,7 @@ class ViewExamScore extends Component {
                     backgroundColor: 'whitesmoke'
                   }}
                 >
-                  <p className='card-header-title'>Exam Score Lists</p>
+                  <p className='card-header-title'>Score Lists</p>
                 </header>
                 <Spinner />
               </div>
@@ -91,7 +88,7 @@ class ViewExamScore extends Component {
               className='has-text-weight-bold'
             >
               <i className='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Student Exam Score
+              &nbsp;&nbsp;Exam Score
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -102,18 +99,19 @@ class ViewExamScore extends Component {
                       backgroundColor: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title'>Exam Score Lists</p>
+                    <p className='card-header-title'>Score Lists</p>
                   </header>
 
                   <table className='table is-bordered is-narrow is-hoverable is-fullwidth has-text-centered'>
                     <thead style={{ background: 'whitesmoke' }}>
                       <tr>
-                      <th>Created At</th>
+                        <th>Created At</th>
                         <th>Student</th>
+                        <th>Teacher</th>
                         <th>Exam Date</th>
                         <th>Exam Types</th>
                         <th>Listening</th>
-                        <th>Writing</th>                   
+                        <th>Writing</th>
                       </tr>
                     </thead>
                     <tbody>{this.renderLists()}</tbody>

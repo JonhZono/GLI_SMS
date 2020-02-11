@@ -17,6 +17,11 @@ import EditProfileInfo from './components/dashboard/user/studentProfile/EditProf
 import CheckStaffProfile from './components/dashboard/user/staffProfile/Index';
 import CreateStaffProfile from './components/dashboard/user/staffProfile/CreateProfileStaff';
 
+//Admin Profile
+import CheckAdminProfile from './components/dashboard/admin/Index';
+import CreateAdminProfile from './components/dashboard/admin/CreateProfileAdmin';
+import EditAdminProfile from './components/dashboard/admin/EditProfileAdmin';
+
 import ViewStaff from './components/dashboard/humanResource/ViewStaffProfile';
 import StaffProfiles from './components/dashboard/humanResource/StaffProfiles';
 import EditStaffProfile from './components/dashboard/humanResource/EditStaffProfile';
@@ -36,7 +41,6 @@ import EditGradePopUp from './components/dashboard/configuration/grade/EditGrade
 import EditCoursePopUp from './components/dashboard/configuration/course/EditCoursePopUp';
 import EditStudentPopUp from './components/dashboard/configuration/student/EditStudentPopUp';
 import EditTeacherPopUp from './components/dashboard/configuration/teacher/EditTeacherPopUp';
-import EditPositionPopUp from './components/dashboard/configuration/position/EditPositionPopUp';
 
 /**Student Feedback */
 import Feedback from './components/dashboard/user/feedbackReport/Feedback';
@@ -65,8 +69,10 @@ import ViewExamScore from './components/dashboard/user/myReport/studentScore/Vie
 import IndexExamScoreChart from './components/dashboard/user/myReport/studentScore/chart/Index';
 /**Admin Create Monthly Due Fee */
 import AdminViewDueFee from './components/dashboard/dueFee/StudentFee';
-/**Student view Fee */
-import ViewDueFee from './components/dashboard/feedback/dueFee/DueFee';
+import AdminEditDueFee from './components/dashboard/dueFee/IndexFee';
+import AdminViewDueFeeById from './components/dashboard/dueFee/ViewEachFee';
+
+import NotFound from './hoc/NotFound';
 
 import { loadUser } from './actions/user';
 import { Provider } from 'react-redux';
@@ -134,6 +140,22 @@ const Routes = () => {
               exact
               path='/user/staff/create/profile'
               component={CreateStaffProfile}
+            />
+            {/**Admin profile */}
+            <PrivateRoute
+              exact
+              path='/user/admin/profile'
+              component={CheckAdminProfile}
+            />
+            <PrivateRoute
+              exact
+              path='/user/admin/create/profile'
+              component={CreateAdminProfile}
+            />
+            <PrivateRoute
+              exact
+              path='/user/admin/profile/edit/:profile_id'
+              component={EditAdminProfile}
             />
 
             {/**List of teacher profiles */}
@@ -216,11 +238,7 @@ const Routes = () => {
               path='/admin/edit/teacher/:teacher_id'
               component={EditTeacherPopUp}
             />
-            <PrivateRoute
-              exact
-              path='/admin/edit/position/:position_id'
-              component={EditPositionPopUp}
-            />
+
             {/**Student Access Only*/}
 
             <PrivateRoute
@@ -317,15 +335,20 @@ const Routes = () => {
 
             <PrivateRoute
               exact
+              path='/admin/edit/due/fee/:fee_id'
+              component={AdminEditDueFee}
+            />
+            <PrivateRoute
+              exact
               path='/admin/view/duefee/lists'
               component={AdminViewDueFee}
             />
-            {/**Student View Lists Due Fee Module */}
             <PrivateRoute
               exact
-              path='/user/duefee/everyone/view/:fee_id'
-              component={ViewDueFee}
+              path='/admin/view/due/fee/:fee_id'
+              component={AdminViewDueFeeById}
             />
+            {/**Student View Lists Due Fee Module */}
             <PrivateRoute
               exact
               path='/user/dashboard'
@@ -333,6 +356,7 @@ const Routes = () => {
             />
 
             <Route exact path='/' component={Login} />
+            <Route component={NotFound} />
           </Switch>
         </Layout>
       </BrowserRouter>

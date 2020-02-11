@@ -39,6 +39,9 @@ router.post(
       .isEmpty(),
     check('teacher', 'teacher is require')
       .not()
+      .isEmpty(),
+    check('name', 'name is require')
+      .not()
       .isEmpty()
   ],
   async (req, res) => {
@@ -55,7 +58,9 @@ router.post(
         examName,
         ownerId,
         teacher,
-        gmail
+        examDate,
+        gmail,
+        name
       } = req.body;
       const exam = new ExamScore({
         writing,
@@ -64,12 +69,50 @@ router.post(
         speaking,
         examName,
         ownerId,
+        examDate,
         teacher,
-        gmail
+        gmail,
+        name
       });
 
       await exam.save();
-      res.status(200).json({ msg: 'Exam Score Insert Successfully' });
+
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: config.get('USER_EMAIL'),
+          pass: config.get('EMAIL_PASS')
+        }
+      });
+      const mailOptions = {
+        from: 'GLI Harumi - Exam Score✔ <gli.harumi01@gmail.com>',
+        to: gmail,
+        subject: 'GLI Harumi Exam Score ✔ ' + `${Date.now().toString()}`,
+        html: examTemplate(
+          reading,
+          speaking,
+          listening,
+          writing,
+          gmail,
+          examName,
+          examDate,
+          name
+        )
+      };
+      // send mail with defined transport object
+      smtpTransport.sendMail(mailOptions, function(error, response) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Message sent');
+        }
+
+        // if you don't want to use this transport object anymore, uncomment following line
+        smtpTransport.close(); // shut down the connection pool, no more messages
+      });
+      res
+        .status(200)
+        .json({ msg: 'Exam Score Insert Successfully', success: true });
     } catch (error) {
       res
         .status(400)
@@ -142,6 +185,9 @@ router.put(
       .isEmpty(),
     check('teacher', 'teacher is require')
       .not()
+      .isEmpty(),
+    check('name', 'name is require')
+      .not()
       .isEmpty()
   ],
   async (req, res) => {
@@ -164,8 +210,9 @@ router.put(
         listening,
         writing,
         gmail,
-        ownerId,
-        examName
+        examName,
+        examDate,
+        name
       } = req.body;
       const smtpTransport = nodemailer.createTransport({
         service: 'Gmail',
@@ -184,8 +231,9 @@ router.put(
           listening,
           writing,
           gmail,
-          ownerId,
-          examName
+          examName,
+          examDate,
+          name
         )
       };
       // send mail with defined transport object

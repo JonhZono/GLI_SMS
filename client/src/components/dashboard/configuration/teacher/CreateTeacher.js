@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormFieldConfig from '../../../utils/form/formFieldConfig';
 import { updates, generateFormData } from '../../../utils/form/formActions';
-import { addTeacher, clearConfigData } from '../../../../actions/profile';
+import { addTeacher } from '../../../../actions/profile';
 
 class CreateTeacher extends Component {
   state = {
@@ -19,9 +19,6 @@ class CreateTeacher extends Component {
     }
   };
 
-  componentWillUnmount = () => {
-    this.props.dispatch(clearConfigData());
-  };
   updateForm = element => {
     //target form input
     const newFormData = updates(element, this.state.formData, 'CreateTeacher');
@@ -43,7 +40,7 @@ class CreateTeacher extends Component {
         <div className='columns'>
           <div className='column'>
             <div className='field'>
-              <p className='control has-icons-left'>
+              <div className='control has-icons-left'>
                 <FormFieldConfig
                   id={'name'}
                   formData={formData.name}
@@ -58,9 +55,9 @@ class CreateTeacher extends Component {
                     color: '#000000'
                   }}
                 >
-                  <i className='fas fa-graduation-cap' />
+                  <i className="fas fa-chalkboard-teacher"/>
                 </span>
-              </p>
+              </div>
             </div>
           </div>
 

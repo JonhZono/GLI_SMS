@@ -71,7 +71,7 @@ class StudentProfile extends Component {
                       }}
                     >
                       <p className='card-header-title'>Student Lists</p>
-                      <div className='control'>
+                      {/*<div className='control'>
                         <span>Search</span>&nbsp;
                         <input
                           className='input is-link is-small buttonCardHeader'
@@ -82,7 +82,7 @@ class StudentProfile extends Component {
                             fontSize: '0.9rem'
                           }}
                         />
-                      </div>
+                        </div>*/}
                     </header>
                     <Spinner />
                   </div>
@@ -115,7 +115,7 @@ class StudentProfile extends Component {
                   paddingBottom: '1rem'
                 }}
               >
-                <i class='fas fa-arrow-circle-right' />
+                <i className='fas fa-arrow-circle-right' />
                 &nbsp;&nbsp; Student Profiles
               </h1>
               <div className='columns'>
@@ -128,7 +128,7 @@ class StudentProfile extends Component {
                       }}
                     >
                       <p className='card-header-title'>Student Lists</p>
-                      <span style={{ marginTop: '15px', fontSize: '17px' }}>
+                      {/*<span style={{ marginTop: '15px', fontSize: '17px' }}>
                         Search:
                       </span>
                       &nbsp;&nbsp;
@@ -157,7 +157,7 @@ class StudentProfile extends Component {
                         >
                           <i className='fas fa-search-plus' />
                         </span>
-                      </p>
+                        </p>*/}
                     </header>
                     <StudentTableListInfo
                       lists={this.props.profile.studentList}

@@ -85,7 +85,7 @@ export default (state = initialState, action) => {
         ...state,
         getPerformanceById: null,
         //myStudentPerformance: null,
-        //adminGetStudentPerformance: null,
+        adminGetStudentPerformance: null,
         //we need to clear the state after the user logout
         loading: true
       };

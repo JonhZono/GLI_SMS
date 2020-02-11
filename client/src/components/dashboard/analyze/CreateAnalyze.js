@@ -84,7 +84,26 @@ class CreateAnalyze extends React.Component {
         },
         showLabel: false
       },
-
+      name: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student name'
+        },
+        showLabel: false
+      },
+      examDate: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'examDate',
+          type: 'text',
+          placeholder: 'Please enter date format YYYY/MM/DD'
+        },
+        showLabel: false
+      },
       ownerId: {
         element: 'select',
         value: '',
@@ -144,7 +163,7 @@ class CreateAnalyze extends React.Component {
   submitForm = event => {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'CreateAnalysis');
-    console.log(dataToSubmit);
+
     this.props.dispatch(
       createStudentPerformance(dataToSubmit, this.props.history)
     );
@@ -167,6 +186,13 @@ class CreateAnalyze extends React.Component {
                 {/*Any other Bulma elements you want*/}
                 <Alert />
                 <form onSubmit={event => this.submitForm(event)}>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
+                      id={'name'}
+                      formData={formData.name}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
                       id={'writing'}
@@ -218,6 +244,13 @@ class CreateAnalyze extends React.Component {
                   </div>
                   <div className='field' style={{ marginTop: '1rem' }}>
                     <FormField
+                      id={'examDate'}
+                      formData={formData.examDate}
+                      change={element => this.updateForm(element)}
+                    />
+                  </div>
+                  <div className='field' style={{ marginTop: '1rem' }}>
+                    <FormField
                       id={'teacher'}
                       formData={formData.teacher}
                       change={element => this.updateForm(element)}
@@ -251,7 +284,15 @@ class CreateAnalyze extends React.Component {
             </div>
           </div>
         </div>
-        <div className='control has-icons-left'>
+        <div
+          className='button is-small is-rounded'
+          style={{ marginTop: '14px' }}
+        >
+          <span style={{ color: 'grey', fontSize: '14px' }}>
+            Total Analysis &nbsp;{this.props.totalAnalysis}
+          </span>
+        </div>
+        {/*<div className='control has-icons-left'>
           <input
             className='input is-small buttonCardHeader'
             type='text'
@@ -272,7 +313,7 @@ class CreateAnalyze extends React.Component {
           >
             <i className='fas fa-search-plus' />
           </span>
-        </div>
+          </div>*/}
         &nbsp;
         <button
           id='showModal'

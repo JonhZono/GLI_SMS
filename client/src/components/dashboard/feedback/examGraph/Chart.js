@@ -46,7 +46,6 @@ class Chart extends Component {
   };
 
   render() {
-    console.log(this.props.everyoneStudentExamByID);
     return this.props.everyoneStudentExamByID === null ? (
       <Spinner />
     ) : (

@@ -12,7 +12,6 @@ class IndexExamScoreChart extends Component {
   };
 
   render() {
-    console.log(this.props.exam.everyoneStudentExamByID);
     return this.props.exam.loading &&
       this.props.exam.everyoneStudentExamByID === null ? (
       <UserLayout>

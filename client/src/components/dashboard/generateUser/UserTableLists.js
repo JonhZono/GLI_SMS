@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { adminDeleteUserAccountById } from '../../../actions/user';
 import Moment from 'react-moment';
 
 class UserTableLists extends Component {
   deleteUserAccount = () => {
-    console.log(this.props._id);
     this.props.dispatch(adminDeleteUserAccountById(this.props._id));
   };
 
@@ -17,28 +16,28 @@ class UserTableLists extends Component {
         <tr>
           <td>{props && props.name}</td>
           <td>{props && props.email}</td>
-          <td>
-            {props && <Moment format='YYYY/MM/DD'>{props.createdAt}</Moment>}
+          <td style={{ color: 'grey', fontSize: '12px' }}>
+            {props && <Moment format='LLLL'>{props.createdAt}</Moment>}
           </td>
           {props.role === 'student' && (
             <td>
-              <span class='tag is-warning'>{props.role}</span>
+              <span className='tag is-warning'>{props.role}</span>
             </td>
           )}
           {props.role === 'staff' && (
             <td>
-              <span class='tag is-primary'>{props.role}</span>
+              <span className='tag is-primary'>{props.role}</span>
             </td>
           )}
           {props.role === 'admin' && (
             <td>
-              <span class='tag is-link'>{props.role}</span>
+              <span className='tag is-link'>{props.role}</span>
             </td>
           )}
 
           <td>
             <span>
-              <Link
+              {/*<Link
                 to={`/admin/user/reset/password/${props._id}`}
                 className='tag is-primary'
                 style={{ margin: '3px' }}
@@ -47,12 +46,12 @@ class UserTableLists extends Component {
                   <i className='fas fa-pencil-alt' />
                 </span>
                 <span>Edit</span>
-              </Link>
+              </Link>*/}
               {props.user.role === 'admin' && (
                 <button
                   onClick={this.deleteUserAccount}
-                  className='tag is-danger'
-                  style={{ margin: '3px' }}
+                  className='button is-small is-danger'
+                  style={{ margin: '3px', fontSize: '10px' }}
                 >
                   <span className='icon is-small'>
                     <i className='fas fa-times' aria-hidden='true' />
@@ -69,7 +68,6 @@ class UserTableLists extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile,
   user: state.user
 });
 

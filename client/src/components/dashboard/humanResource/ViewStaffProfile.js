@@ -12,7 +12,6 @@ import Spinner from '../../spinner/Spinner';
 
 class ViewStaffProfile extends Component {
   componentDidMount = () => {
-
     const profile_id = this.props.match.params.profile_id;
     this.props.dispatch(getStaffProfileById(profile_id));
   };
@@ -65,7 +64,7 @@ class ViewStaffProfile extends Component {
                   }}
                   className='has-text-weight-bold'
                 >
-                  <i class='fas fa-arrow-circle-right' />
+                  <i className='fas fa-arrow-circle-right' />
                   &nbsp;&nbsp; Staff Profile
                 </h1>
                 <div className='columns'>
@@ -109,7 +108,7 @@ class ViewStaffProfile extends Component {
                   }}
                   className='has-text-weight-bold'
                 >
-                  <i class='fas fa-arrow-circle-right' />
+                  <i className='fas fa-arrow-circle-right' />
                   &nbsp;&nbsp; Staff Profile
                 </h1>
                 <div className='columns'>
@@ -139,7 +138,7 @@ class ViewStaffProfile extends Component {
                                           <img
                                             key={item.public_id}
                                             src={item.url}
-                                            alt=''
+                                            alt='user'
                                             className='is-rounded'
                                           />
                                         )
@@ -160,35 +159,46 @@ class ViewStaffProfile extends Component {
                                     </u>
                                   </figure>
                                   <br />
-                                  <nav className='level is-mobile py-1 has-text-centered'>
-                                    <Link
-                                      to={`/user/staff/profile/edit/${this.props.match.params.profile_id}`}
-                                      className='tag is-primary'
-                                      style={{ margin: '3px' }}
-                                    >
-                                      <span className='icon is-small'>
-                                        <i
-                                          className='fas fa-pencil-alt'
-                                          aria-hidden='true'
-                                        />
-                                      </span>
-                                      <span>Edit</span>
-                                    </Link>
+                                  {this.props.user.role === 'admin' ||
+                                  this.props.user.role === 'staff' ? (
+                                    <nav className='level is-mobile py-1 has-text-centered'>
+                                      <Link
+                                        to={`/user/staff/profile/edit/${this.props.match.params.profile_id}`}
+                                        className='button is-small is-primary'
+                                        style={{
+                                          margin: '3px',
+                                          fontSize: '12px'
+                                        }}
+                                      >
+                                        <span className='icon is-small'>
+                                          <i
+                                            className='fas fa-pencil-alt'
+                                            aria-hidden='true'
+                                          />
+                                        </span>
+                                        <span>Edit</span>
+                                      </Link>
 
-                                    <button
-                                      onClick={this.deleteStaffProfile}
-                                      className='tag is-danger'
-                                      style={{ margin: '3px' }}
-                                    >
-                                      <span className='icon is-small'>
-                                        <i
-                                          className='fas fa-trash-alt'
-                                          aria-hidden='true'
-                                        />
-                                      </span>
-                                      <span>Delete Profile</span>
-                                    </button>
-                                  </nav>
+                                      <button
+                                        onClick={this.deleteStaffProfile}
+                                        className='button is-small is-danger'
+                                        style={{
+                                          margin: '3px',
+                                          fontSize: '12px'
+                                        }}
+                                      >
+                                        <span className='icon is-small'>
+                                          <i
+                                            className='fas fa-trash-alt'
+                                            aria-hidden='true'
+                                          />
+                                        </span>
+                                        <span>Delete Profile</span>
+                                      </button>
+                                    </nav>
+                                  ) : (
+                                    ''
+                                  )}
                                 </div>
                               </article>
                             </div>
@@ -214,40 +224,40 @@ class ViewStaffProfile extends Component {
                                             <tr>
                                               <td>Staff</td>
                                               <td>
-                                                {profile.staffProfileById.name}
+                                                {profile &&
+                                                  profile.staffProfileById.name}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Gender</td>
                                               <td>
-                                                {
+                                                {profile &&
                                                   profile.staffProfileById
-                                                    .gender
-                                                }
+                                                    .gender}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Date of Birth</td>
                                               <td>
-                                                {profile.staffProfileById.birth}
+                                                {profile &&
+                                                  profile.staffProfileById
+                                                    .birth}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Marital Status</td>
                                               <td>
-                                                {
+                                                {profile &&
                                                   profile.staffProfileById
-                                                    .marital_status
-                                                }
+                                                    .marital_status}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Position</td>
                                               <td>
-                                                {profile.staffProfileById
-                                                  .position ? (
+                                                {profile.staffProfileById ? (
                                                   profile.staffProfileById
-                                                    .position.name
+                                                    .position
                                                 ) : (
                                                   <p>Position Not Select</p>
                                                 )}
@@ -256,19 +266,17 @@ class ViewStaffProfile extends Component {
                                             <tr>
                                               <td>Experience</td>
                                               <td>
-                                                {
+                                                {profile &&
                                                   profile.staffProfileById
-                                                    .work_experiences
-                                                }
+                                                    .work_experiences}
                                               </td>
                                             </tr>
                                             <tr>
                                               <td>Admission Date</td>
                                               <td>
-                                                {
+                                                {profile &&
                                                   profile.staffProfileById
-                                                    .admission
-                                                }
+                                                    .admission}
                                               </td>
                                             </tr>
                                           </tbody>
@@ -423,6 +431,7 @@ class ViewStaffProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  user: state.user
 });
 export default connect(mapStateToProps)(ViewStaffProfile);

@@ -27,7 +27,6 @@ class EditStudent extends Component {
   componentDidMount = () => {
     const formData = this.state.formData;
     //Populate the edit field
-    console.log(this.props.student);
     const newFormData = populateFields(formData, this.props.student);
     this.setState({
       formData: newFormData

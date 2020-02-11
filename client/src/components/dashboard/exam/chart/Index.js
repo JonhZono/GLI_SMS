@@ -90,6 +90,7 @@ class IndexExamChart extends Component {
                         backgroundColor: 'whitesmoke'
                       }}
                     >
+                      
                       Exam Information
                     </p>
                   </header>

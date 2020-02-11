@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import { adminGetUser } from '../../../actions/user';
-import { adminGetDueFeeLists } from '../../../actions/duefee';
+import { adminGetDueFeeLists, clearFee } from '../../../actions/duefee';
 import UserLayout from '../../../hoc/User';
 import CreateFee from './CreateFee';
 import FeeLists from './FeeLists';
@@ -13,6 +13,9 @@ class StudentFee extends Component {
   componentWillMount = () => {
     this.props.dispatch(adminGetUser());
     this.props.dispatch(adminGetDueFeeLists());
+  };
+  componentWillUnmount = () => {
+    this.props.dispatch(clearFee());
   };
   render() {
     $(document).ready(function() {
@@ -66,6 +69,9 @@ class StudentFee extends Component {
                       }}
                     >
                       <p className='card-header-title'>Fee Lists</p>
+                      <CreateFee
+                        feeLists={this.props.fee.adminGetFeeLists.length}
+                      />
                     </header>
                     <Spinner />
                   </div>
@@ -111,7 +117,9 @@ class StudentFee extends Component {
                   >
                     <p className='card-header-title'>Fee Lists</p>
 
-                    <CreateFee userLists={this.props.user.userLists} />
+                    <CreateFee
+                      feeLists={this.props.fee.adminGetFeeLists.length}
+                    />
                   </header>
 
                   <FeeLists

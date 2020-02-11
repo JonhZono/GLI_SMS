@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import FormFieldConfig from '../../../utils/form/formFieldConfig';
 import { updates, generateFormData } from '../../../utils/form/formActions';
 import { addClassroom } from '../../../../actions/profile';
@@ -13,7 +13,7 @@ class CreateClass extends Component {
         config: {
           name: 'name',
           type: 'text',
-          placeholder: 'Enter Class'
+          placeholder: 'Enter Classroom'
         }
       }
     }
@@ -39,7 +39,7 @@ class CreateClass extends Component {
         <div className='columns'>
           <div className='column'>
             <div className='field'>
-              <p className='control has-icons-left'>
+              <div className='control has-icons-left'>
                 <FormFieldConfig
                   id={'name'}
                   formData={formData.name}
@@ -47,11 +47,16 @@ class CreateClass extends Component {
                 />
                 <span
                   className='icon is-small is-left'
-                  style={{ paddingLeft: '20px',paddingRight: '10px',paddingBottom: '2px', color: '#000000' }}
+                  style={{
+                    paddingLeft: '20px',
+                    paddingRight: '10px',
+                    paddingBottom: '2px',
+                    color: '#000000'
+                  }}
                 >
-                  <i className='fas fa-graduation-cap' />
+                  <i className='fas fa-archway' />
                 </span>
-              </p>
+              </div>
             </div>
           </div>
 

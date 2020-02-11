@@ -14,10 +14,8 @@ class ExamListComponent extends Component {
     return (
       <tr>
         <td>
-          {props.ownerId ? (
-            <Link to={`/user/exam/score/view/${props._id}`}>
-              {props.ownerId.name}
-            </Link>
+          {props ? (
+            <Link to={`/user/exam/score/view/${props._id}`}>{props.name}</Link>
           ) : (
             <p>Please put name</p>
           )}
@@ -31,7 +29,7 @@ class ExamListComponent extends Component {
             <p>Please put name</p>
           )}
         </td>
-        <td style={{ fontSize: '14px', color: 'grey' }}>
+        <td style={{ fontSize: '12px', color: 'grey' }}>
           {props ? (
             <Moment format='LLLL'>{props.createdAt}</Moment>
           ) : (
@@ -56,6 +54,7 @@ class ExamListComponent extends Component {
             <p>Please put speaking</p>
           )}
         </td>
+
         <td>
           {props ? (
             <span className='tag is-success'>
@@ -69,8 +68,8 @@ class ExamListComponent extends Component {
           <span>
             <Link
               to={`/user/exam/score/view/${props._id}`}
-              className='tag is-info'
-              style={{ margin: '3px' }}
+              className='button is-small is-info'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-info' aria-hidden='true' />
@@ -79,8 +78,8 @@ class ExamListComponent extends Component {
             </Link>
             <Link
               to={`/user/exam/score/edit/${props._id}`}
-              className='tag is-primary'
-              style={{ margin: '3px' }}
+              className='button is-small is-primary'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-pencil-alt' />
@@ -90,8 +89,8 @@ class ExamListComponent extends Component {
             {props.user.role === 'admin' && (
               <button
                 onClick={this.deleteStudentExamByID}
-                className='tag is-danger'
-                style={{ margin: '3px' }}
+                className='button is-small is-danger'
+                style={{ margin: '3px', fontSize: '10px' }}
               >
                 <span className='icon is-small'>
                   <i className='fas fa-trash-alt' aria-hidden='true' />

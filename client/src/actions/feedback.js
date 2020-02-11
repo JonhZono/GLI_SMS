@@ -46,7 +46,6 @@ export const editStudentFeedback = (
 
     dispatch(adminGetOverallReport());
     dispatch(setAlert(response.data.msg, 'success'));
-    //history.push('/student/feedbacks/history')
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -110,22 +109,28 @@ export const deleteStudentReportById = (
   }
 };
 //admin and staff
-export const adminDashboardFeedback = () => dispatch => {
-  return axios.get(`/api/classfeedback/dashboard/classes`).then(response => {
+export const adminDashboardFeedback = () => async dispatch => {
+  try {
+    const response = await axios.get(`/api/classfeedback/dashboard/classes`);
     dispatch({
       type: ADMIN_DASHBOARD_FEEDBACK,
       payload: response.data.articles
     });
-  });
+  } catch (error) {
+    if (error) throw error;
+  }
 };
 //student only
-export const studentDashboardFeedbackById = () => dispatch => {
-  return axios.get(`/api/student/dashboard/classes`).then(response => {
+export const studentDashboardFeedbackById = () => async dispatch => {
+  try {
+    const response = await axios.get(`/api/student/dashboard/classes`);
     dispatch({
       type: STUDENT_DASHBOARD_FEEDBACK,
       payload: response.data.articles
     });
-  });
+  } catch (error) {
+    if (error) throw error;
+  }
 };
 
 export const clearViewEachFeedback = () => dispatch => {

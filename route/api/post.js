@@ -18,16 +18,12 @@ router.post(
     check('title', 'title is require')
       .not()
       .isEmpty(),
-    check('descriptions', 'descriptions is require')
-      .not()
-      .isEmpty(),
-    check('status', 'status is require')
-      .not()
-      .isEmpty(),
     check('image', 'image is require')
       .not()
       .isEmpty(),
-    check('gmailLists', 'gmail lists is require').isEmail()
+    check('type', 'type is require')
+      .not()
+      .isEmpty()
   ],
   auth,
   admin,
@@ -42,14 +38,18 @@ router.post(
         title: req.body.title,
         descriptions: req.body.descriptions,
         status: req.body.status,
+        event: req.body.event,
         image: req.body.image,
+        image1: req.body.image1,
+        type: req.body.type,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id
       });
       const post = await newPost.save();
 
-      const { title, descriptions, image, status, gmailLists } = req.body;
+      const { title, descriptions, status, gmailLists, event, type } = req.body;
+
       const smtpTransport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -57,12 +57,13 @@ router.post(
           pass: config.get('EMAIL_PASS')
         }
       });
+
       const mailOptions = {
-        from: 'GLI Harumi - Event & News Letter ✔ <gli.harumi01@gmail.com>',
+        from: 'GLI - Event & News Letter ✔ <gli.harumi01@gmail.com>',
         to: gmailLists,
         subject:
           'GLI Harumi Event & News Letter ✔ ' + `${Date.now().toString()}`,
-        html: postTemplate(title, descriptions, image, status)
+        html: postTemplate(title, descriptions, status, event, type)
       };
       // send mail with defined transport object
       smtpTransport.sendMail(mailOptions, function(error, response) {
@@ -89,7 +90,7 @@ router.post(
 router.get('/posts', auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
-    res.json(posts);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ msg: 'Server Error' });
   }
@@ -104,7 +105,7 @@ router.get('/:post_id', auth, async (req, res) => {
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
     }
-    res.json(post);
+    return res.status(200).json(post);
   } catch (error) {
     console.log(error.message);
     if (error.kind == 'ObjectId') {
@@ -149,38 +150,16 @@ router.put(
   '/edit/:post_id',
   auth,
   admin,
-  [
-    check('title', 'title is require')
-      .not()
-      .isEmpty(),
-    check('descriptions', 'descriptions is require')
-      .not()
-      .isEmpty(),
-    check('status', 'status is require')
-      .not()
-      .isEmpty(),
-    check('image', 'image is require')
-      .not()
-      .isEmpty(),
-    check('gmailLists', 'gmail lists is require').isEmail()
-  ],
+
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(500).json({ errors: errors.array() });
-    }
     try {
-      /*if(post_id.toString() == filter(post_id => post_id == post._id)) {
-            return res.status(404).json({msg: 'Post not found'})
-        }*/
       const post = await Post.findByIdAndUpdate(
         { _id: req.params.post_id },
         req.body,
         { new: true, runValidators: true }
       );
       await post.save();
-      const { title, descriptions, image, status, gmailLists } = req.body;
-      console.log(image);
+      const { title, descriptions, status, gmailLists, event, type } = req.body;
       const smtpTransport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -188,12 +167,13 @@ router.put(
           pass: config.get('EMAIL_PASS')
         }
       });
+
       const mailOptions = {
         from: 'GLI Harumi - Event & News Letter ✔ <gli.harumi01@gmail.com>',
         to: gmailLists,
         subject:
           'GLI Harumi Event & News Letter ✔ ' + `${Date.now().toString()}`,
-        html: postTemplate(title, descriptions, image, status)
+        html: postTemplate(title, descriptions, status, event, type)
       };
       // send mail with defined transport object
       smtpTransport.sendMail(mailOptions, function(error, response) {
@@ -231,7 +211,56 @@ router.put('/like/:id', auth, async (req, res) => {
     //push user like ID into like array
     post.likes.unshift({ user: req.user.id });
     await post.save();
-    res.json(post.likes);
+    res.status(200).json(post.likes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+//@route        api/post/sns/:id
+//@des          Add sns by id Post
+//@access       Private - available to all user
+router.put('/sns/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    //POST ALREADY LIKE
+    if (
+      post.sns.filter(sns => sns.user.toString() === req.user.id).length > 0
+    ) {
+      return res.status(400).json({ msg: 'Post already accepted sns' });
+    }
+    //push user like ID into like array
+    post.sns.unshift({ user: req.user.id });
+    await post.save();
+    res.status(200).json(post.sns);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+//@route api/post/get/likes
+router.get('/get/likes/:postId', auth, async (req, res) => {
+  try {
+    //check if post exist
+    const likes = await Post.findOne({ _id: req.params.postId })
+      .populate('user', ['name'])
+      .populate('likes.user', ['name']);
+    return res.status(200).json(likes.likes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+//@route api/post/get/sns
+router.get('/get/sns/:postId', auth, async (req, res) => {
+  try {
+    //check if post exist
+    const sns = await Post.findOne({ _id: req.params.postId })
+      .populate('user', ['name'])
+      .populate('sns.user', ['name']);
+    return res.status(200).json(sns.sns);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ msg: 'Server error' });
@@ -265,74 +294,30 @@ router.put('/unlike/:id', auth, async (req, res) => {
   }
 });
 
-//@route        api/post/comment/:comment_id
-//@des          Comment by User id
+//@route        api/post/unlike/:id
+//@des          Unlike by id
 //@access       Private - available to all user
-router.put(
-  '/comment/:comment_id',
-  [
-    check('descriptions', 'descriptions is require')
-      .not()
-      .isEmpty()
-  ],
-  auth,
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.status(500).json({ errors: errors.array() });
-    }
-    try {
-      const user = await User.findById(req.user.id).select('-password');
-      const post = await Post.findById(req.params.comment_id);
-      const newComment = new Post({
-        descriptions: req.body.descriptions,
-        name: user.name,
-        avatar: user.avatar,
-        user: req.user.id
-      });
-      //push newComment into post and save
-      post.comments.unshift(newComment);
-      await post.save();
-      res.json(post.comments);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).json({ msg: 'Server Error' });
-    }
-  }
-);
-
-//@route        api/post/comment/:post_id/:comment_id
-//@des          User delete their own comment
-//@access       Private - available to all user
-router.delete('/comment/:post_id/:comment_id', auth, async (req, res) => {
+router.put('/sns/no/:id', auth, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.post_id);
-    if (!post) return res.status(404).json({ msg: 'Post not found' });
-
-    //Pull out comment
-    const comment = await post.comments.find(
-      comment => comment.id === req.params.comment_id
-    );
-    //Make sure comment existed
-    if (!comment) {
-      return res.status(404).json({ msg: 'Comment does not exist' });
+    const post = await Post.findById(req.params.id);
+    //POST ALREADY LIKE
+    if (
+      post.sns.filter(sns => sns.user.toString() === req.user.id).length === 0
+    ) {
+      return res.status(400).json({ msg: 'Post has not accepted sns yet' });
     }
-    //Check user own that comment or not
-    if (comment.user.toString() !== req.user.id) {
-      return res
-        .status(401)
-        .json({ msg: 'User not authorized to delete comment' });
-    }
-    //Remove comment
-    const removeIndex = await post.comments
-      .map(comment => comment.user.toString())
+    //push user like ID into like array
+    const removeIndex = await post.sns
+      .map(sns => sns.user.toString())
       .indexOf(req.user.id);
-    post.comments.splice(removeIndex, 1);
+    await post.sns.splice(removeIndex, 1);
+    //res.json({msg: 'You Unlike successfully'})
     await post.save();
-    res.json(post.comments);
+    res.json(post.sns);
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ msg: 'Server Error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
+
 module.exports = router;

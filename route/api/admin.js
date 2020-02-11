@@ -8,6 +8,7 @@ const Staff = require('../../model/Staff.model');
 const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
 const combine = require('../../middleware/Combine');
+const ClassFeedback = require('../../model/ClassFeedback.model');
 
 //@route        api/admin/profile/me
 //@des          user profile
@@ -20,9 +21,9 @@ router.get('/profile/me', auth, admin, async (req, res) => {
     );
 
     if (!profile) {
-      res.status(400).json({ msg: 'There is no profile found' });
+      return res.status(404).json({ msg: 'There is no profile found' });
     }
-    res.json(profile);
+    return res.status(200).json(profile);
   } catch (error) {
     console.log(error.message);
     res.status(500).json('Server Error');
@@ -64,6 +65,11 @@ router.post(
       .isEmpty(),
     check('email', 'email is require').isEmail(),
     check('bio', 'bio is require')
+      .not()
+      .isEmpty(),
+    check('admission', 'admission is require')
+      .not()
+      .isEmpty()
   ],
   auth,
   admin,
@@ -84,7 +90,8 @@ router.post(
         country,
         bank_account_details,
         position,
-        email
+        email,
+        admission
       } = req.body;
 
       const adminFields = {};
@@ -98,18 +105,17 @@ router.post(
       if (work_experiences) adminFields.work_experiences = work_experiences;
       if (country) adminFields.country = country;
       if (position) adminFields.position = position;
+      if (admission) adminFields.admission = admission;
       if (email) adminFields.email = email;
       if (addresses) {
         adminFields.addresses = addresses
           .split(', ')
           .map(address => address.trim());
-        console.log(adminFields.addresses);
       }
       if (bank_account_details) {
         adminFields.bank_account_details = bank_account_details
           .split(', ')
           .map(bank => bank.trim());
-        console.log(adminFields.bank_account_details);
       }
 
       let admin = await Admin.findOne({ user: req.user.id });
@@ -132,6 +138,26 @@ router.post(
     }
   }
 );
+
+//@route        api/admin/edit/:profile_id
+//@des          Update Profile by id
+//@access       Private - available only student
+router.put('/edit/:profile_id', auth, admin, async (req, res) => {
+  try {
+    const admin = await Admin.findByIdAndUpdate(
+      { _id: req.params.profile_id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    await admin.save();
+    res.status(200).json({ msg: 'Profile Update Successfully' });
+  } catch (error) {
+    console.log(error.message);
+    if (error.kind == 'ObjectId')
+      return res.status(404).json({ msg: 'Profile not found' });
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 
 //@route        api/admin/user_accounts
 //@des          Get All User ID
@@ -204,14 +230,27 @@ router.get('/get/student/profile/:profile_id', auth, async (req, res) => {
 });
 router.get('/get/staff/profile/:profile_id', auth, async (req, res) => {
   try {
-    let profile_id = await Staff.findById({ _id: req.params.profile_id })
-      .populate('user', ['_id', 'name', 'avatar', 'role', 'email'])
-      .populate('position', ['name']);
+    let profile_id = await Staff.findById({
+      _id: req.params.profile_id
+    }).populate('user', ['_id', 'name', 'avatar', 'role', 'email']);
 
     res.status(200).json(profile_id);
   } catch (error) {
     console.log(error.message);
     res.status(500).json('Server Error');
+  }
+});
+//api/admin/get/profile/:profile_id
+router.get('/get/profile/:profile_id', auth, async (req, res) => {
+  try {
+    let profileInfo = await Admin.findById({
+      _id: req.params.profile_id
+    }).populate('user', ['_id', 'name', 'avatar', 'role', 'email']);
+
+    return res.status(200).json(profileInfo);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
   }
 });
 //@route        api/admin/edit/staff/profile/:profile_id
@@ -244,8 +283,9 @@ router.delete('/remove/:user_id', auth, admin, async (req, res) => {
   try {
     //delete user and profile
     await User.findByIdAndRemove({ _id: req.params.user_id });
+    await ClassFeedback.findOneAndRemove({ _id: req.params.user_id });
     //consider to delete their account as well by checking with their role student || staff
-    res.json({ msg: 'User Deleted' });
+    return res.status(200).json({ msg: 'User Deleted' });
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Server Error');
@@ -280,7 +320,6 @@ router.delete('/remove/student/:profile_id', auth, admin, async (req, res) => {
 
     res.status(200).json({ msg: 'Student Profile Deleted' });
   } catch (error) {
-    console.log(error.message);
     res.status(500).send('Server Error');
   }
 });
@@ -305,9 +344,13 @@ router.get('/get/student/profiles', auth, combine, async (req, res) => {
 router.get('/get/staff/profiles', auth, async (req, res) => {
   try {
     //GET All STAFF PROFILE
-    const staffProfiles = await Staff.find({})
-      .populate('position')
-      .populate('user', ['_id', 'name', 'avatar', 'role', 'email']);
+    const staffProfiles = await Staff.find({}).populate('user', [
+      '_id',
+      'name',
+      'avatar',
+      'role',
+      'email'
+    ]);
     res.status(200).json(staffProfiles);
   } catch (error) {
     console.log(error.message);
@@ -332,14 +375,17 @@ router.delete('/remove/staff/:profile_id', auth, admin, async (req, res) => {
 //@route        api/admin/remove
 //@des          Remove Admin Profile ID
 //@access       Private/admin only
-router.delete('/remove/admin/:profile_id', auth, admin, async (req, res) => {
+router.delete('/remove/profile/:profile_id', auth, admin, async (req, res) => {
   try {
-    //DELETE STAFF PROFILE
-    await Admin.findByIdAndRemove({ _id: req.params.profile_id });
-    res.json({ msg: 'Admin Profile Deleted' });
+    await Admin.findByIdAndRemove({
+      _id: req.params.profile_id
+    });
+    res.status(200).json({ msg: 'Profile Remove Successfully' });
   } catch (error) {
     console.log(error.message);
-    res.status(500).send('Server Error');
+    if (error.kind == 'ObjectId')
+      return res.status(404).json({ msg: 'Profile not found' });
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

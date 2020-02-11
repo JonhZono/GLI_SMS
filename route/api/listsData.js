@@ -5,7 +5,6 @@ const Teacher = require('../../model/Teacher.model');
 const StudentLists = require('../../model/StudentLists.model');
 const Grade = require('../../model/Grade.model');
 const Course = require('../../model/Course.model');
-const Position = require('../../model/Position.model');
 const Classroom = require('../../model/Classroom.model');
 const auth = require('../../middleware/Auth');
 const admin = require('../../middleware/Admin');
@@ -25,13 +24,14 @@ router.post(
   admin,
   (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).send({ errors: errors.array() });
 
     const teacher = new Teacher(req.body);
 
     teacher.save((err, doc) => {
       if (err) return res.json({ success: false, err });
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         teacher: doc,
         msg: 'Teacher Add Successfully'
@@ -120,14 +120,15 @@ router.post(
   admin,
   (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).send({ errors: errors.array() });
 
     const { name } = req.body;
     const student = new StudentLists({ name });
 
     student.save((err, doc) => {
       if (err) return { success: false, err };
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         student: doc,
         msg: 'Student add successfully'
@@ -216,13 +217,14 @@ router.post(
   admin,
   (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).send({ errors: errors.array() });
 
     const grade = new Grade(req.body);
 
     grade.save((err, doc) => {
-      if (err) return res.json({ success: false, err });
-      res.status(200).json({
+      if (err) res.status(400).send({ success: false, err });
+      return res.status(200).send({
         success: true,
         grade: doc,
         msg: 'Grade add successfully'
@@ -311,7 +313,8 @@ router.post(
   admin,
   (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).send({ errors: errors.array() });
 
     const course = new Course(req.body);
 
@@ -320,7 +323,7 @@ router.post(
       res.status(200).json({
         success: true,
         course: doc,
-        msg: 'Course remove successfully'
+        msg: 'Course created successfully'
       });
     });
   }
@@ -341,7 +344,7 @@ router.put('/edit/course/:course_id', auth, admin, async (req, res) => {
       { new: true }
     );
     await course.save();
-    res.status(200).json({ msg: 'Course update successfully' });
+    res.status(200).json({ msg: 'Course updated successfully', success: true });
   } catch (error) {
     res.status(500).json({ msg: 'Server Error' });
   }
@@ -373,7 +376,7 @@ router.delete('/remove/course/:course_id', auth, admin, async (req, res) => {
     }
     await course.remove();
     return res.status(200).json({
-      msg: 'Course remove successfully',
+      msg: 'Course removed successfully',
       success: true
     });
   } catch (error) {
@@ -392,105 +395,6 @@ router.delete('/remove/course/:course_id', auth, admin, async (req, res) => {
 });
 
 /**
- * @POSITION
- */
-//@position Lists
-router.post(
-  '/add/position',
-  [
-    check('name', 'position name is require')
-      .not()
-      .isEmpty()
-  ],
-  auth,
-  admin,
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
-
-    const position = new Position(req.body);
-
-    position.save((err, doc) => {
-      if (err) return res.json({ success: false, err });
-      res.status(200).json({
-        success: true,
-        position: doc,
-        msg: 'Position add successfully'
-      });
-    });
-  }
-);
-
-router.get('/get/positions', (req, res) => {
-  Position.find({}, (err, doc) => {
-    if (err) return res.status(400).send(err);
-    res.status(200).json(doc);
-  });
-});
-
-router.put('/edit/position/:position_id', auth, admin, async (req, res) => {
-  try {
-    const position = await Position.findByIdAndUpdate(
-      { _id: req.params.position_id },
-      req.body,
-      { new: true }
-    );
-    await position.save();
-    res.status(200).json({ msg: 'Position update successfully' });
-  } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
-  }
-});
-
-router.get('/get/position/:position_id', auth, async (req, res) => {
-  try {
-    const position = await Position.findById(req.params.position_id);
-    res.status(200).json(position);
-  } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
-  }
-});
-
-router.delete(
-  '/remove/position/:position_id',
-  auth,
-  admin,
-  async (req, res) => {
-    try {
-      const position = await Position.findById(req.params.position_id);
-      //Check user authorized
-
-      if (!position) {
-        return res.status(404).json({
-          errors: [
-            {
-              msg: 'Position not found!',
-              success: false
-            }
-          ]
-        });
-      }
-      await position.remove();
-      return res.status(200).json({
-        msg: 'Position remove successfully',
-        success: true
-      });
-    } catch (error) {
-      if (error.kind == 'ObjectId') {
-        return res.status(404).json({
-          errors: [
-            {
-              msg: 'Position not found',
-              success: false
-            }
-          ]
-        });
-      }
-      return res.status(500).json({ msg: 'Server Error' });
-    }
-  }
-);
-/**
  * @CLASSROOM
  */
 //@classroom lists
@@ -505,14 +409,15 @@ router.post(
   admin,
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).send({ errors: errors.array() });
     try {
       const classroom = new Classroom(req.body);
       await classroom.save();
       res.status(200).json({
         success: true,
         classroom,
-        msg: 'Classroom add successfully'
+        msg: 'Classroom created successfully'
       });
     } catch (error) {
       res.status(500).json({ msg: 'Server Error', success: false });

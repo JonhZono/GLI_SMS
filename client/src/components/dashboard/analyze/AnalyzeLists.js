@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import UserLayout from '../../../hoc/User';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import AnalyzeTableListInfo from './AnalyzeTableListInfo';
 import { adminGetStatistics, clearStatistic } from '../../../actions/analysis';
 import Spinner from '../../spinner/Spinner';
@@ -10,7 +9,6 @@ import CreateAnalyze from './CreateAnalyze';
 
 class AnalyzeLists extends Component {
   componentDidMount = () => {
-   
     this.props.dispatch(adminGetStatistics());
   };
 
@@ -70,10 +68,10 @@ class AnalyzeLists extends Component {
                         background: 'whitesmoke'
                       }}
                     >
-                      <p className='card-header-title'>
-                        Performance Lists
-                      </p>
-                      <CreateAnalyze />
+                      <p className='card-header-title'>Performance Lists</p>
+                      <CreateAnalyze
+                        totalAnalysis={analysis.performanceLists.length}
+                      />
                     </header>
                     <Spinner />
                   </div>
@@ -104,7 +102,7 @@ class AnalyzeLists extends Component {
                 paddingBottom: '1rem'
               }}
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp; Analysis
             </h1>
             <div className='columns'>
@@ -117,7 +115,9 @@ class AnalyzeLists extends Component {
                     }}
                   >
                     <p className='card-header-title'>Performance Lists</p>
-                    <CreateAnalyze />
+                    <CreateAnalyze
+                      totalAnalysis={analysis.performanceLists.length}
+                    />
                   </header>
                   <AnalyzeTableListInfo
                     lists={this.props.analysis.performanceLists}

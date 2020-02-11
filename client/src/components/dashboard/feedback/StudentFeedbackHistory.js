@@ -37,7 +37,6 @@ class StudentFeedbackHistory extends React.Component {
                 fontSize: 20,
                 paddingBottom: '1rem'
               }}
-              className='has-text-weight-bold'
             >
               <i class='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;History
@@ -52,7 +51,11 @@ class StudentFeedbackHistory extends React.Component {
                     }}
                   >
                     <p className='card-header-title'>List of Feedback</p>
-                    <StudentFeedback />
+                    <StudentFeedback
+                      totalFeedback={
+                        this.props.feedback.adminGetOverallReport.length
+                      }
+                    />
                   </header>
                   <Spinner />
                 </div>
@@ -80,9 +83,8 @@ class StudentFeedbackHistory extends React.Component {
                 fontSize: 20,
                 paddingBottom: '1rem'
               }}
-              className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;History
             </h1>
             <div className='columns'>
@@ -95,7 +97,11 @@ class StudentFeedbackHistory extends React.Component {
                     }}
                   >
                     <p className='card-header-title'>List of Feedback</p>
-                    <StudentFeedback />
+                    <StudentFeedback
+                      totalFeedback={
+                        this.props.feedback.adminGetOverallReport.length
+                      }
+                    />
                   </header>
 
                   <FeedbackLists

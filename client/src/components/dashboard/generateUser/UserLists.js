@@ -4,10 +4,11 @@ import Spinner from '../../spinner/Spinner';
 
 const UserLists = props => {
   const renderLists = () =>
-    props.userLists && props.userLists.length > 0
-      ? props.userLists.map((item, i) => <UserTableLists key={i} {...item} />)
-      : null;
-  console.log(props.userLists);
+    props.userLists && props.userLists.length > 0 ? (
+      props.userLists.map((item, i) => <UserTableLists key={i} {...item} />)
+    ) : (
+      <Spinner />
+    );
 
   return props.loading ? (
     <Spinner />

@@ -5,16 +5,21 @@ import {
   LOAD_USER,
   AUTH_ERROR,
   LOG_OUT,
-  CLEAR_PROFILE,
   ADMIN_CREATE_USER,
   CREATE_USER_ERROR,
   ADMIN_GET_USER_ACCOUNT,
   GET_USER_AUTH,
-  ALL_STUDENT_ACCOUNTS
+  ALL_STUDENT_ACCOUNTS,
+  CLEAR_USER_LIST
 } from './types';
 import { setAlert } from '../actions/alert';
-import {} from '../actions/feedback';
 import setGlobalToken from '../components/utils/setGlobalToken';
+import { clearProfileDetails, clearConfigData } from '../actions/profile';
+import { clearViewPost, clearEditPost } from './post';
+import { clearStatistic, clearViewPerformance } from './analysis';
+import { clearExam, clearViewExam } from './exam';
+import { clearFee } from './duefee';
+import { clearViewEachFeedback } from './feedback';
 
 //load user to check if token is available,
 //since token is stateless when reload is clear from the header, set up global header to store token
@@ -64,8 +69,17 @@ export const loginUser = (email, password) => async dispatch => {
 };
 
 export const logOut = history => dispatch => {
-  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOG_OUT });
+  dispatch(clearProfileDetails());
+  dispatch(clearConfigData());
+  dispatch(clearViewPost());
+  dispatch(clearEditPost());
+  dispatch(clearStatistic());
+  dispatch(clearViewPerformance());
+  dispatch(clearViewEachFeedback());
+  dispatch(clearExam());
+  dispatch(clearViewExam());
+  dispatch(clearFee());
   history.push('/');
 };
 
@@ -150,4 +164,10 @@ export const getUserAuth = () => async dispatch => {
   } catch (error) {
     dispatch({ type: AUTH_ERROR });
   }
+};
+
+export const clearUserData = () => dispatch => {
+  dispatch({
+    type: CLEAR_USER_LIST
+  });
 };

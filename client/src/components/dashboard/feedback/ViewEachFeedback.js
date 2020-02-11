@@ -53,10 +53,7 @@ class ViewEachFeedback extends Component {
                     >
                       {this.props.feedback.getStudentReportById && (
                         <p>
-                          {
-                            this.props.feedback.getStudentReportById.ownerId
-                              .name
-                          }{' '}
+                          {this.props.feedback.getStudentReportById.name}{' '}
                           Feedback
                         </p>
                       )}
@@ -102,13 +99,10 @@ class ViewEachFeedback extends Component {
                       }}
                     >
                       {this.props.feedback.getStudentReportById && (
-                        <p>
-                          {
-                            this.props.feedback.getStudentReportById.ownerId
-                              .name
-                          }{' '}
+                        <span>
+                          {this.props.feedback.getStudentReportById.name}{' '}
                           Feedback
-                        </p>
+                        </span>
                       )}
                     </p>
                   </header>

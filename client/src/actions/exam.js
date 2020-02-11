@@ -49,7 +49,6 @@ export const getIndividualStudentExamById = exam_id => async dispatch => {
 //Everyone get individual exam score to show in viewEachFeedback
 export const getExamScoreByStudentID = student_id => async dispatch => {
   const response = await axios.get(`/api/student/exam/score/all/${student_id}`);
-  console.log(response.data[0]);
   try {
     dispatch({
       type: GET_EXAM_SCORE_BY_STUDENT_ID,

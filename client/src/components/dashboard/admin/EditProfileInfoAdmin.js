@@ -1,27 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  getTeacher,
-  getGrade,
-  getCourse,
-  getClassroom,
-  getCurrentStudentProfile,
-  studentEditProfileById
-} from '../../../../actions/profile';
-import Alert from '../../../alert/Alert';
-import UserLayout from '../../../../hoc/User';
-import FormField from '../../../../components/utils/form/formField';
-import ProfileImage from '../../../utils/form/profileImage';
+import { adminEditProfileById } from '../../../actions/profile';
+import Alert from '../../alert/Alert';
+import UserLayout from '../../../hoc/User';
+import FormField from '../../../components/utils/form/formField';
+import ProfileImage from '../../utils/form/profileImage';
 import {
   updates,
   generateFormData,
-  populateFormField,
   populateFields
-} from '../../../utils/form/formActions';
-import Spinner from '../../../spinner/Spinner';
+} from '../../utils/form/formActions';
+import Spinner from '../../spinner/Spinner';
 
-class EditProfileInfo extends React.Component {
+class EditProfileInfoAdmin extends React.Component {
   state = {
     formData: {
       name: {
@@ -30,11 +22,10 @@ class EditProfileInfo extends React.Component {
         config: {
           name: 'name',
           type: 'text',
-          placeholder: 'Student name'
+          placeholder: 'Admin name'
         },
         showLabel: false
       },
-
       gender: {
         element: 'select',
         value: '',
@@ -43,12 +34,12 @@ class EditProfileInfo extends React.Component {
           name: 'gender',
           options: [
             {
-              key: 'boy',
-              value: 'Boy'
+              key: 'men',
+              value: 'Men'
             },
             {
-              key: 'girl',
-              value: 'Girl'
+              key: 'women',
+              value: 'Women'
             }
           ]
         },
@@ -58,19 +49,54 @@ class EditProfileInfo extends React.Component {
         element: 'input',
         value: '',
         config: {
-          name: 'date',
+          name: 'birth',
           type: 'date',
           placeholder: 'Your Birthday Date'
         },
         showLabel: false
       },
-      classroom: {
+      marital_status: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'marital_status',
+          type: 'input',
+          placeholder: 'Marital Status'
+        },
+        showLabel: false
+      },
+      position: {
         element: 'select',
         value: '',
         config: {
-          label: 'Which Classroom',
-          name: 'classroom',
-          options: []
+          label: 'Which Position',
+          name: 'position',
+          options: [
+            {
+              key: 'Administrator',
+              value: 'Administrator'
+            },
+            {
+              key: 'Head Teacher',
+              value: 'Head Teacher'
+            },
+            {
+              key: 'Full Time Teacher',
+              value: 'Full Time Teacher'
+            },
+            {
+              key: 'Part Time Teacher',
+              value: 'Part Time Teacher'
+            },
+            {
+              key: 'President',
+              value: 'President'
+            },
+            {
+              key: 'Supporting Teacher',
+              value: 'Supporting Teacher'
+            }
+          ]
         },
         showLabel: true
       },
@@ -84,87 +110,44 @@ class EditProfileInfo extends React.Component {
         },
         showLabel: false
       },
-      course: {
-        element: 'select',
-        value: '',
-        config: {
-          label: 'Which Course',
-          name: 'course',
-          options: []
-        },
-        showLabel: true
-      },
       admission: {
         element: 'input',
         value: '',
         config: {
-          name: 'father',
+          name: 'admission',
           type: 'date',
           placeholder: 'Admission Date'
         },
         showLabel: false
       },
-      teacher: {
-        element: 'select',
+      work_experiences: {
+        element: 'input',
         value: '',
         config: {
-          label: 'Teacher',
-          name: 'teacher',
-          options: [
-            /* fetch from api */
-          ]
+          name: 'work-experiences',
+          type: 'input',
+          placeholder: 'How many year?'
+        },
+        showLabel: false
+      },
+      bio: {
+        element: 'textarea',
+        value: '',
+        config: {
+          name: 'bio',
+          label: 'Please Enter Your BIO',
+          type: 'text',
+          placeholder: 'Please enter your BIO that should describe about you...'
         },
         showLabel: true
       },
-      grade: {
-        element: 'select',
-        value: '',
-        config: {
-          label: 'Your Grade',
-          name: 'grade',
-          options: [
-            /* fetch from api */
-          ]
-        },
-        showLabel: true
-      },
-      fee: {
+      bank_account_details: {
         element: 'input',
         value: '',
         config: {
-          name: 'fee',
+          name: 'bank_account_details',
           type: 'text',
-          placeholder: 'Due Fee'
-        },
-        showLabel: false
-      },
-      father: {
-        element: 'input',
-        value: '',
-        config: {
-          name: 'father',
-          type: 'text',
-          placeholder: 'Your father name'
-        },
-        showLabel: false
-      },
-      father_occupation: {
-        element: 'input',
-        value: '',
-        config: {
-          name: 'father_occupation',
-          type: 'text',
-          placeholder: 'What is he doing?'
-        },
-        showLabel: false
-      },
-      mother: {
-        element: 'input',
-        value: '',
-        config: {
-          name: 'mother',
-          type: 'text',
-          placeholder: 'Your mother name'
+          placeholder: 'Account Name, Bank Name, Bank ID'
         },
         showLabel: false
       },
@@ -175,6 +158,16 @@ class EditProfileInfo extends React.Component {
           name: 'addresses',
           type: 'text',
           placeholder: 'Your address name'
+        },
+        showLabel: false
+      },
+      country: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'country',
+          type: 'input',
+          placeholder: 'Where are you from?'
         },
         showLabel: false
       },
@@ -193,53 +186,11 @@ class EditProfileInfo extends React.Component {
       }
     }
   };
-
   componentDidMount = () => {
     const formData = this.state.formData;
 
-    this.props.dispatch(getClassroom()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.classroomList,
-        'classroom'
-      );
-      this.updateFields(newFormData);
-    });
-
-    this.props.dispatch(getTeacher()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.teacherList,
-        'teacher'
-      );
-      this.updateFields(newFormData);
-    });
-    this.props.dispatch(getGrade()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.gradeList,
-        'grade'
-      );
-      this.updateFields(newFormData);
-    });
-    this.props.dispatch(getCourse()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.courseList,
-        'course'
-      );
-      this.updateFields(newFormData);
-    });
-    this.props.dispatch(getCurrentStudentProfile());
-    if (this.props.profile.studentProfile === null) {
-      return <Spinner />;
-    } else {
-      const newFormData = populateFields(
-        formData,
-        this.props.profile.studentProfile
-      );
-      this.updateFields(newFormData);
-    }
+    const newFormData = populateFields(formData, this.props.adminProfile);
+    this.updateFields(newFormData);
   };
 
   updateFields = newFormData => {
@@ -253,7 +204,7 @@ class EditProfileInfo extends React.Component {
     const newFormData = updates(
       element,
       this.state.formData,
-      'EditProfileStudentInfo'
+      'EditProfileAdminInfo'
     );
     this.setState({
       formData: newFormData
@@ -264,18 +215,16 @@ class EditProfileInfo extends React.Component {
     event.preventDefault();
     let dataToSubmit = generateFormData(
       this.state.formData,
-      'EditProfileStudentInfo'
+      'EditProfileAdminInfo'
     );
 
     this.props.dispatch(
-      studentEditProfileById(
-        this.props.match.params.profile_id,
+      adminEditProfileById(
+        this.props.profile_id,
         dataToSubmit,
-        this.props.history,
-        true
+        this.props.history
       )
     );
-    //console.log(dataToSubmit);
   };
   imageHandler = images => {
     const newFormData = { ...this.state.formData };
@@ -310,7 +259,7 @@ class EditProfileInfo extends React.Component {
               className='has-text-weight-bold'
             >
               <i class='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Student Profile
+              &nbsp;&nbsp;Admin Profile
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -351,7 +300,7 @@ class EditProfileInfo extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              Student Profile
+              Admin Profile
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -378,77 +327,76 @@ class EditProfileInfo extends React.Component {
                           formData={this.state.formData.name}
                           change={element => this.updateForm(element)}
                         />
-
+                        <br />
                         <FormField
                           id={'gender'}
                           formData={this.state.formData.gender}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'birth'}
                           formData={this.state.formData.birth}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
-                          id={'classroom'}
-                          formData={this.state.formData.classroom}
+                          id={'bio'}
+                          formData={this.state.formData.bio}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+                        <FormField
+                          id={'position'}
+                          formData={this.state.formData.position}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
+                          id={'marital_status'}
+                          formData={this.state.formData.marital_status}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'phone'}
                           formData={this.state.formData.phone}
                           change={element => this.updateForm(element)}
                         />
-                        <FormField
-                          id={'course'}
-                          formData={this.state.formData.course}
-                          change={element => this.updateForm(element)}
-                        />
+                        <br />
+
                         <FormField
                           id={'admission'}
                           formData={this.state.formData.admission}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+
                         <FormField
-                          id={'grade'}
-                          formData={this.state.formData.grade}
+                          id={'work_experiences'}
+                          formData={this.state.formData.work_experiences}
                           change={element => this.updateForm(element)}
                         />
-                        <FormField
-                          id={'teacher'}
-                          formData={this.state.formData.teacher}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'fee'}
-                          formData={this.state.formData.fee}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'father'}
-                          formData={this.state.formData.father}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'father_occupation'}
-                          formData={this.state.formData.father_occupation}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'mother'}
-                          formData={this.state.formData.mother}
-                          change={element => this.updateForm(element)}
-                        />
+                        <br />
+
                         <FormField
                           id={'email'}
                           formData={this.state.formData.email}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'addresses'}
                           formData={this.state.formData.addresses}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
+                        <FormField
+                          id={'country'}
+                          formData={this.state.formData.country}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>
@@ -469,7 +417,7 @@ class EditProfileInfo extends React.Component {
                             <div className='field'>
                               <div className='control'>
                                 <Link
-                                  to='/user/student/profile'
+                                  to='/user/admin/profile'
                                   type='submit'
                                   className='button is-normal buttonForm'
                                 >
@@ -494,4 +442,4 @@ class EditProfileInfo extends React.Component {
 
 const mapStateToProps = state => ({ user: state.user, profile: state.profile });
 
-export default connect(mapStateToProps)(EditProfileInfo);
+export default connect(mapStateToProps)(EditProfileInfoAdmin);

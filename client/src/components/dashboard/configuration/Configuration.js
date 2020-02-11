@@ -9,24 +9,16 @@ import Grade from '../configuration/grade/Grade';
 import CreateGrade from '../configuration/grade/CreateGrade';
 import Student from '../configuration/student/Student';
 import CreateStudent from '../configuration/student/CreateStudent';
-import Position from '../configuration/position/Position';
-import CreatePosition from '../configuration/position/CreatePosition';
 import Teacher from '../configuration/teacher/Teacher';
 import CreateTeacher from '../configuration/teacher/CreateTeacher';
 import Alert from '../../alert/Alert';
-import FilterClass from './classroom/FilterClass';
-import FilterGrade from './grade/FilterGrade';
-import FilterCourse from './course/FilterCourse';
-import FilterStudent from './student/FilterStudent';
-import FilterTeacher from './teacher/FilterTeacher';
-import FilterPosition from './position/FilterPosition';
 import {
   getTeacher,
   getGrade,
   getStudent,
-  getPosition,
   getClassroom,
-  getCourse
+  getCourse,
+  clearConfigData
 } from '../../../actions/profile';
 import Spinner from '../../spinner/Spinner';
 
@@ -35,13 +27,12 @@ class Configuration extends React.Component {
     this.props.dispatch(getTeacher());
     this.props.dispatch(getGrade());
     this.props.dispatch(getStudent());
-    this.props.dispatch(getPosition());
     this.props.dispatch(getClassroom());
     this.props.dispatch(getCourse());
   };
 
   componentWillUnmount = () => {
-    console.log('Component Unmount!');
+    this.props.dispatch(clearConfigData());
   };
   render() {
     const profile = this.props.profile;
@@ -50,7 +41,6 @@ class Configuration extends React.Component {
       profile.gradeList === null &&
       profile.listOfStudents === null &&
       profile.classroomList === null &&
-      profile.positionList === null &&
       profile.courseList === null ? (
       <UserLayout>
         <div
@@ -84,9 +74,7 @@ class Configuration extends React.Component {
                       background: 'smoke'
                     }}
                   >
-                    <p className='card-header-title'>
-                      List of Configuration
-                    </p>
+                    <p className='card-header-title'>List of Configuration</p>
                   </header>
                   <Spinner />
                 </div>
@@ -128,9 +116,7 @@ class Configuration extends React.Component {
                       background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title'>
-                      List of Configuration
-                    </p>
+                    <p className='card-header-title'>List of Configuration</p>
                   </header>
                   <div className='card'>
                     <div className='card-content'>
@@ -138,12 +124,7 @@ class Configuration extends React.Component {
                       <div className='columns'>
                         <div className='column'>
                           <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterCourse />
-                            </div>
-                            <div>
-                              <CreateCourse />
-                            </div>
+                            <CreateCourse />
                           </div>
                           <Course
                             course={profile.courseList}
@@ -152,12 +133,7 @@ class Configuration extends React.Component {
                         </div>
                         <div className='column'>
                           <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterStudent />
-                            </div>
-                            <div>
-                              <CreateStudent />
-                            </div>
+                            <CreateStudent />
                           </div>
                           <Student
                             student={profile.listOfStudents}
@@ -168,12 +144,7 @@ class Configuration extends React.Component {
                       <div className='columns'>
                         <div className='column'>
                           <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterGrade />
-                            </div>
-                            <div>
-                              <CreateGrade />
-                            </div>
+                            <CreateGrade />
                           </div>
                           <Grade
                             grade={profile.gradeList}
@@ -182,12 +153,7 @@ class Configuration extends React.Component {
                         </div>
                         <div className='column'>
                           <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterClass />
-                            </div>
-                            <div>
-                              <CreateClass />
-                            </div>
+                            <CreateClass />
                           </div>
 
                           <Classroom
@@ -199,29 +165,10 @@ class Configuration extends React.Component {
                       <div className='columns'>
                         <div className='column'>
                           <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterTeacher />
-                            </div>
-                            <div>
-                              <CreateTeacher />
-                            </div>
+                            <CreateTeacher />
                           </div>
                           <Teacher
                             teacher={profile.teacherList}
-                            loading={profile.loading}
-                          />
-                        </div>
-                        <div className='column'>
-                          <div className='columns'>
-                            <div style={{ marginRight: '50px' }}>
-                              <FilterPosition />
-                            </div>
-                            <div>
-                              <CreatePosition />
-                            </div>
-                          </div>
-                          <Position
-                            position={profile.positionList}
                             loading={profile.loading}
                           />
                         </div>

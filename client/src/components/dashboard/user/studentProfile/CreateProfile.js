@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import $ from 'jquery';
 import { connect } from 'react-redux';
 import {
   createStudentProfile,
@@ -251,6 +252,22 @@ class CreateStudentProfile extends React.Component {
   };
 
   render() {
+    $(document).ready(function() {
+      $('#showModal').click(function() {
+        $('.modal').addClass('is-active');
+      });
+
+      $('.modal-close').click(function() {
+        $('.modal').removeClass('is-active');
+      });
+      $('.toggler').on('click', function() {
+        $('.menu-container').toggleClass('active');
+      });
+      $('.nav-toggler').on('click', function() {
+        $('.navbar-toggler').toggleClass('is-active');
+        $('.navbar-menu').toggleClass('is-active');
+      });
+    });
     return this.props.profile.loading ? (
       <UserLayout>
         <div
@@ -338,73 +355,124 @@ class CreateStudentProfile extends React.Component {
                           formData={this.state.formData.name}
                           change={element => this.updateForm(element)}
                         />
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'gender'}
+                            formData={this.state.formData.gender}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'birth'}
+                            formData={this.state.formData.birth}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'classroom'}
+                            formData={this.state.formData.classroom}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'phone'}
+                            formData={this.state.formData.phone}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'course'}
+                            formData={this.state.formData.course}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'admission'}
+                            formData={this.state.formData.admission}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'grade'}
+                            formData={this.state.formData.grade}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'teacher'}
+                            formData={this.state.formData.teacher}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
 
-                        <FormField
-                          id={'gender'}
-                          formData={this.state.formData.gender}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'birth'}
-                          formData={this.state.formData.birth}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'classroom'}
-                          formData={this.state.formData.classroom}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'phone'}
-                          formData={this.state.formData.phone}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'course'}
-                          formData={this.state.formData.course}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'admission'}
-                          formData={this.state.formData.admission}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'grade'}
-                          formData={this.state.formData.grade}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'teacher'}
-                          formData={this.state.formData.teacher}
-                          change={element => this.updateForm(element)}
-                        />
-
-                        <FormField
-                          id={'father'}
-                          formData={this.state.formData.father}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'father_occupation'}
-                          formData={this.state.formData.father_occupation}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'mother'}
-                          formData={this.state.formData.mother}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'email'}
-                          formData={this.state.formData.email}
-                          change={element => this.updateForm(element)}
-                        />
-                        <FormField
-                          id={'addresses'}
-                          formData={this.state.formData.addresses}
-                          change={element => this.updateForm(element)}
-                        />
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'father'}
+                            formData={this.state.formData.father}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'father_occupation'}
+                            formData={this.state.formData.father_occupation}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'mother'}
+                            formData={this.state.formData.mother}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'email'}
+                            formData={this.state.formData.email}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
+                        <div
+                          style={{ marginTop: '15px', marginBottom: '15px' }}
+                        >
+                          <FormField
+                            id={'addresses'}
+                            formData={this.state.formData.addresses}
+                            change={element => this.updateForm(element)}
+                          />
+                        </div>
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>

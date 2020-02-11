@@ -80,6 +80,7 @@ class EditNewsLetter extends Component {
       <EditPost
         post_id={this.props.match.params.post_id}
         postById={this.props.post.postById}
+        loading={this.props.post.loading}
       />
     );
   }

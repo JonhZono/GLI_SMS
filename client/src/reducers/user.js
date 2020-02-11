@@ -4,7 +4,7 @@ import {
   LOAD_USER,
   AUTH_ERROR,
   LOG_OUT,
-  CLEAR_PROFILE,
+  CLEAR_USER_LIST,
   ALL_STUDENT_ACCOUNTS,
   ADMIN_CREATE_USER,
   CREATE_USER_ERROR,
@@ -77,7 +77,20 @@ export default (state = initialState, action) => {
         token: null,
         role: '',
         userData: null,
-        getUserAuth: null
+        getUserAuth: null,
+        userLists: [],
+        allStudentSelectField: [],
+        getUserData: null,
+        id: null,
+        name: null,
+        email: null,
+        avatar: null
+      };
+    case CLEAR_USER_LIST:
+      return {
+        ...state,
+        loading: true,
+        userLists: []
       };
     default:
       return state;

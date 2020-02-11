@@ -77,7 +77,7 @@ const StaffProfile = props => {
             }}
             className='has-text-weight-bold'
           >
-            <i class='fas fa-arrow-circle-right' />
+            <i className='fas fa-arrow-circle-right' />
             &nbsp;&nbsp;Staff Profile
           </h1>
           <div className='columns'>

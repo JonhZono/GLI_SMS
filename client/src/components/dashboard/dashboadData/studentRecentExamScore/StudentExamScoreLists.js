@@ -16,6 +16,7 @@ class StudentExamScoreLists extends Component {
   componentWillUnmount = () => {
     this.props.dispatch(clearExam());
   };
+
   render() {
     return (
       <table className='fixed_header'>

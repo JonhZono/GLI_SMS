@@ -98,6 +98,26 @@ class EditAnalyze extends React.Component {
         },
         showLabel: true
       },
+      name: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student name'
+        },
+        showLabel: false
+      },
+      examDate: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'examDate',
+          type: 'text',
+          placeholder: 'Please enter date format YYYY/MM/DD'
+        },
+        showLabel: false
+      },
       ownerId: {
         element: 'select',
         value: '',
@@ -232,7 +252,7 @@ class EditAnalyze extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Edit Analysis
             </h1>
             <div className='columns'>
@@ -250,6 +270,12 @@ class EditAnalyze extends React.Component {
                     <Alert />
                     <div className='content'>
                       <form onSubmit={event => this.submitForm(event)}>
+                        <FormField
+                          id={'name'}
+                          formData={formData.name}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'writing'}
                           formData={formData.writing}
@@ -289,6 +315,12 @@ class EditAnalyze extends React.Component {
                         <FormField
                           id={'attitude'}
                           formData={formData.attitude}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FormField
+                          id={'examDate'}
+                          formData={formData.examDate}
                           change={element => this.updateForm(element)}
                         />
                         <br />

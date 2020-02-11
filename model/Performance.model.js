@@ -49,6 +49,13 @@ const PerformanceSchema = new mongoose.Schema(
       required: true,
       ref: 'user'
     },
+    name: {
+      type: String,
+      required: true
+    },
+    examDate: {
+      type: String
+    },
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

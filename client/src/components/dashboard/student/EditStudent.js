@@ -56,7 +56,7 @@ class EditStudentProfile extends React.Component {
         element: 'input',
         value: '',
         config: {
-          name: 'date',
+          name: 'birth',
           type: 'date',
           placeholder: 'Your Birthday Date'
         },
@@ -96,7 +96,7 @@ class EditStudentProfile extends React.Component {
         element: 'input',
         value: '',
         config: {
-          name: 'father',
+          name: 'admission',
           type: 'date',
           placeholder: 'Admission Date'
         },
@@ -126,16 +126,7 @@ class EditStudentProfile extends React.Component {
         },
         showLabel: true
       },
-      fee: {
-        element: 'input',
-        value: '',
-        config: {
-          name: 'fee',
-          type: 'text',
-          placeholder: 'Due Fee'
-        },
-        showLabel: false
-      },
+      
       father: {
         element: 'input',
         value: '',
@@ -237,7 +228,7 @@ class EditStudentProfile extends React.Component {
       this.updateFields(newFormData);
     });
     //Populate the edit field
-    console.log(this.props.studentProfile);
+
     const newFormData = populateFields(formData, this.props.studentProfile);
     this.setState({
       formData: newFormData
@@ -261,7 +252,6 @@ class EditStudentProfile extends React.Component {
   submitForm = event => {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'update_student');
-    console.log(dataToSubmit);
     this.props.dispatch(
       adminEditStudentProfileById(this.props.profile_id, dataToSubmit)
     );
@@ -326,81 +316,92 @@ class EditStudentProfile extends React.Component {
                         <ProfileImage
                           imageHandler={image => this.imageHandler(image)}
                         />
+                      
                         <FormField
                           id={'name'}
                           formData={this.state.formData.name}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'gender'}
                           formData={this.state.formData.gender}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'birth'}
                           formData={this.state.formData.birth}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'classroom'}
                           formData={this.state.formData.classroom}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'phone'}
                           formData={this.state.formData.phone}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'course'}
                           formData={this.state.formData.course}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'admission'}
                           formData={this.state.formData.admission}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'grade'}
                           formData={this.state.formData.grade}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'teacher'}
                           formData={this.state.formData.teacher}
                           change={element => this.updateForm(element)}
                         />
-                        <FormField
-                          id={'fee'}
-                          formData={this.state.formData.fee}
-                          change={element => this.updateForm(element)}
-                        />
+                        
+                        <br />
                         <FormField
                           id={'father'}
                           formData={this.state.formData.father}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'father_occupation'}
                           formData={this.state.formData.father_occupation}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'mother'}
                           formData={this.state.formData.mother}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'email'}
                           formData={this.state.formData.email}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
                         <FormField
                           id={'addresses'}
                           formData={this.state.formData.addresses}
                           change={element => this.updateForm(element)}
                         />
+                        <br />
 
                         <div className='field is-horizontal'>
                           <div className='field-label'></div>
@@ -411,7 +412,7 @@ class EditStudentProfile extends React.Component {
                                   type='submit'
                                   className='button is-outlined buttonForm'
                                 >
-                                  UPDATE
+                                  UPDATE PROFILE
                                 </button>
                               </div>
                             </div>

@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import UserLayout from '../../../../hoc/User';
-import Spinner from '../../../spinner/Spinner';
-import { studentDueFeeLists } from '../../../../actions/duefee';
-import RenderFee from './RenderFee';
+import ViewDetailsFee from './ViewDetailsFee';
 
-class DueFee extends React.Component {
+import Spinner from '../../spinner/Spinner';
+import UserLayout from '../../../hoc/User';
+import { adminGetFeeById, clearFee } from '../../../actions/duefee';
+
+class ViewEachFee extends Component {
   componentDidMount = () => {
-    this.props.dispatch(studentDueFeeLists(this.props.match.params.fee_id));
+    const fee_id = this.props.match.params.fee_id;
+    this.props.dispatch(adminGetFeeById(fee_id));
   };
-
+  componentWillUnmount = () => {
+    this.props.dispatch(clearFee());
+  };
   render() {
     return this.props.fee.individualFeeLists === null &&
       this.props.fee.loading ? (
@@ -31,21 +36,21 @@ class DueFee extends React.Component {
                 fontSize: 20,
                 paddingBottom: '1rem'
               }}
-              className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Due Fee
+              Monthly Fee
             </h1>
             <div className='columns'>
               <div className='column'>
                 <div className='card has-text-centered'>
-                  <header
-                    className='card-header'
-                    style={{
-                      background: 'whitesmoke'
-                    }}
-                  >
-                    <p className='card-header-title'>Fee Lists</p>
+                  <header className='card-header'>
+                    <p
+                      className='card-header-title'
+                      style={{
+                        backgroundColor: 'whitesmoke'
+                      }}
+                    >
+                      Monthly Fee
+                    </p>
                   </header>
                   <Spinner />
                 </div>
@@ -73,23 +78,29 @@ class DueFee extends React.Component {
                 fontSize: 20,
                 paddingBottom: '1rem'
               }}
-              className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Due Fee
+              Monthly Fee
             </h1>
             <div className='columns'>
               <div className='column'>
                 <div className='card has-text-centered'>
-                  <header
-                    className='card-header'
-                    style={{
-                      background: 'whitesmoke'
-                    }}
-                  >
-                    <p className='card-header-title'>Fee Lists</p>
+                  <header className='card-header'>
+                    <p
+                      className='card-header-title'
+                      style={{
+                        backgroundColor: 'whitesmoke'
+                      }}
+                    >
+                      Due Fee Details
+                    </p>
                   </header>
-                  <RenderFee studentFee={this.props.fee.individualFeeLists} />
+                  <div className='card'>
+                    <div className='card-content'>
+                      <ViewDetailsFee
+                        studentFee={this.props.fee.individualFeeLists}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -100,8 +111,8 @@ class DueFee extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { fee: state.fee };
-};
+const mapStateToProps = state => ({
+  fee: state.fee
+});
 
-export default connect(mapStateToProps)(DueFee);
+export default connect(mapStateToProps)(withRouter(ViewEachFee));

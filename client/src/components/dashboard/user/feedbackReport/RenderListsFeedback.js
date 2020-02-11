@@ -23,7 +23,7 @@ const RenderListsFeedback = props => {
       </td>
       <td>
         {props.user ? (
-          <span class='tag is-primary'>{props.user.name}</span>
+          <span className='tag is-primary'>{props.user.name}</span>
         ) : (
           <p>Please put is View By</p>
         )}

@@ -8,9 +8,8 @@ const StudentFeedbackTableLists = props => {
     <tr>
       <td>
         <Link to={`/user/student/feedback/view/${props._id}`}>
-          <span style={{ fontSize: '14px', color: 'grey' }}>Created By:</span>
           <span style={{ fontSize: '14px', color: '#69D420' }}>
-            <b> {props && props.teacher.name}</b>
+            <b> {props.teacher && props.teacher.name}</b>
           </span>
           <br />
           <span className='has-text-grey' style={{ fontSize: '14px' }}>

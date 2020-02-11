@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
 import ExamListComponent from './ExamListComponent';
 import { connect } from 'react-redux';
+import Spinner from '../../spinner/Spinner';
 
 const ExamTableListInfo = props => {
   const renderExamLists = () =>
-    props.lists
-      ? props.lists.map((exam, i) => <ExamListComponent key={i} {...exam} />)
-      : null;
+    props.lists ? (
+      props.lists.map((exam, i) => <ExamListComponent key={i} {...exam} />)
+    ) : (
+      <Spinner />
+    );
 
   return (
-    <table className='table is-striped is-bordered is-narrow is-hoverable is-fullwidth has-text-centered'>
+    <table className='table is-striped student_fixed_header is-hoverable has-text-centered'>
       <thead style={{ background: 'whitesmoke' }}>
         <tr>
           <td>Student</td>

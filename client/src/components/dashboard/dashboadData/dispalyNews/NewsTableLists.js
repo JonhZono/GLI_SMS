@@ -8,6 +8,7 @@ class NewsTableLists extends Component {
   deletePost = () => {
     this.props.dispatch(deletePost(this.props._id, this.props.history));
   };
+
   render() {
     const props = this.props; //post props
 
@@ -16,7 +17,7 @@ class NewsTableLists extends Component {
         <td>
           <Link to={`/user/view/news/post/${this.props._id}`}>
             <span className='has-text-link' style={{ fontSize: '14px' }}>
-              <b>{props && props.title}</b>
+              {props && props.title}
             </span>
           </Link>
         </td>
@@ -28,37 +29,38 @@ class NewsTableLists extends Component {
           </Link>
         </td>
         <td>
-          {props.status === 'starting' ? (
+          {props.status === 'upcoming' ? (
             <p
               className='has-text-centered'
               style={{ fontSize: '14px', color: 'grey' }}
             >
-              Status:{' '}
-              <span className='tag is-grey'>
-                {' '}
-                <b>{props.status}</b>
-              </span>
+              <span className='tag is-primary'> 準備中</span>
             </p>
-          ) : props.status === 'on-going' ? (
-            <p style={{ fontSize: '14px', color: 'grey' }}>
-              Status:
-              <span className='tag is-info'>
-                <b>{props.status}</b>
-              </span>
+          ) : props.status === 'onGoing' ? (
+            <p
+              style={{ fontSize: '14px', color: 'grey' }}
+              className='has-text-centered'
+            >
+              <span className='tag is-info'>受付中</span>
             </p>
           ) : props.status === 'finished' ? (
             <p
               className='has-text-centered'
               style={{ fontSize: '14px', color: 'grey' }}
             >
-              Status:
-              <span className='tag is-danger'>
-                <b>{props.status}</b>
-              </span>
+              <span className='tag is-danger'>受付終了</span>
             </p>
           ) : (
             ''
           )}
+        </td>
+        <td>
+          <span
+            className='has-text-centered'
+            style={{ fontSize: '14px', color: 'grey' }}
+          >
+            {props && props.type}
+          </span>
         </td>
       </tr>
     );

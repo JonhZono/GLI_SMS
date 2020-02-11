@@ -52,7 +52,7 @@ const StudentProfile = props => {
             }}
             className='has-text-weight-bold'
           >
-            <i class='fas fa-arrow-circle-right' />
+            <i className='fas fa-arrow-circle-right' />
             &nbsp;&nbsp;Student Profile
           </h1>
           <div className='columns'>
@@ -94,7 +94,7 @@ const StudentProfile = props => {
             }}
             className='has-text-weight-bold'
           >
-            <i class='fas fa-arrow-circle-right' />
+            <i className='fas fa-arrow-circle-right' />
             &nbsp;&nbsp;Student Profile
           </h1>
           <div className='columns'>
@@ -119,7 +119,7 @@ const StudentProfile = props => {
                           style={{ marginTop: '14px', fontSize: '18px' }}
                         >
                           <span>
-                            <i class='far fa-hand-point-right' />
+                            <i className='far fa-hand-point-right' />
                             &nbsp;&nbsp;Please set up your own profile here...
                           </span>
                         </div>

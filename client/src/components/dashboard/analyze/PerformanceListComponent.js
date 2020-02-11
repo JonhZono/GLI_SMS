@@ -6,7 +6,6 @@ import Moment from 'react-moment';
 
 class PerformanceListComponent extends Component {
   deleteStudentPerformance = () => {
-    console.log('statistic');
     this.props.dispatch(
       adminDeleteStatistic(this.props._id, this.props.history)
     );
@@ -17,10 +16,8 @@ class PerformanceListComponent extends Component {
     return (
       <tr>
         <td>
-          {props.ownerId ? (
-            <Link to={`/user/analysis/view/${props._id}`}>
-              {props.ownerId.name}
-            </Link>
+          {props ? (
+            <Link to={`/user/analysis/view/${props._id}`}>{props.name}</Link>
           ) : (
             <p>Please put name</p>
           )}
@@ -81,8 +78,8 @@ class PerformanceListComponent extends Component {
           <span>
             <Link
               to={`/user/analysis/view/${props._id}`}
-              className='tag is-info'
-              style={{ margin: '3px' }}
+              className='button is-small is-info'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-info' aria-hidden='true' />
@@ -91,8 +88,8 @@ class PerformanceListComponent extends Component {
             </Link>
             <Link
               to={`/user/analysis/edit/${props._id}`}
-              className='tag is-primary'
-              style={{ margin: '3px' }}
+              className='button is-small is-primary'
+              style={{ margin: '3px', fontSize: '10px' }}
             >
               <span className='icon is-small'>
                 <i className='fas fa-pencil-alt' />
@@ -102,8 +99,8 @@ class PerformanceListComponent extends Component {
             {props.user.role === 'admin' && (
               <button
                 onClick={this.deleteStudentPerformance}
-                className='tag is-danger'
-                style={{ margin: '3px' }}
+                className='button is-small is-danger'
+                style={{ margin: '3px', fontSize: '10px' }}
               >
                 <span className='icon is-small'>
                   <i className='fas fa-trash-alt' aria-hidden='true' />

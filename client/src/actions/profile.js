@@ -4,7 +4,6 @@ import {
   GET_GRADE,
   GET_STUDENT,
   GET_COURSE,
-  GET_POSITION,
   CREATE_STUDENT_PROFILE,
   GET_CLASSROOM,
   GET_STUDENT_PROFILE_LISTS,
@@ -25,12 +24,12 @@ import {
   GET_STUDENT_BY_ID,
   CREATE_TEACHER,
   GET_TEACHER_BY_ID,
-  CREATE_POSITION,
-  GET_POSITION_BY_ID,
   GET_CURRENT_STAFF_PROFILE,
   GET_CURRENT_ADMIN_PROFILE,
   GET_CURRENT_STUDENT_PROFILE,
-  CLEAR_STUDENT_PROFILE
+  CLEAR_STUDENT_PROFILE,
+  GET_ADMIN_PROFILE_ID,
+  CLEAR_ADMIN_PROFILE
 } from './types';
 import { setAlert } from '../actions/alert';
 
@@ -48,6 +47,115 @@ export const getCurrentAdminProfile = () => async dispatch => {
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
+  }
+};
+//admin profile by id
+export const getAdminProfileById = profile_id => async dispatch => {
+  try {
+    const response = await axios.get(`/api/admin/get/profile/${profile_id}`);
+
+    dispatch({
+      type: GET_ADMIN_PROFILE_ID,
+      payload: response.data
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+//create admin profile
+export const createAdminProfile = dataToSubmit => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  try {
+    const response = await axios.post(
+      `/api/admin/profile`,
+      dataToSubmit,
+      config
+    );
+    console.log(response.data);
+    dispatch(getCurrentAdminProfile());
+    dispatch(setAlert(response.data.msg, 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
+    }
+  }
+};
+export const adminEditProfileById = (
+  profile_id,
+  dataToSubmit
+) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  try {
+    const response = await axios.put(
+      `/api/admin/edit/${profile_id}`,
+      dataToSubmit,
+      config
+    );
+
+    dispatch(getCurrentAdminProfile());
+    dispatch(setAlert(response.data.msg, 'success'));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
+    });
+  }
+};
+
+//admin delete profile
+export const adminDeleteProfileById = (
+  profile_id,
+  history
+) => async dispatch => {
+  if (window.confirm('Are you sure, this can be undone!')) {
+    try {
+      await axios.delete(`/api/admin/remove/profile/${profile_id}`);
+      history.push('/user/dashboard');
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status
+        }
+      });
+    }
+  }
+};
+
+export const staffDeleteProfileById = (
+  profile_id,
+  history
+) => async dispatch => {
+  if (window.confirm('Are you sure, this can be undone!')) {
+    try {
+      await axios.delete(`/api/staff/remove/profile/${profile_id}`);
+      dispatch(getCurrentStaffProfile());
+      history.push('/user/dashboard');
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status
+        }
+      });
+    }
   }
 };
 
@@ -260,7 +368,7 @@ export const createStaffProfile = (dataToSubmit, history) => async dispatch => {
       type: CREATE_STUDENT_PROFILE,
       payload: response.data
     });
-    dispatch(setAlert('Profile Created', 'success'));
+    dispatch(setAlert(response.data.msg, 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -324,6 +432,13 @@ export const studentDeleteProfileById = (
 export const clearStudentProfile = () => dispatch => {
   dispatch({
     type: CLEAR_STUDENT_PROFILE,
+    payload: ''
+  });
+};
+
+export const clearAdminProfile = () => dispatch => {
+  dispatch({
+    type: CLEAR_ADMIN_PROFILE,
     payload: ''
   });
 };
@@ -424,7 +539,6 @@ export const addTeacher = dataToSubmit => async dispatch => {
     });
     dispatch(setAlert(response.data.msg, 'success'));
     dispatch(getTeacher());
-    dispatch(clearConfigData());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -512,7 +626,6 @@ export const addStudent = dataToSubmit => async dispatch => {
     });
     dispatch(setAlert(response.data.msg, 'success'));
     dispatch(getStudent());
-    dispatch(clearConfigData());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -773,7 +886,6 @@ export const addClassroom = dataToSubmit => async dispatch => {
     });
     dispatch(setAlert(response.data.msg, 'success'));
     dispatch(getClassroom());
-    dispatch(clearConfigData());
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -836,97 +948,10 @@ export const deleteClass = classroom_id => async dispatch => {
   }
 };
 
-export const getPosition = () => dispatch => {
-  return axios.get(`/api/lists/get/positions`).then(response => {
-    dispatch({
-      type: GET_POSITION,
-      payload: response.data
-    });
-  });
-};
-
-export const addPosition = dataToSubmit => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  try {
-    const response = await axios.post(
-      `/api/lists/add/position`,
-      dataToSubmit,
-      config
-    );
-    dispatch({
-      type: CREATE_POSITION,
-      payload: response.data
-    });
-    dispatch(setAlert(response.data.msg, 'success'));
-    dispatch(getPosition());
-    dispatch(clearConfigData());
-  } catch (err) {
-    const errors = err.response.data.errors;
-    if (errors) {
-      errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-    }
-  }
-};
-export const getPositionById = position_id => async dispatch => {
-  try {
-    const response = await axios.get(`/api/lists/get/position/${position_id}`);
-
-    dispatch({
-      type: GET_POSITION_BY_ID,
-      payload: response.data
-    });
-  } catch (err) {
-    if (err) throw err;
-  }
-};
-export const editPosition = (
-  position_id,
-  dataToSubmit,
-  history
-) => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  try {
-    const response = await axios.put(
-      `/api/lists/edit/position/${position_id}`,
-      dataToSubmit,
-      config
-    );
-    dispatch(getPosition());
-    dispatch(setAlert(response.data.msg, 'success'));
-    history.push('/admin/config/data');
-  } catch (err) {
-    if (err) throw err;
-  }
-};
-
-export const deletePosition = position_id => async dispatch => {
-  if (window.confirm('Are you sure, this can be undone!')) {
-    try {
-      const response = await axios.delete(
-        `/api/lists/remove/position/${position_id}`
-      );
-      dispatch(getPosition());
-      dispatch(setAlert(response.data.msg, 'success'));
-    } catch (err) {
-      const errors = err.response.data.errors;
-      if (errors) {
-        errors.forEach(err => dispatch(setAlert(err.msg, 'danger')));
-      }
-    }
-  }
-};
-
 export const clearConfigData = () => dispatch => {
   dispatch({
     type: CLEAR_CONFIG_DATA,
     payload: ''
   });
 };
+

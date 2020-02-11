@@ -5,7 +5,7 @@ import Spinner from '../../spinner/Spinner';
 const LoadMoreStaff = props => {
   const renderStaffProfile = () =>
     props.profiles.map(card => <StaffCard key={card._id} {...card} />);
-  console.log(props.profiles);
+
   return (
     <Fragment>
       {props.profiles ? (

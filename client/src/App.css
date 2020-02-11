@@ -5,17 +5,14 @@ body {
   height: 100%;
   font-weight: 300;
 }
-.nav-button {
-  margin: 5px;
-}
-.cardButton {
+
+.cardRecord {
   display: inline-block;
-  width: 30%;
+  width: 48%;
   border: none;
-  background-color: rgb(52, 96, 138);
   padding: 5px 20px;
   font-size: 14px;
-  margin: 1%;
+  margin: 0.5%;
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
@@ -34,6 +31,7 @@ h1 {
 .title {
   text-align: center;
   padding: 0px;
+  margin-top: 6px;
 }
 .des {
   padding: 3px;
@@ -41,25 +39,6 @@ h1 {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-/*Card
-
-
-button {
-  margin-top: 40px;
-  margin-bottom: 10px;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
-}
-button:hover {
-  background-color: black;
-  color: white;
-  transition: 0.5s;
-  cursor: pointer;
-}*/
-
-/*style test*/
 
 .dropzone {
   border: 1px solid #e5e5e5;
@@ -205,16 +184,22 @@ select {
 .inputStyleConfig {
   display: block;
   font-family: 'Alegreya', serif;
-  width: 94%;
+  width: 420px;
   font-size: 1rem;
-  margin-left: auto;
+  margin-left: 12px;
   margin-top: 0.7rem;
   padding: 0.5rem 1.7rem;
   border-radius: 0.1rem;
   border: 1.15px solid#004973;
   transition: all 0.5s;
 }
-
+.p_wrap {
+  font-size: 20px;
+  white-space: pre-line;
+}
+.p_wrap_feedback {
+  white-space: pre-line;
+}
 .input,
 .textarea,
 .select select {
@@ -327,27 +312,6 @@ select {
   background: transparent;
   border: 1.15px solid#004973;
   transition: color 0.5s, border-color 0.5s;
-}
-
-.buttonProfileView {
-  border-radius: 1px;
-  border-color: #004973;
-  color: #004973;
-}
-.buttonProfileEdit {
-  border-radius: 1px;
-  border-color: #004973;
-  color: #00a82d;
-}
-.buttonProfileUpload {
-  border-radius: 1px;
-  border-color: #004973;
-  color: #2199e8;
-}
-.buttonProfileDelete {
-  border-radius: 1px;
-  border-color: #004973;
-  color: #ec2028;
 }
 
 .buttonLanding {

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../../../spinner/Spinner';
 import FeedbackTableLists from './FeedbackTableLists';
+import { clearViewEachFeedback } from '../../../../actions/feedback';
 
-const FeedbackLists = props => {
-  const renderFeedbacks = feedback =>
+class FeedbackLists extends Component {
+  componentWillUnmount = () => {
+    this.props.dispatch(clearViewEachFeedback());
+  };
+  renderFeedbacks = feedback =>
     feedback.length > 0 ? (
       feedback.map(feedback => (
         <FeedbackTableLists key={feedback._id} {...feedback} />
@@ -14,16 +18,13 @@ const FeedbackLists = props => {
     ) : (
       <div>No Feedback available</div>
     );
+  render() {
+    return (
+      <table className='fixed_header'>
+        <tbody>{this.renderFeedbacks(this.props.feedback)}</tbody>
+      </table>
+    );
+  }
+}
 
-  return (
-    <table className='fixed_header'>
-      <tbody>{renderFeedbacks(props.feedback)}</tbody>
-    </table>
-  );
-};
-
-const mapStateToProps = state => ({
-  user: state.user
-});
-
-export default connect(mapStateToProps)(FeedbackLists);
+export default connect(null)(FeedbackLists);

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import UserLayout from '../../../../hoc/User';
+import { staffDeleteProfileById } from '../../../../actions/profile';
 import Spinner from '../../../spinner/Spinner';
 
 class ProfileInfoStaff extends Component {
@@ -27,10 +27,10 @@ class ProfileInfoStaff extends Component {
   componentWillUnmount = () => {
     //this.props.dispatch(clearProfileDetails());
   };
-  /*deleteStaffProfile = () => {
-    const profile_id = this.props.match.params.profile_id;
-    this.props.dispatch(deleteStaffProfileById(profile_id, this.props.history));
-  };*/
+  deleteStaffProfile = () => {
+    const profile_id = this.props.staffProfile._id;
+    this.props.dispatch(staffDeleteProfileById(profile_id, this.props.history));
+  };
   render() {
     const staffProfile = this.props.staffProfile;
     return (
@@ -51,6 +51,7 @@ class ProfileInfoStaff extends Component {
                             <img
                               key={item.public_id}
                               src={item.url}
+                              alt='user'
                               className='is-rounded'
                             />
                           ))
@@ -137,8 +138,8 @@ class ProfileInfoStaff extends Component {
                                 <tr>
                                   <td>Position</td>
                                   <td>
-                                    {staffProfile.position ? (
-                                      staffProfile.position.name
+                                    {staffProfile ? (
+                                      staffProfile.position
                                     ) : (
                                       <p>Position Not Select</p>
                                     )}
@@ -284,4 +285,4 @@ class ProfileInfoStaff extends Component {
 const mapStateToProps = state => ({
   profile: state.profile
 });
-export default connect(mapStateToProps)(ProfileInfoStaff);
+export default connect(mapStateToProps)(withRouter(ProfileInfoStaff));

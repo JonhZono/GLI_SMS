@@ -18,6 +18,10 @@ const AdminSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    admission: {
+      type: String,
+      required: true
+    },
     birth: {
       type: String,
       required: true
@@ -39,8 +43,12 @@ const AdminSchema = new mongoose.Schema(
       required: true
     },
     position: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Position'
+      type: String,
+      required: true
+    },
+    company: {
+      type: String,
+      default: '@JIPROCE'
     },
     country: {
       type: String,
@@ -52,6 +60,10 @@ const AdminSchema = new mongoose.Schema(
     },
     bank_account_details: {
       type: [String]
+    },
+    image: {
+      type: Array,
+      default: []
     }
   },
   { timestamps: true }

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import { ENDPOINT } from '../misc';
 
 class FileUpload extends React.Component {
   state = {
@@ -20,9 +19,8 @@ class FileUpload extends React.Component {
     formData.append('file', files[0]);
 
     axios
-      .post(`${ENDPOINT}api/user/uploadimage`, formData, config)
+      .post(`/api/user/uploadimage`, formData, config)
       .then(response => {
-        console.log(response.data);
         this.setState(
           {
             uploading: false,
@@ -37,7 +35,7 @@ class FileUpload extends React.Component {
 
   onRemove = id => {
     axios
-      .get(`${ENDPOINT}api/user/removeimage?public_id=${id}`)
+      .get(`/api/user/removeimage?public_id=${id}`)
       .then(response => {
         let images = this.state.uploadFiles.filter(item => {
           return item.public_id !== id;

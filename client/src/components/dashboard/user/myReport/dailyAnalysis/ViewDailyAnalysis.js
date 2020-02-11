@@ -51,7 +51,7 @@ class ViewDailyAnalysis extends Component {
               className='has-text-weight-bold'
             >
               <i className='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Report Daily Analysis
+              &nbsp;&nbsp;Monthly Performance
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -61,7 +61,7 @@ class ViewDailyAnalysis extends Component {
                     backgroundColor: 'whitesmoke'
                   }}
                 >
-                  <p className='card-header-title'>Daily Analysis Lists</p>
+                  <p className='card-header-title'>Monthly Performance Lists</p>
                 </header>
                 <Spinner />
               </div>
@@ -91,7 +91,7 @@ class ViewDailyAnalysis extends Component {
               className='has-text-weight-bold'
             >
               <i className='fas fa-arrow-circle-right' />
-              &nbsp;&nbsp;Report Daily Analysis
+              &nbsp;&nbsp;Monthly Performance
             </h1>
             <div className='columns'>
               <div className='column'>
@@ -102,7 +102,7 @@ class ViewDailyAnalysis extends Component {
                       backgroundColor: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title'>Daily Analysis Lists</p>
+                    <p className='card-header-title'>Monthly Performance Lists</p>
                   </header>
 
                   <table className='table is-bordered is-narrow is-hoverable is-fullwidth has-text-centered'>
@@ -112,8 +112,8 @@ class ViewDailyAnalysis extends Component {
                         <th>Available To</th>
                         <th>Sent By</th>
                         <th>Speaking</th>
-                        <th>Active</th>
-                        <th>Attitude</th>
+                        <th>活動</th>
+                        <th>授業態度</th>
                       </tr>
                     </thead>
                     <tbody>{this.renderLists()}</tbody>

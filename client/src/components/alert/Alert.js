@@ -8,8 +8,8 @@ const Alert = ({ alerts, user }) =>
   alerts.map(alert => (
     <div
       key={alert.id}
-      className={`help is-${alert.alertType}`}
-      style={{ fontSize: '1rem' }}
+      className={`has-text-light has-text-weight-bold has-background-${alert.alertType}`}
+      style={{ fontSize: '16px', padding: '5px' }}
     >
       {user.success ? (
         <Fragment>
@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
   user: state.user
 });
 Alert.propTypes = {
-  Alert: PropTypes.func.isRequired,
-  Auth: PropTypes.func.isRequired
+  Alert: PropTypes.func,
+  Auth: PropTypes.func
 };
 export default connect(mapStateToProps)(Alert);

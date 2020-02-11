@@ -5,8 +5,9 @@ import UserLayout from '../../../hoc/User';
 import Alert from '../../alert/Alert';
 import FormField from '../../utils/form/formField';
 import { updates, generateFormData } from '../../utils/form/formActions';
-import { createPost } from '../../../actions/post';
+import { createPost, clearViewPost } from '../../../actions/post';
 import FileUpload from '../../utils/form/fileUpload';
+import FileUpload1 from '../../utils/form/fileUpload1';
 
 class NewsLetterForm extends React.Component {
   state = {
@@ -27,7 +28,17 @@ class NewsLetterForm extends React.Component {
         config: {
           name: 'status',
           type: 'text',
-          placeholder: 'ex. starting, on-going, finished'
+          placeholder: 'Status: upcoming, onGoing, finished'
+        },
+        showLabel: false
+      },
+      type: {
+        element: 'input',
+        value: '',
+        config: {
+          name: 'type',
+          type: 'text',
+          placeholder: 'Post Type: News Letter, Event'
         },
         showLabel: false
       },
@@ -36,9 +47,20 @@ class NewsLetterForm extends React.Component {
         value: '',
         config: {
           name: 'descriptions',
-          label: 'Please Enter Your Content Body',
+          label: 'News Letter Descriptions',
           type: 'text',
-          placeholder: 'What is your content body?'
+          placeholder: 'What is your news letter content body?'
+        },
+        showLabel: true
+      },
+      event: {
+        element: 'textarea',
+        value: '',
+        config: {
+          name: 'event',
+          label: 'Event Descriptions',
+          type: 'text',
+          placeholder: 'What is your event content body?'
         },
         showLabel: true
       },
@@ -54,6 +76,9 @@ class NewsLetterForm extends React.Component {
         showLabel: true
       },
       image: {
+        value: []
+      },
+      image1: {
         value: []
       }
     }
@@ -88,6 +113,20 @@ class NewsLetterForm extends React.Component {
     });
   };
 
+  imageHandler1 = images => {
+    const newFormData = { ...this.state.formData };
+
+    newFormData['image1'].value = images;
+
+    this.setState({
+      formData: newFormData
+    });
+  };
+
+  componentWillUnmount = () => {
+    this.props.dispatch(clearViewPost());
+  };
+
   render() {
     return (
       <UserLayout>
@@ -110,7 +149,7 @@ class NewsLetterForm extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Create News Letter
             </h1>
             <div className='columns'>
@@ -133,7 +172,12 @@ class NewsLetterForm extends React.Component {
                         <FileUpload
                           imageHandler={images => this.imageHandler(images)}
                         />
-
+                        <FormField
+                          id={'type'}
+                          formData={this.state.formData.type}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
                         <FormField
                           id={'title'}
                           formData={this.state.formData.title}
@@ -149,6 +193,15 @@ class NewsLetterForm extends React.Component {
                         <FormField
                           id={'descriptions'}
                           formData={this.state.formData.descriptions}
+                          change={element => this.updateForm(element)}
+                        />
+                        <br />
+                        <FileUpload1
+                          imageHandler1={images => this.imageHandler1(images)}
+                        />
+                        <FormField
+                          id={'event'}
+                          formData={this.state.formData.event}
                           change={element => this.updateForm(element)}
                         />
                         <br />

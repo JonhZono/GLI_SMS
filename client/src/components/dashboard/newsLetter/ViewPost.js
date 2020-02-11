@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import UserLayout from '../../../hoc/User';
-import { getPostById } from '../../../actions/post';
+import { getPostById, getLikeLists, getSnsLists } from '../../../actions/post';
 import Spinner from '../../spinner/Spinner';
 import RenderPostArticle from './RenderPostArticle';
 
@@ -10,6 +10,8 @@ class ViewPost extends React.Component {
   componentDidMount = () => {
     const post_id = this.props.match.params.post_id;
     this.props.dispatch(getPostById(post_id));
+    this.props.dispatch(getLikeLists(post_id));
+    this.props.dispatch(getSnsLists(post_id));
   };
   render() {
     $(document).ready(function() {
@@ -90,7 +92,11 @@ class ViewPost extends React.Component {
             <div className='columns'>
               <div className='column'>
                 <div className='card'>
-                  <RenderPostArticle post={post.postById} />
+                  <RenderPostArticle
+                    post={post.postById}
+                    getLikes={post.getLikes}
+                    getSns={post.getSns}
+                  />
                 </div>
               </div>
             </div>

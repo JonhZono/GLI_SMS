@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 const RenderFeedback = props => {
-  console.log(props.user_id)
+  console.log(props)
   return (
     <Fragment>
       <Link
@@ -10,13 +10,13 @@ const RenderFeedback = props => {
         className='button buttonInformation is-outlined'
         style={{ marginBottom: '12px' }}
       >
-        See Profile
+        <span>View {props.name} &nbsp;Profile</span>
       </Link>
       <Link
         to={`/user/student/view/report/${props.user_id}`}
         className='button buttonInformation is-info is-outlined'
       >
-        Check Feedback
+        Check {props.name} &nbsp;Feedback
       </Link>
     </Fragment>
   );

@@ -28,7 +28,7 @@ const ViewStudent = props => {
   const deleteStudentProfile = () => {
     props.studentDeleteProfileById(props.studentProfile._id, props.history);
   };
-  
+
   return (
     <div className='card-content'>
       <div className='content'>
@@ -43,6 +43,7 @@ const ViewStudent = props => {
                       <img
                         key={item.public_id}
                         src={item.url}
+                        alt='user'
                         className='is-rounded'
                       />
                     ))
@@ -61,8 +62,11 @@ const ViewStudent = props => {
                 <nav className='level is-mobile py-1 has-text-centered'>
                   <Link
                     to={`/user/student/edit/${props.studentProfile._id}`}
-                    className='tag is-primary'
-                    style={{ margin: '3px' }}
+                    className='button is-small is-primary'
+                    style={{
+                      margin: '3px',
+                      fontSize: '12px'
+                    }}
                   >
                     <span className='icon is-small'>
                       <i className='fas fa-pencil-alt' aria-hidden='true' />
@@ -71,8 +75,11 @@ const ViewStudent = props => {
                   </Link>
                   <button
                     onClick={deleteStudentProfile}
-                    className='tag is-danger'
-                    style={{ margin: '3px' }}
+                    className='button is-small is-danger'
+                    style={{
+                      margin: '3px',
+                      fontSize: '12px'
+                    }}
                   >
                     <span className='icon is-small'>
                       <i className='fas fa-trash-alt' aria-hidden='true' />

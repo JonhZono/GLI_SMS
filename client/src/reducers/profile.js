@@ -29,7 +29,9 @@ import {
   GET_CURRENT_STAFF_PROFILE,
   GET_CURRENT_ADMIN_PROFILE,
   GET_CURRENT_STUDENT_PROFILE,
-  CLEAR_STUDENT_PROFILE
+  CLEAR_STUDENT_PROFILE,
+  CLEAR_ADMIN_PROFILE,
+  GET_ADMIN_PROFILE_ID
 } from '../actions/types';
 
 const initialState = {
@@ -38,19 +40,18 @@ const initialState = {
   listOfStudents: [],
   createStudent: [],
   staffList: [],
-  studentLists: [],
   classroomList: [],
   createClass: [],
   teacherList: [],
   gradeList: [],
   createGrade: [],
-  teacherList: [],
   createTeacher: [],
   courseList: [],
   createCourse: [],
   positionList: [],
   studentProfile: null,
   adminProfile: null,
+  adminProfileById: null,
   staffProfile: null,
   studentProfileById: null,
   staffProfileById: null,
@@ -58,8 +59,7 @@ const initialState = {
   getGradeById: null,
   getCourseById: null,
   getStudentById: null,
-  getTeacherById: null,
-  getStudentById: null
+  getTeacherById: null
 };
 
 export default (state = initialState, action) => {
@@ -89,6 +89,12 @@ export default (state = initialState, action) => {
         ...state,
         adminProfile: payload
       };
+    case GET_ADMIN_PROFILE_ID:
+      return {
+        ...state,
+        adminProfileById: payload,
+        loading: false
+      };
     case GET_CURRENT_STUDENT_PROFILE:
       return {
         ...state,
@@ -97,7 +103,14 @@ export default (state = initialState, action) => {
     case CLEAR_STUDENT_PROFILE:
       return {
         ...state,
-        studentProfile: null
+        studentProfile: null,
+        loading: true
+      };
+    case CLEAR_ADMIN_PROFILE:
+      return {
+        ...state,
+        adminProfile: null,
+        loading: true
       };
 
     case GET_CURRENT_STAFF_PROFILE:
@@ -144,7 +157,11 @@ export default (state = initialState, action) => {
         staffList: [],
         loading: true,
         studentProfileById: null,
-        staffProfileById: null
+        staffProfileById: null,
+        adminProfileById: null,
+        adminProfile: null,
+        staffProfile: null,
+        studentProfile: null
       };
     case GET_CLASSROOM:
       return {
@@ -271,7 +288,14 @@ export default (state = initialState, action) => {
         createGrade: [],
         createStudent: [],
         createTeacher: [],
-        createPosition: []
+        createPosition: [],
+        teacherList: [],
+        gradeList: [],
+        listOfStudents: [],
+        classroomList: [],
+        positionList: [],
+        courseList: [],
+        loading: true
       };
 
     default:

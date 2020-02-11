@@ -42,7 +42,6 @@ class Login extends React.Component {
               <div className='has-text-centered'>
                 <Logo style={{ width: '80%', height: 'auto', margin: '1rem' }} />
               </div>
-
               <div className='box' style={{ borderRadius: '1px' }}>
                 <Alert />
                 <br />

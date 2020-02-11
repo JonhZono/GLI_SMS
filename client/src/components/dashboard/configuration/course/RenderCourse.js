@@ -16,7 +16,7 @@ class RenderCourse extends Component {
           <span>
             <Link
               to={`/admin/edit/course/${props._id}`}
-              className='button is-small buttonProfileEdit'
+              className='button is-small is-success'
               style={{ margin: '1px', borderRadius: '1px' }}
             >
               <span className='icon is-small'>
@@ -25,7 +25,7 @@ class RenderCourse extends Component {
             </Link>
             <button
               onClick={this.deleteCourse}
-              className='button is-small buttonProfileDelete'
+              className='button is-small is-danger'
               style={{ margin: '1px', borderRadius: '1px' }}
             >
               <span className='icon is-small'>

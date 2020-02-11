@@ -15,7 +15,6 @@ class Chart extends Component {
   };
   componentDidMount = () => {
     const performanceById = this.props.performanceById;
-    console.log(performanceById);
 
     this.setState({
       chartData: {
@@ -24,13 +23,13 @@ class Chart extends Component {
           'Reading',
           'Listening',
           'Speaking',
-          'Participation',
-          'Active',
-          'Attitude'
+          '出席率',
+          '活動',
+          '授業態度'
         ],
         datasets: [
           {
-            label: '# Daily Class Evaluation',
+            label: 'Tracking',
             data: [
               performanceById && performanceById.writing,
               performanceById && performanceById.reading,
@@ -89,7 +88,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayPie
                   positionLegend='right'
+                  date={this.props.performanceById.date}
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>
@@ -101,7 +102,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayPolarArea
                   positionLegend='right'
+                  date={this.props.performanceById.date}
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>
@@ -112,7 +115,9 @@ class Chart extends Component {
               <div className='card'>
                 <DisplayLine
                   positionLegend='right'
+                  date={this.props.performanceById.date}
                   chartData={this.state.chartData}
+                  student={this.props.performanceById}
                 />
               </div>
             </div>

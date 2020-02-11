@@ -2,17 +2,13 @@ import React from 'react';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {
-  getTeacher,
-  getGrade,
-  getClassroom,
-  getStudent
-} from '../../../actions/profile';
+import { getTeacher, getGrade, getClassroom } from '../../../actions/profile';
 import { editStudentFeedback } from '../../../actions/feedback';
 import { studentSelectField } from '../../../actions/user';
 import Alert from '../../alert/Alert';
 import UserLayout from '../../../hoc/User';
 import FormField from '../../../components/utils/form/formField';
+import FileUpload from '../../utils/form/fileUpload';
 import {
   updates,
   generateFormData,
@@ -34,16 +30,15 @@ class EditStudentFeedback extends React.Component {
         },
         showLabel: false
       },
-
-      student: {
-        element: 'select',
+      name: {
+        element: 'input',
         value: '',
         config: {
-          name: 'student',
-          label: 'Choose Student Name',
-          options: []
+          name: 'name',
+          type: 'text',
+          placeholder: 'Student Name'
         },
-        showLabel: true
+        showLabel: false
       },
 
       termCode: {
@@ -128,6 +123,9 @@ class EditStudentFeedback extends React.Component {
           placeholder: 'Please input students email'
         },
         showLabel: false
+      },
+      image: {
+        value: []
       }
     }
   };
@@ -140,14 +138,6 @@ class EditStudentFeedback extends React.Component {
         formData,
         this.props.profile.classroomList,
         'classroom'
-      );
-      this.updateFields(newFormData);
-    });
-    this.props.dispatch(getStudent()).then(() => {
-      let newFormData = populateFormField(
-        formData,
-        this.props.profile.listOfStudents,
-        'student'
       );
       this.updateFields(newFormData);
     });
@@ -182,7 +172,15 @@ class EditStudentFeedback extends React.Component {
       formData: newFormData
     });
   };
+  imageHandler = images => {
+    const newFormData = { ...this.state.formData };
 
+    newFormData['image'].value = images;
+
+    this.setState({
+      formData: newFormData
+    });
+  };
   updateFields = newFormData => {
     this.setState({
       formData: newFormData
@@ -298,7 +296,7 @@ class EditStudentFeedback extends React.Component {
               }}
               className='has-text-weight-bold'
             >
-              <i class='fas fa-arrow-circle-right' />
+              <i className='fas fa-arrow-circle-right' />
               &nbsp;&nbsp;Student Feedbacks
             </h1>
             <div className='columns'>
@@ -318,6 +316,9 @@ class EditStudentFeedback extends React.Component {
                     <Alert />
                     <div className='content'>
                       <form onSubmit={event => this.submitForm(event)}>
+                        <FileUpload
+                          imageHandler={images => this.imageHandler(images)}
+                        />
                         <FormField
                           id={'email'}
                           formData={this.state.formData.email}
@@ -331,8 +332,8 @@ class EditStudentFeedback extends React.Component {
                         />
                         <br />
                         <FormField
-                          id={'student'}
-                          formData={this.state.formData.student}
+                          id={'name'}
+                          formData={this.state.formData.name}
                           change={element => this.updateForm(element)}
                         />
                         <br />

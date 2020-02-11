@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormFieldConfig from '../../../utils/form/formFieldConfig';
 import { updates, generateFormData } from '../../../utils/form/formActions';
-import { addCourse, clearConfigData } from '../../../../actions/profile';
+import { addCourse } from '../../../../actions/profile';
 
 class CreateCourse extends Component {
   state = {
@@ -19,9 +19,6 @@ class CreateCourse extends Component {
     }
   };
 
-  componentWillUnmount = () => {
-    this.props.dispatch(clearConfigData());
-  };
   updateForm = element => {
     //target form input
     const newFormData = updates(element, this.state.formData, 'CreateCourse');
@@ -43,7 +40,7 @@ class CreateCourse extends Component {
         <div className='columns'>
           <div className='column'>
             <div className='field'>
-              <p className='control has-icons-left'>
+              <div className='control has-icons-left'>
                 <FormFieldConfig
                   id={'name'}
                   formData={formData.name}
@@ -51,11 +48,16 @@ class CreateCourse extends Component {
                 />
                 <span
                   className='icon is-small is-left'
-                  style={{ paddingLeft: '20px',paddingRight: '10px',paddingBottom: '2px', color: '#000000' }}
+                  style={{
+                    paddingLeft: '20px',
+                    paddingRight: '10px',
+                    paddingBottom: '2px',
+                    color: '#000000'
+                  }}
                 >
-                  <i className='fas fa-graduation-cap' />
+                  <i className='fab fa-discourse' />
                 </span>
-              </p>
+              </div>
             </div>
           </div>
 

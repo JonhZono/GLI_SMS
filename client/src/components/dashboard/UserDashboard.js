@@ -52,14 +52,32 @@ const UserDashboard = props => {
     props.adminDashboardExam();
     props.studentDashboardFeedbackById();
     props.studentDashboardExamById();
-  }, []);
+  }, [
+    getCurrentStudentProfile,
+    getCurrentAdminProfile,
+    getCurrentStaffProfile,
+    getAllPosts,
+    adminGetUser,
+    getCourse,
+    getTeacher,
+    getUserAuth,
+    staffGetStudentPerformance,
+    adminGetStudentPerformance,
+    getStudentPerformanceMe,
+    adminDashboardFeedback,
+    adminDashboardExam,
+    studentDashboardFeedbackById,
+    studentDashboardExamById
+  ]);
 
   const studentCount = props.user.userLists.filter(
     count => count.role === 'student'
   );
+
   const teacherCount = props.profile.teacherList.length;
   const courseCount = props.profile.courseList.length;
   const eventCount = props.post.posts.length;
+
   return props.profile.loading &&
     props.feedback.loading &&
     props.profile.studentProfile === null &&
@@ -67,6 +85,7 @@ const UserDashboard = props => {
     props.analysis.staffGetStudentPerformance === null &&
     props.analysis.adminGetStudentPerformance === null &&
     props.feedback.adminGetFeedbackArticles === null &&
+    props.feedback.studentGetFeedbackArticleById === null &&
     props.exam.studentGetExamArticleById === null ? (
     <UserLayout>
       <div
@@ -100,7 +119,8 @@ const UserDashboard = props => {
               }}
               className='has-text-weight-bold'
             >
-              Admin Dashboard, Welcome back <i>{props.user.name} :)</i>
+              Admin Dashboard, Welcome back {props.user.name}&nbsp;
+              <span>🤔</span>
             </h1>
           ) : props.user.role === 'student' ? (
             <h1
@@ -111,7 +131,7 @@ const UserDashboard = props => {
               }}
               className='has-text-weight-bold'
             >
-              Welcome Back <i>{props.user.name} :]</i>
+              Welcome Back {props.user.name}&nbsp;<span>😃</span>
             </h1>
           ) : props.user.role === 'staff' ? (
             <h1
@@ -122,7 +142,7 @@ const UserDashboard = props => {
               }}
               className='has-text-weight-bold'
             >
-              Welcome Back <i>{props.user.name} :]</i>
+              Welcome Back {props.user.name}&nbsp;<span>😃</span>
             </h1>
           ) : (
             ''
@@ -134,15 +154,17 @@ const UserDashboard = props => {
                   className='card has-text-centered'
                   style={{ fontSize: '20px' }}
                 >
-                  <div className='card-content has-background-danger has-text-light'>
-                    <div className='content'>
-                      <i className='fas fa-newspaper fa-lg' /> &nbsp;
-                      <span>{eventCount}</span>
-                      <span style={{ padding: '40px' }}>
-                        <i>Events</i>
-                      </span>
+                  <Link to='/user/view/newsletter'>
+                    <div className='card-content has-background-danger has-text-light'>
+                      <div className='content'>
+                        <i className='fas fa-newspaper fa-lg' /> &nbsp;
+                        <span>{eventCount}</span>
+                        <span style={{ padding: '40px' }}>
+                          <i>Events</i>
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
             )}
@@ -206,12 +228,12 @@ const UserDashboard = props => {
                   className='card has-text-centered'
                   style={{ fontSize: '20px' }}
                 >
-                  <Link to='/'>
+                  <Link to='/user/staff/profiles'>
                     <div className='card-content has-background-danger has-text-light'>
-                      <i className='far fa-money-bill-alt fa-lg' />
-                      &nbsp;<span>37000 Y</span>
+                      <i className='fas fa-chalkboard-teacher fa-lg' />
+                      &nbsp;<span>{teacherCount}</span>
                       <span style={{ padding: '40px' }}>
-                        <i>Due Fee</i>
+                        <i>Teachers</i>
                       </span>
                     </div>
                   </Link>
@@ -270,12 +292,13 @@ const UserDashboard = props => {
                   className='card has-text-centered'
                   style={{ fontSize: '20px' }}
                 >
-                  <Link to=''>
+                  <Link
+                    to={`/user/student/exam/score/view/lists/${props.user.id}`}
+                  >
                     <div className='card-content has-background-link has-text-light'>
                       <i className='far fa-edit fa-lg' />
-                      &nbsp;<span>78</span>
                       <span style={{ padding: '40px' }}>
-                        <i>Exam Score</i>
+                        <i>Score Lists</i>
                       </span>
                     </div>
                   </Link>
@@ -322,14 +345,12 @@ const UserDashboard = props => {
 
               {/*<Chart user_id={props.user.id} loading={props.analysis.loading} />*/}
             </div>
-            {props.feedback.adminGetFeedbackArticles &&
-            props.feedback.adminGetFeedbackArticles.length > 0 &&
-            (props.user.role === 'admin' || props.user.role === 'staff') ? (
+            {props.user.role === 'admin' || props.user.role === 'staff' ? (
               <div className='column'>
                 <div className='card'>
                   <header className='card-header'>
                     <p className='card-header-title has-text-grey'>
-                      Recent Classroom Feedback
+                      直近のレッスンレポート
                     </p>
                   </header>
 
@@ -339,22 +360,25 @@ const UserDashboard = props => {
                 </div>
               </div>
             ) : (
-              props.user.role === 'student' && (
-                <div className='column'>
-                  <div className='card'>
-                    <header className='card-header'>
-                      <p className='card-header-title has-text-grey'>
-                        Recent Classroom Feedback
-                      </p>
-                    </header>
-                    <StudentFeedbackLists
-                      recentFeedback={
-                        props.feedback.studentGetFeedbackArticleById
-                      }
-                    />
-                  </div>
+              ''
+            )}
+            {props.user.role === 'student' ? (
+              <div className='column'>
+                <div className='card'>
+                  <header className='card-header'>
+                    <p className='card-header-title has-text-grey'>
+                      直近のレッスンレポート
+                    </p>
+                  </header>
+                  <StudentFeedbackLists
+                    recentFeedback={
+                      props.feedback.studentGetFeedbackArticleById
+                    }
+                  />
                 </div>
-              )
+              </div>
+            ) : (
+              ''
             )}
           </div>
 
@@ -363,7 +387,7 @@ const UserDashboard = props => {
               <div className='card'>
                 <header className='card-header'>
                   <p className='card-header-title has-text-grey'>
-                    Upcoming Events && News Letter
+                    イベント＆News Letter
                   </p>
                 </header>
                 {props.post.posts && props.post.posts.length > 0 ? (
@@ -381,27 +405,27 @@ const UserDashboard = props => {
                 <div className='card'>
                   <header className='card-header'>
                     <p className='card-header-title has-text-grey'>
-                      Last Update Exam Result
+                      最新のテスト結果
                     </p>
                   </header>
                   <ExamLists exam={props.exam.adminGetDashboardExam} />
                 </div>
               </div>
-            ) : (
-              props.user.role === 'student' && (
-                <div className='column'>
-                  <div className='card'>
-                    <header className='card-header'>
-                      <p className='card-header-title has-text-grey'>
-                        Last Update Exam Result
-                      </p>
-                    </header>
-                    <StudentExamScoreLists
-                      recentExam={props.exam.studentGetExamArticleById}
-                    />
-                  </div>
+            ) : props.user.role === 'student' ? (
+              <div className='column'>
+                <div className='card'>
+                  <header className='card-header'>
+                    <p className='card-header-title has-text-grey'>
+                      最新のテスト結果
+                    </p>
+                  </header>
+                  <StudentExamScoreLists
+                    recentExam={props.exam.studentGetExamArticleById}
+                  />
                 </div>
-              )
+              </div>
+            ) : (
+              ''
             )}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import FormField from '../../../utils/form/formField';
 import {
@@ -26,6 +26,7 @@ class EditClass extends Component {
   componentDidMount = () => {
     const formData = this.state.formData;
     //Populate the edit field
+    console.log(this.props.classroom);
     const newFormData = populateFields(formData, this.props.classroom);
     this.setState({
       formData: newFormData
@@ -45,7 +46,9 @@ class EditClass extends Component {
   submitForm = event => {
     event.preventDefault();
     let dataToSubmit = generateFormData(this.state.formData, 'EditClass');
-    this.props.dispatch(editClass(this.props.class_id, dataToSubmit, this.props.history));
+    this.props.dispatch(
+      editClass(this.props.class_id, dataToSubmit, this.props.history)
+    );
   };
 
   render() {

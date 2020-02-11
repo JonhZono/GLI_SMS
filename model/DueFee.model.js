@@ -8,8 +8,7 @@ const DueFeeSchema = new mongoose.Schema(
     },
     gmailLists: {
       type: Array,
-      default: [],
-      required: true
+      default: []
     },
     amount: {
       type: String,

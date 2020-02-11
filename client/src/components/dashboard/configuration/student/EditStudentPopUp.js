@@ -12,7 +12,7 @@ class EditStudentPopUp extends React.Component {
 
   render() {
     const profile = this.props.profile;
-    console.log(profile.loading);
+
     return profile.getStudentById === null ? (
       <UserLayout>
         <div
@@ -43,10 +43,10 @@ class EditStudentPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
+                    <p className='card-header-title'>
                       List of Configuration
                     </p>
                   </header>
@@ -87,10 +87,10 @@ class EditStudentPopUp extends React.Component {
                   <header
                     className='card-header'
                     style={{
-                      background: '#004973'
+                      background: 'whitesmoke'
                     }}
                   >
-                    <p className='card-header-title has-text-light'>
+                    <p className='card-header-title'>
                       List of Configuration
                     </p>
                   </header>

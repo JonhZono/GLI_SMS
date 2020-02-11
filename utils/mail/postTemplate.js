@@ -1,13 +1,17 @@
-const postTemplate = (title, descriptions, image, status) => {
+const postTemplate = (title, descriptions, status, event, type) => {
   return (template = `
     <section id="Introduction" class="main-section">
-    <header><h2>${title}</h2><br/>
+    <header><h2>${title}</h2>
+    Post Type: <b>${type}</b><br/>
     Event Status: <b>${status}</b><br/>
-    </header>
-    <img src='${image}' alt='GLI Harumi' />
-      <p style="font-size: 15px">${descriptions}</p>
+    Send From: <b>GLI Harumi</b><br/>
+    </header>  
+      <p style="font-size: 15px; white-space: pre-line">${descriptions}</p>
+      <p style="font-size: 15px; white-space: pre-line">${event}</p>
     </section>
-    <footer><i>➤ Check here for more detail: http://localhost:3000/user/dashboard </i></footer>
+    <p><i>➤ Please Login Here: http://localhost:3000/user/dashboard </i></p>
+    </section>
+    <footer>GLI晴海校。</footer>
   `);
 };
 

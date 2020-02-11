@@ -64,7 +64,9 @@ class GenerateUser extends Component {
                       }}
                     >
                       <p className='card-header-title'>Lists of User</p>
-                      <CreateUser />
+                      <CreateUser
+                        userLists={this.props.user.userLists.length}
+                      />
                     </header>
                     <Spinner />
                   </div>
@@ -109,7 +111,7 @@ class GenerateUser extends Component {
                     }}
                   >
                     <p className='card-header-title'>Lists of User</p>
-                    <CreateUser />
+                    <CreateUser userLists={this.props.user.userLists.length} />
                   </header>
 
                   <UserLists
