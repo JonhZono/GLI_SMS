@@ -1,0 +1,9 @@
+{
+  "jwtSecret": "P@%%w0rdE!@#123",
+  "MONGODB_URI": "mongodb://localhost:27017/sms_db",
+  "USER_EMAIL": "gli.harumi01@gmail.com",
+  "EMAIL_PASS": "glimaster0401",
+  "CLOUD_NAME": "https-jiproce-co-jp-gli-course",
+  "CLOUD_API_KEY": "427952325777942",
+  "CLOUD_API_SECRET": "GFqTh6LxSvNhz9_jWmLzeCReP98"
+}
