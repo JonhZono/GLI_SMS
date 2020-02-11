@@ -1,7 +1,7 @@
 /node_modules
 /build
 /client/node_modules
-/config/default.json
+/config/production.json
 .DS_Store
 .env
 
