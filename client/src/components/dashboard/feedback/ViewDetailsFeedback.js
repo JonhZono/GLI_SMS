@@ -8,121 +8,96 @@ const ViewDetailsFeedback = props => {
     <Spinner />
   ) : (
     <Fragment>
-      <div className='image'>
+      <section className='hero is-info is-bold is-small promo-block'>
         {props.studentFeedback.image.length > 0 &&
           props.studentFeedback.image.map(item => (
             <img key={item.public_id} src={item.url} alt='user' />
           ))}
+      </section>
+      <div className='section'>
+        <div style={{ fontSize: '18px' }}>
+          <p>
+            <b>Send To Parents: </b>
+            {props.studentFeedback && props.studentFeedback.email}
+          </p>
+          <p>
+            <b>Lesson ID:</b>{' '}
+            {props.studentFeedback && props.studentFeedback.lessonID}
+          </p>
+          <p>
+            <b>Student:</b>{' '}
+            {props.studentFeedback && props.studentFeedback.name}
+          </p>
+          <p>
+            <b>Term Code: </b>
+            {props.studentFeedback && (
+              <span className='tag is-success'>
+                {props.studentFeedback.termCode}
+              </span>
+            )}
+          </p>
+          <p>
+            <b>Created At: </b>
+            {props.studentFeedback && (
+              <Moment format='LLLL'>{props.studentFeedback.createdAt}</Moment>
+            )}
+          </p>
+          <p>
+            <b>Grade: </b>
+            {props.studentFeedback.grade && props.studentFeedback.grade.name}
+          </p>
+          <p>
+            <b>Teacher: </b>
+            {props.studentFeedback.teacher &&
+              props.studentFeedback.teacher.name}
+          </p>
+        </div>
+
+        <br />
+
+        {props.studentFeedback && (
+          <p className='p_wrap_feedback' style={{ fontSize: '18px' }}>
+            {props.studentFeedback.lessonContent}
+          </p>
+        )}
+
+        <p style={{ fontSize: '18px', marginTop: '20px'}}>
+          <b>GLI News </b>
+          {props.studentFeedback && (
+            <p className='p_wrap_feedback'>{props.studentFeedback.gliNews}</p>
+          )}
+        </p>
+        <div style={{ marginTop: '15px' }}>
+          <Link
+            to={`/user/analysis/everyone/view/${props.studentFeedback.ownerId &&
+              props.studentFeedback.ownerId._id}`}
+            className='tag is-info'
+            style={{ margin: '3px' }}
+          >
+            <span className='icon is-small'>
+              <i className='fas fa-info' aria-hidden='true' />
+            </span>
+            <span>
+              View {props.studentFeedback && props.studentFeedback.name} Monthly
+              Analysis
+            </span>
+          </Link>
+          <Link
+            to={`/user/exam/score/everyone/view/${props.studentFeedback
+              .ownerId && props.studentFeedback.ownerId._id}`}
+            className='tag is-primary'
+            style={{ margin: '3px' }}
+          >
+            <span className='icon is-small'>
+              <i className='fas fa-info' aria-hidden='true' />
+            </span>
+            <span>
+              View {props.studentFeedback && props.studentFeedback.name} Exam
+              Score
+            </span>
+          </Link>
+        </div>
       </div>
-      <table className='table is-striped is-hoverable is-fullwidth'>
-        <tbody>
-          <tr>
-            <th>Send To Parent</th>
-            <td>{props.studentFeedback && props.studentFeedback.email}</td>
-          </tr>
-          <tr>
-            <th>Lesson ID</th>
-            <td>{props.studentFeedback && props.studentFeedback.lessonID}</td>
-          </tr>
-          <tr>
-            <th>Student</th>
-            <td>{props.studentFeedback && props.studentFeedback.name}</td>
-          </tr>
-          <tr>
-            <th>Term Code</th>
-            <td>
-              {props.studentFeedback && (
-                <span className='tag is-success'>
-                  {props.studentFeedback.termCode}
-                </span>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>Created At</th>
-            <td>
-              {props.studentFeedback && (
-                <Moment format='LLLL'>{props.studentFeedback.createdAt}</Moment>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>Grade</th>
-            <td>
-              {props.studentFeedback.grade && props.studentFeedback.grade.name}
-            </td>
-          </tr>
-          <tr>
-            <th>Classroom</th>
-            <td>
-              {props.studentFeedback.classroom &&
-                props.studentFeedback.classroom.name}
-            </td>
-          </tr>
-          <tr>
-            <th>Teacher</th>
-            <td>
-              {props.studentFeedback.teacher &&
-                props.studentFeedback.teacher.name}
-            </td>
-          </tr>
-          <tr>
-            <th>GLI News</th>
-            <td>
-              {props.studentFeedback && (
-                <p className='p_wrap_feedback'>
-                  {props.studentFeedback.gliNews}
-                </p>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>Lesson Content</th>
-            <td>
-              {props.studentFeedback && (
-                <p className='p_wrap_feedback'>
-                  {props.studentFeedback.lessonContent}
-                </p>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Please Check <i className='far fa-hand-point-right' />
-            </th>
-            <td>
-              <Link
-                to={`/user/analysis/everyone/view/${props.studentFeedback
-                  .ownerId && props.studentFeedback.ownerId._id}`}
-                className='tag is-info'
-                style={{ margin: '3px' }}
-              >
-                <span className='icon is-small'>
-                  <i className='fas fa-info' aria-hidden='true' />
-                </span>
-                <span>
-                  View {props.studentFeedback && props.studentFeedback.name}{' '}
-                  Monthly Analysis
-                </span>
-              </Link>
-              <Link
-                to={`/user/exam/score/everyone/view/${props.studentFeedback
-                  .ownerId && props.studentFeedback.ownerId._id}`}
-                className='tag is-primary'
-                style={{ margin: '3px' }}
-              >
-                <span className='icon is-small'>
-                  <i className='fas fa-info' aria-hidden='true' />
-                </span>
-                <span>
-                  View {props.studentFeedback && props.studentFeedback.name}{' '}
-                  Exam Score
-                </span>
-              </Link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </Fragment>
   );
 };

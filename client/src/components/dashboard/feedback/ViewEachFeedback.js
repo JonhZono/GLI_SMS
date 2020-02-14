@@ -90,7 +90,7 @@ class ViewEachFeedback extends Component {
             </h1>
             <div className='columns'>
               <div className='column'>
-                <div className='card has-text-centered'>
+                <div className='card'>
                   <header className='card-header'>
                     <p
                       className='card-header-title'
