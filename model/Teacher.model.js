@@ -6,6 +6,6 @@ const TeacherSchema = new mongoose.Schema({
     maxlength: 100,
     required: true
   }
-})
+});
 
-module.exports = Teacher = mongoose.model('Teacher', TeacherSchema);
+module.exports = teacher = mongoose.model('Teacher', TeacherSchema);

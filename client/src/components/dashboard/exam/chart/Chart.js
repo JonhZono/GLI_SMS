@@ -26,10 +26,7 @@ class Chart extends Component {
               examById && examById.writing,
               examById && examById.reading,
               examById && examById.listening,
-              examById && examById.speaking,
-              examById && examById.participation,
-              examById && examById.active,
-              examById && examById.attitude
+              examById && examById.speaking
             ],
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',

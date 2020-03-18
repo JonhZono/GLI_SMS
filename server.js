@@ -40,6 +40,8 @@ app.use('/api/classfeedback', require('./route/api/classFeedback'));
 app.use('/api/analyze', require('./route/api/analyze'));
 app.use('/api/post', require('./route/api/post'));
 app.use('/api/exam', require('./route/api/examScore'));
+app.use('/api/eiken_exam', require('./route/api/eikenExamScore'));
+app.use('/api/junior_eiken_exam/', require('./route/api/juniorEikenExamScore'));
 app.use('/api/duefee', require('./route/api/dueFee'));
 
 //server static assets in production

@@ -12,6 +12,8 @@ const ClassFeedback = require('../../model/ClassFeedback.model');
 const Course = require('../../model/Course.model');
 const Performance = require('../../model/Performance.model');
 const ExamScore = require('../../model/ExamScore.model');
+const EikenExamScore = require('../../model/EikenExamScore.model');
+const JuniorEikenExamScore = require('../../model/JuniorEikenExamScore.model');
 const Fee = require('../../model/DueFee.model');
 
 //@route        api/student/profile/me
@@ -307,7 +309,7 @@ router.get('/get/performance/me', auth, student, (req, res) => {
       res.status(200).json(performance[0]);
     });
 });
-
+//GLI exam score
 router.get('/exam/score/all/:ownerId', auth, async (req, res) => {
   try {
     const exam = await ExamScore.find({
@@ -322,6 +324,51 @@ router.get('/exam/score/all/:ownerId', auth, async (req, res) => {
     if (error.kind == 'ObjectId') {
       res.status(404).json({
         errors: [{ msg: 'Exam not found' }]
+      });
+    }
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+  }
+});
+
+//Eiken exam score
+router.get('/eiken_exam/score/all/:ownerId', auth, async (req, res) => {
+  try {
+    const exam = await EikenExamScore.find({
+      ownerId: req.params.ownerId
+    })
+      .sort({ date: -1 })
+      .populate('ownerId', ['name']);
+    if (!exam)
+      res.status(404).json({ errors: [{ msg: 'Eiken Exam not found' }] });
+
+    res.status(200).json(exam);
+  } catch (error) {
+    if (error.kind == 'ObjectId') {
+      res.status(404).json({
+        errors: [{ msg: 'Eiken Exam not found' }]
+      });
+    }
+    res.status(500).json({ errors: [{ msg: 'Server Error' }] });
+  }
+});
+//Junior Eiken exam score
+router.get('/junior_eiken_exam/score/all/:ownerId', auth, async (req, res) => {
+  try {
+    const exam = await JuniorEikenExamScore.find({
+      ownerId: req.params.ownerId
+    })
+      .sort({ date: -1 })
+      .populate('ownerId', ['name']);
+    if (!exam)
+      res
+        .status(404)
+        .json({ errors: [{ msg: 'Junior Eiken Exam not found' }] });
+
+    res.status(200).json(exam);
+  } catch (error) {
+    if (error.kind == 'ObjectId') {
+      res.status(404).json({
+        errors: [{ msg: 'Junior Eiken Exam not found' }]
       });
     }
     res.status(500).json({ errors: [{ msg: 'Server Error' }] });

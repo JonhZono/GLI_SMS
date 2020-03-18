@@ -50,6 +50,8 @@ import ViewEachStudentFeedback from './components/dashboard/feedback/ViewEachFee
 /**Everyone View student daily analysis from viewEachFeedbackDetails*/
 import IndexDailyAnalysisInViewEachFeedbackDetails from './components/dashboard/feedback/analysisGraph/IndexGraph';
 import IndexExamScoreInViewEachFeedbackDetails from './components/dashboard/feedback/examGraph/IndexGraph';
+import IndexEikenExamScoreInViewEachFeedbackDetails from './components/dashboard/feedback/eikenExamGraph/IndexGraph';
+import IndexJuniorEikenExamScoreInViewEachFeedbackDetails from './components/dashboard/feedback/juniorEikenExamGraph/IndexGraph';
 
 /**Student My Report Module */
 import MyReport from './components/dashboard/user/myReport/MyReport';
@@ -61,9 +63,25 @@ import AnalyzeLists from './components/dashboard/analyze/AnalyzeLists';
 import EditAnalyzeIndex from './components/dashboard/analyze/EditAnalyzeIndex';
 import IndexAnalyzeChart from './components/dashboard/analyze/chart/Index';
 
+//GLI exam route
 import ExamLists from './components/dashboard/exam/ExamLists';
 import EditExamIndex from './components/dashboard/exam/EditExamIndex';
 import IndexExamChart from './components/dashboard/exam/chart/Index';
+
+//Eiken exam route
+import EikenExamLists from './components/dashboard/eikenExam/EikenExamLists';
+import EditEikenExamIndex from './components/dashboard/eikenExam/EditExamIndex';
+import IndexEikenExamChart from './components/dashboard/eikenExam/chart/Index';
+import ViewListsEikenExamScoreByStudentID from './components/dashboard/user/myReport/studentEikenExamScore/ViewEikenExamScore';
+import StudentViewEikenExamByID from './components/dashboard/user/myReport/studentEikenExamScore/chart/Index';
+
+//Junior Eiken exam route
+import JuniorEikenExamLists from './components/dashboard/juniorEikenExam/JuniorEikenExamLists';
+import EditJuniorEikenExamIndex from './components/dashboard/juniorEikenExam/EditExamIndex';
+import IndexJuniorEikenExamChart from './components/dashboard/juniorEikenExam/chart/Index';
+import ViewListsJuniorEikenExamScoreByStudentID from './components/dashboard/user/myReport/studentJuniorEikenExamScore/ViewJuniorEikenExamScore';
+import StudentViewJuniorEikenExamByID from './components/dashboard/user/myReport/studentJuniorEikenExamScore/chart/Index';
+
 /**Student Exam Score Module */
 import ViewExamScore from './components/dashboard/user/myReport/studentScore/ViewExamScore';
 import IndexExamScoreChart from './components/dashboard/user/myReport/studentScore/chart/Index';
@@ -286,6 +304,16 @@ const Routes = () => {
               path='/user/exam/score/everyone/view/:student_id'
               component={IndexExamScoreInViewEachFeedbackDetails}
             />
+            <PrivateRoute
+              exact
+              path='/user/eiken_exam/score/everyone/view/:student_id'
+              component={IndexEikenExamScoreInViewEachFeedbackDetails}
+            />
+            <PrivateRoute
+              exact
+              path='/user/junior_eiken_exam/score/everyone/view/:student_id'
+              component={IndexJuniorEikenExamScoreInViewEachFeedbackDetails}
+            />
 
             {/**Admin Access Only Exam Module*/}
             <PrivateRoute
@@ -303,6 +331,66 @@ const Routes = () => {
               exact
               path='/user/exam/score/view/:exam_id'
               component={IndexExamChart}
+            />
+            {/**Admin Access Only Eiken Exam Module*/}
+            <PrivateRoute
+              exact
+              path='/user/eiken_exam/scores'
+              component={EikenExamLists}
+            />
+
+            <PrivateRoute
+              exact
+              path='/user/eiken_exam/score/edit/:exam_id'
+              component={EditEikenExamIndex}
+            />
+            <PrivateRoute
+              exact
+              path='/user/eiken_exam/score/view/:exam_id'
+              component={IndexEikenExamChart}
+            />
+            <PrivateRoute
+              exact
+              path='/user/eiken_exam/score/view/:exam_id'
+              component={IndexEikenExamChart}
+            />
+            <PrivateRoute
+              exact
+              path='/user/student/eiken_exam/score/view/lists/:exam_id'
+              component={ViewListsEikenExamScoreByStudentID}
+            />
+            <PrivateRoute
+              exact
+              path='/user/student/eiken_exam/score/view/:exam_id'
+              component={StudentViewEikenExamByID}
+            />
+
+            {/**Admin Access Only Junior Eiken Exam Module*/}
+            <PrivateRoute
+              exact
+              path='/user/junior_eiken_exam/scores'
+              component={JuniorEikenExamLists}
+            />
+
+            <PrivateRoute
+              exact
+              path='/user/junior_eiken_exam/score/edit/:exam_id'
+              component={EditJuniorEikenExamIndex}
+            />
+            <PrivateRoute
+              exact
+              path='/user/junior_eiken_exam/score/view/:exam_id'
+              component={IndexJuniorEikenExamChart}
+            />
+            <PrivateRoute
+              exact
+              path='/user/student/junior_eiken_exam/score/view/lists/:exam_id'
+              component={ViewListsJuniorEikenExamScoreByStudentID}
+            />
+            <PrivateRoute
+              exact
+              path='/user/student/junior_eiken_exam/score/view/:exam_id'
+              component={StudentViewJuniorEikenExamByID}
             />
 
             {/**Student MyReport module */}

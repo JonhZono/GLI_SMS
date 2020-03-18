@@ -17,6 +17,18 @@ const RenderDAES = props => {
       >
         {props.name}&nbsp;Exam Score
       </Link>
+      <Link
+        to={`/user/student/eiken_exam/score/view/lists/${props.user_id}`}
+        className='button buttonInformation is-info is-outlined'
+      >
+        {props.name}&nbsp;Eiken Exam Score
+      </Link>
+      <Link
+        to={`/user/student/junior_eiken_exam/score/view/lists/${props.user_id}`}
+        className='button buttonInformation is-info is-outlined'
+      >
+        {props.name}&nbsp;Junior Eiken Exam Score
+      </Link>
     </Fragment>
   );
 };

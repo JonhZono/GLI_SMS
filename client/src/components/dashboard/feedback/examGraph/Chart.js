@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import DisplayPie from './DisplayPie';
 import DisplayPolarArea from './DisplayPolarArea';
 import Spinner from '../../../spinner/Spinner';
-import { clearViewPerformance } from '../../../../actions/analysis';
+import { clearViewExam } from '../../../../actions/exam';
 class Chart extends Component {
   state = {
     chartData: {}
   };
   componentWillUnmount = () => {
-    this.props.dispatch(clearViewPerformance());
+    this.props.dispatch(clearViewExam());
   };
   componentDidMount = () => {
     const everyoneStudentExamByID = this.props.everyoneStudentExamByID;

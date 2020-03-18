@@ -61,13 +61,13 @@ const ViewDetailsFeedback = props => {
           </p>
         )}
 
-        <p style={{ fontSize: '18px', marginTop: '20px'}}>
+        <p style={{ fontSize: '18px', marginTop: '20px' }}>
           <b>GLI News </b>
           {props.studentFeedback && (
             <p className='p_wrap_feedback'>{props.studentFeedback.gliNews}</p>
           )}
         </p>
-        <div style={{ marginTop: '15px' }}>
+        <div style={{ marginTop: '16px' }}>
           <Link
             to={`/user/analysis/everyone/view/${props.studentFeedback.ownerId &&
               props.studentFeedback.ownerId._id}`}
@@ -94,6 +94,42 @@ const ViewDetailsFeedback = props => {
             <span>
               View {props.studentFeedback && props.studentFeedback.name} Exam
               Score
+            </span>
+          </Link>
+          <Link
+            to={`/user/eiken_exam/score/everyone/view/${props.studentFeedback
+              .ownerId && props.studentFeedback.ownerId._id}`}
+            className='tag'
+            style={{
+              margin: '3px',
+              backgroundColor: '#E7740F',
+              color: 'white'
+            }}
+          >
+            <span className='icon is-small'>
+              <i className='fas fa-info' aria-hidden='true' />
+            </span>
+            <span>
+              View {props.studentFeedback && props.studentFeedback.name} Eiken
+              Exam Score
+            </span>
+          </Link>
+          <Link
+            to={`/user/junior_eiken_exam/score/everyone/view/${props
+              .studentFeedback.ownerId && props.studentFeedback.ownerId._id}`}
+            className='tag'
+            style={{
+              margin: '3px',
+              backgroundColor: '#CCCC43',
+              color: 'white'
+            }}
+          >
+            <span className='icon is-small'>
+              <i className='fas fa-info' aria-hidden='true' />
+            </span>
+            <span>
+              View {props.studentFeedback && props.studentFeedback.name} Junior
+              Eiken Exam Score
             </span>
           </Link>
         </div>

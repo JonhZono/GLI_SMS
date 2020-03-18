@@ -35,6 +35,7 @@ class RenderPostArticle extends Component {
     const post = this.props.post;
     const getLikes = this.props.getLikes;
     const getSns = this.props.getSns;
+    console.log(this.props.user);
     $(document).ready(function() {
       $('#showModal').click(function() {
         $('.modal').addClass('is-active');
@@ -81,31 +82,21 @@ class RenderPostArticle extends Component {
               className='has-text-centered'
               style={{ fontSize: '14px', color: 'grey' }}
             >
-              Event Status:{' '}
-              <span className='tag is-primary'>
-                {' '}
-                準備中
-              </span>
+              Event Status: <span className='tag is-primary'> 準備中</span>
             </p>
           ) : post.status === 'onGoing' ? (
             <p
               style={{ fontSize: '14px', color: 'grey' }}
               className='has-text-centered'
             >
-              Event Status:{' '}
-              <span className='tag is-info'>
-                受付中
-              </span>
+              Event Status: <span className='tag is-info'>受付中</span>
             </p>
           ) : post.status === 'finished' ? (
             <p
               className='has-text-centered'
               style={{ fontSize: '14px', color: 'grey' }}
             >
-              Event Status:{' '}
-              <span className='tag is-danger'>
-                受付終了
-              </span>
+              Event Status: <span className='tag is-danger'>受付終了</span>
             </p>
           ) : (
             ''
@@ -137,13 +128,21 @@ class RenderPostArticle extends Component {
                     参加&nbsp;<span>🙂</span>
                   </button>
                   &nbsp;&nbsp;
-                  {getLikes.length > 0 && (
-                    <span style={{ fontSize: '12px' }} className='button is-small is-warning is-rounded'>{getLikes.length}</span>
+                  {getLikes.length > 0 && this.props.user.role == 'admin' && (
+                    <span
+                      style={{ fontSize: '12px' }}
+                      className='button is-small is-warning is-rounded'
+                    >
+                      {getLikes.length}
+                    </span>
                   )}
                   {getLikes.length > 0
-                    ? getLikes.map(like => (
-                        <ListOfLikes key={like._id} {...like} />
-                      ))
+                    ? getLikes.map(
+                        like =>
+                          this.props.user.role == 'admin' && (
+                            <ListOfLikes key={like._id} {...like} />
+                          )
+                      )
                     : ''}
                 </div>
                 <div className='column'>
@@ -162,11 +161,21 @@ class RenderPostArticle extends Component {
                     SNS(顔出しOK)&nbsp;<span>🙂</span>
                   </button>
                   &nbsp;&nbsp;
-                  {getSns.length > 0 && (
-                    <span style={{ fontSize: '12px' }} className='button is-small is-warning is-rounded'>{getSns.length}</span>
+                  {getSns.length > 0 && this.props.user.role == 'admin' && (
+                    <span
+                      style={{ fontSize: '12px' }}
+                      className='button is-small is-warning is-rounded'
+                    >
+                      {getSns.length}
+                    </span>
                   )}
                   {getSns.length > 0
-                    ? getSns.map(sns => <SnsLists key={sns._id} {...sns} />)
+                    ? getSns.map(
+                        sns =>
+                          this.props.user.role == 'admin' && (
+                            <SnsLists key={sns._id} {...sns} />
+                          )
+                      )
                     : ''}
                 </div>
                 <div className='column'>
@@ -222,4 +231,8 @@ class RenderPostArticle extends Component {
   }
 }
 
-export default connect(null)(withRouter(RenderPostArticle));
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(withRouter(RenderPostArticle));

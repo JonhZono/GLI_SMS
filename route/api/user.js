@@ -7,6 +7,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const admin = require('../../middleware/Admin');
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 const nodemailer = require('nodemailer');
@@ -257,4 +258,38 @@ router.post(
   }
 );
 
+router.put('/edit/:user_id', auth, admin, async (req, res) => {
+  [
+    check('name', 'name is require')
+      .not()
+      .isEmpty(),
+    check('email', 'email is require').isEmail()
+  ],
+    async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      try {
+        const user = await User.findByIdAndUpdate(
+          { _id: req.params.user_id },
+          req.body,
+          {
+            new: true
+          }
+        );
+        await user.save();
+
+        res
+          .status(200)
+          .json({ msg: 'User Update Successfully', success: true });
+      } catch (error) {
+        console.log(error.message);
+        if (error)
+          res.status(400).json({
+            errors: [{ msg: 'Please check it again!' }]
+          });
+      }
+    };
+});
 module.exports = router;

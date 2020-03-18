@@ -28,8 +28,16 @@ const links = [
     linkTo: '/user/analysis'
   },
   {
-    name: 'Exam Score',
+    name: 'GLIExam Score',
     linkTo: '/user/exam/scores'
+  },
+  {
+    name: 'Eiken Exam Score',
+    linkTo: '/user/eiken_exam/scores'
+  },
+  {
+    name: 'Junior Eiken Exam Score',
+    linkTo: '/user/junior_eiken_exam/scores'
   },
   {
     name: 'News & Events',
@@ -107,7 +115,19 @@ const UserLayout = props => {
           <i className='fas fa-chart-line' style={{ marginRight: '10px' }} />
           &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
         </Link>
-      ) : item.name === 'Exam Score' &&
+      ) : item.name === 'GLIExam Score' &&
+        (props.user.role === 'admin' || props.user.role === 'staff') ? (
+        <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
+          <i className='far fa-edit' style={{ marginRight: '10px' }} />
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
+        </Link>
+      ) : item.name === 'Eiken Exam Score' &&
+        (props.user.role === 'admin' || props.user.role === 'staff') ? (
+        <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
+          <i className='far fa-edit' style={{ marginRight: '10px' }} />
+          &nbsp;&nbsp;&nbsp;&nbsp;{item.name}
+        </Link>
+      ) : item.name === 'Junior Eiken Exam Score' &&
         (props.user.role === 'admin' || props.user.role === 'staff') ? (
         <Link to={item.linkTo} key={i} style={{ color: '#7f90a0' }}>
           <i className='far fa-edit' style={{ marginRight: '10px' }} />
